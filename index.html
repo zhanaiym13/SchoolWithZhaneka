@@ -10,7 +10,7 @@
             --primary-light: #198754;
             --accent: #f59e0b;
             --accent-hover: #d97706;
-            --bg: #f0f4f2;
+            --bg: #eef3f0;
             --card: #ffffff;
             --text: #1e293b;
             --muted: #64748b;
@@ -20,46 +20,43 @@
 
         body {
             background-color: var(--bg);
-            background-image: 
-                radial-gradient(circle at 15% 20%, rgba(15, 92, 62, 0.08) 0%, transparent 25%),
-                radial-gradient(circle at 85% 75%, rgba(245, 158, 11, 0.09) 0%, transparent 25%),
-                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230f5c3e' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            background-image:
+                radial-gradient(circle at 12% 18%, rgba(15, 92, 62, 0.08) 0%, transparent 28%),
+                radial-gradient(circle at 88% 78%, rgba(245, 158, 11, 0.09) 0%, transparent 28%);
             color: var(--text);
             min-height: 100vh;
             overflow-x: hidden;
         }
 
-        /* Декоративные плавающие элементы на фоне */
         .bg-decor {
             position: fixed;
-            font-size: 2.5rem;
-            opacity: 0.14;
+            font-size: 2.3rem;
+            opacity: 0.12;
             pointer-events: none;
             z-index: 0;
             animation: float 7s ease-in-out infinite;
         }
         @keyframes float {
             0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-18px) rotate(8deg); }
+            50% { transform: translateY(-16px) rotate(6deg); }
         }
 
-        /* Шапка */
         header {
-            background: linear-gradient(135deg, var(--primary) 0%, #093d29 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, #083825 100%);
             color: white;
-            padding: 1.5rem 1rem 2rem;
+            padding: 1.4rem 1rem 1.8rem;
             text-align: center;
             position: relative;
             z-index: 10;
             box-shadow: 0 4px 20px rgba(0,0,0,0.12);
         }
-        header h1 { font-size: 2rem; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        header p { opacity: 0.9; margin-top: 5px; font-size: 0.95rem; }
+        header h1 { font-size: 1.9rem; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        header p { opacity: 0.9; margin-top: 4px; font-size: 0.92rem; }
 
         .user-bar {
-            max-width: 960px;
+            max-width: 980px;
             margin: 12px auto 0;
-            background: rgba(255,255,255,0.12);
+            background: rgba(255,255,255,0.14);
             backdrop-filter: blur(8px);
             padding: 8px 16px;
             border-radius: 50px;
@@ -68,24 +65,23 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 10px;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
         }
 
         .badge-pill {
-            background: rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.22);
             padding: 4px 12px;
             border-radius: 20px;
             font-weight: 600;
         }
 
-        /* Навигация */
         nav {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
             gap: 8px;
-            padding: 14px;
-            background: rgba(255,255,255,0.85);
+            padding: 12px;
+            background: rgba(255,255,255,0.88);
             backdrop-filter: blur(10px);
             position: sticky;
             top: 0;
@@ -96,59 +92,57 @@
             background: #e9f2ee;
             color: var(--primary);
             border: none;
-            padding: 10px 16px;
+            padding: 9px 15px;
             border-radius: 12px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
-            font-size: 0.92rem;
+            font-size: 0.9rem;
         }
         nav button:hover, nav button.active {
             background: var(--primary);
             color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(15, 92, 62, 0.25);
+            transform: translateY(-1px);
         }
 
-        /* Контейнер */
         main {
-            max-width: 960px;
-            margin: 24px auto;
+            max-width: 980px;
+            margin: 22px auto;
             padding: 0 16px 60px;
             position: relative;
             z-index: 5;
         }
 
-        .section { display: none; animation: fadeIn 0.3s ease; }
+        .section { display: none; animation: fadeIn 0.25s ease; }
         .section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
         .card {
             background: var(--card);
             border-radius: 20px;
-            padding: 24px;
+            padding: 22px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             border: 1px solid rgba(15, 92, 62, 0.08);
         }
 
-        /* Экран входа */
         #auth-screen {
-            max-width: 420px;
-            margin: 50px auto;
+            max-width: 440px;
+            margin: 40px auto;
             position: relative;
             z-index: 30;
         }
+
         .input-group { margin-bottom: 14px; }
         .input-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px; color: var(--muted); }
         .input-group input, .input-group select {
             width: 100%;
-            padding: 12px 14px;
+            padding: 11px 14px;
             border: 2px solid #e2e8f0;
             border-radius: 12px;
-            font-size: 1rem;
+            font-size: 0.98rem;
             outline: none;
-            transition: border-color 0.2s;
+            background: white;
         }
         .input-group input:focus, .input-group select:focus { border-color: var(--primary); }
 
@@ -156,251 +150,124 @@
             background: var(--primary);
             color: white;
             border: none;
-            padding: 12px 20px;
+            padding: 11px 18px;
             border-radius: 12px;
             font-weight: 600;
             cursor: pointer;
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             transition: 0.2s;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
         }
-        .btn:hover { background: var(--primary-light); transform: translateY(-1px); }
+        .btn:hover { background: var(--primary-light); }
         .btn-gold { background: var(--accent); color: #1e293b; }
         .btn-gold:hover { background: var(--accent-hover); color: white; }
         .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
         .btn-outline:hover { background: var(--primary); color: white; }
-        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        /* Карточка баланса */
         .hero-balance {
             background: linear-gradient(135deg, var(--primary) 0%, #147a52 100%);
             color: white;
             border-radius: 18px;
-            padding: 28px;
+            padding: 24px;
             text-align: center;
-            margin: 18px 0;
-            position: relative;
-            overflow: hidden;
+            margin: 16px 0;
         }
-        .hero-balance .stars-count { font-size: 2.6rem; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .hero-balance .stars-count { font-size: 2.4rem; font-weight: 800; }
         .limit-bar-wrap {
             background: rgba(0,0,0,0.25);
             border-radius: 20px;
-            height: 12px;
+            height: 11px;
             max-width: 340px;
-            margin: 14px auto 6px;
+            margin: 12px auto 6px;
             overflow: hidden;
         }
-        .limit-bar-fill {
-            background: var(--accent);
-            height: 100%;
-            width: 0%;
-            transition: width 0.4s ease;
-        }
+        .limit-bar-fill { background: var(--accent); height: 100%; width: 0%; transition: width 0.35s ease; }
 
-        /* 3D Интерактивная доска / Карта школы */
-        .map-controls {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 16px;
-            align-items: center;
-        }
-        .floor-tabs { display: flex; gap: 6px; }
-        .floor-btn {
-            padding: 8px 14px;
-            border-radius: 10px;
-            border: 2px solid var(--primary);
-            background: white;
-            color: var(--primary);
-            font-weight: 700;
-            cursor: pointer;
-        }
-        .floor-btn.active { background: var(--primary); color: white; }
-
-        .board-3d-viewport {
-            background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+        .blueprint-stage {
+            background: #0f172a;
             border-radius: 18px;
-            padding: 20px;
-            perspective: 1100px;
+            padding: 18px;
+            border: 4px solid #334155;
             overflow: hidden;
             position: relative;
-            border: 6px solid #475569;
-            box-shadow: inset 0 0 40px rgba(0,0,0,0.6), 0 12px 24px rgba(0,0,0,0.15);
         }
-
-        .board-header-tag {
-            position: absolute;
-            top: 10px;
-            left: 14px;
-            background: rgba(255,255,255,0.12);
-            color: #94a3b8;
-            font-size: 0.75rem;
-            padding: 4px 10px;
-            border-radius: 8px;
-            z-index: 5;
-        }
-
-        .school-3d-scene {
-            width: 100%;
-            max-width: 680px;
-            height: 410px;
-            margin: 15px auto;
+        .blueprint-frame {
             position: relative;
-            transform-style: preserve-3d;
-            transform: rotateX(34deg) rotateZ(-8deg);
-            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-            background: #e2e8f0;
-            border-radius: 16px;
-            box-shadow: 0 22px 0 #94a3b8, 0 30px 45px rgba(0,0,0,0.5);
-            border: 4px solid #cbd5e1;
-        }
-        .school-3d-scene.flat-view {
-            transform: rotateX(0deg) rotateZ(0deg);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-        }
-
-        /* Коридор школы */
-        .corridor {
-            position: absolute;
-            left: 10%;
-            top: 38%;
-            width: 80%;
-            height: 24%;
-            background: repeating-linear-gradient(90deg, #f8fafc 0px, #f8fafc 28px, #e2e8f0 28px, #e2e8f0 30px);
-            border-top: 2px dashed #cbd5e1;
-            border-bottom: 2px dashed #cbd5e1;
-        }
-
-        /* 3D Кабинеты */
-        .room-3d {
-            position: absolute;
-            background: linear-gradient(145deg, #ffffff, #f1f5f9);
-            border: 2px solid #64748b;
-            border-radius: 10px;
-            padding: 8px;
-            cursor: pointer;
-            transform: translateZ(14px);
-            box-shadow: 0 10px 0 #64748b, 0 14px 18px rgba(0,0,0,0.25);
-            transition: all 0.25s;
+            max-width: 740px;
+            margin: 10px auto;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #1e293b;
+            min-height: 340px;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            text-align: center;
+            transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .blueprint-frame img {
+            width: 100%;
+            height: auto;
+            max-height: 460px;
+            object-fit: contain;
+            display: block;
+        }
+        .room-pin {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            background: var(--accent);
+            color: #0f172a;
+            font-weight: 800;
             font-size: 0.78rem;
+            padding: 5px 10px;
+            border-radius: 999px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.45);
+            border: 2px solid white;
+            z-index: 6;
+            white-space: nowrap;
+        }
+        .compass-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #f1f5f9;
+            padding: 8px 14px;
+            border-radius: 12px;
             font-weight: 700;
-            color: #1e293b;
-        }
-        .room-3d:hover {
-            transform: translateZ(24px);
-            background: #ecfdf5;
-            border-color: var(--primary);
-        }
-        .room-3d.target-room {
-            background: #fef3c7;
-            border-color: var(--accent);
-            box-shadow: 0 12px 0 #d97706, 0 0 25px rgba(245, 158, 11, 0.8);
-            transform: translateZ(26px);
-        }
-        .room-3d span.icon { font-size: 1.4rem; margin-bottom: 2px; }
-
-        /* Вход и персонаж */
-        .entrance-gate {
-            position: absolute;
-            bottom: 4px;
-            left: 44%;
-            width: 12%;
-            height: 28px;
-            background: var(--primary);
-            color: white;
-            font-size: 0.7rem;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 6px;
-            transform: translateZ(8px);
+            font-size: 0.9rem;
         }
 
-        .student-avatar-3d {
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transform: translate(-50%, -50%) translateZ(28px);
-            transition: left 0.7s ease, top 0.7s ease;
-            z-index: 25;
-            filter: drop-shadow(0 6px 4px rgba(0,0,0,0.4));
-        }
-
-        /* Звездочки на маршруте */
-        .route-star {
-            position: absolute;
-            font-size: 1.35rem;
-            transform: translate(-50%, -50%) translateZ(22px);
-            animation: pulseStar 1.2s infinite alternate;
-            cursor: pointer;
-            z-index: 20;
-            filter: drop-shadow(0 4px 6px rgba(245, 158, 11, 0.6));
-        }
-        .route-star.collected {
-            opacity: 0.25;
-            transform: translate(-50%, -50%) translateZ(10px) scale(0.7);
-            animation: none;
-        }
-        @keyframes pulseStar {
-            from { transform: translate(-50%, -50%) translateZ(20px) scale(1); }
-            to { transform: translate(-50%, -50%) translateZ(32px) scale(1.25); }
-        }
-
-        /* Декоративные человечки и растения на 3D сцене */
-        .scene-prop {
-            position: absolute;
-            font-size: 1.15rem;
-            transform: translateZ(14px);
-            pointer-events: none;
-            opacity: 0.85;
-        }
-
-        .gps-panel {
+        .info-box {
             background: #f8fafc;
             border: 1px solid #e2e8f0;
             border-radius: 14px;
             padding: 14px;
             margin-top: 14px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
         }
 
-        /* Квесты и Магазин */
+        .bell-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9rem; }
+        .bell-table th, .bell-table td { padding: 9px 10px; border-bottom: 1px solid #e2e8f0; text-align: left; }
+        .bell-table th { color: var(--muted); font-size: 0.82rem; }
+
         .grid-cards {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
             gap: 16px;
-            margin-top: 16px;
+            margin-top: 14px;
         }
         .quest-item, .shop-item {
             border: 1px solid #e2e8f0;
             border-radius: 16px;
-            padding: 18px;
+            padding: 16px;
             background: #fafafa;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             gap: 12px;
-            transition: transform 0.2s;
         }
-        .quest-item:hover, .shop-item:hover { transform: translateY(-3px); border-color: var(--primary); }
         .reward-tag {
             display: inline-block;
             background: #fef3c7;
@@ -411,228 +278,229 @@
             font-size: 0.85rem;
         }
 
-        /* Уведомления (Toast) */
         #toast {
             position: fixed;
-            bottom: 24px;
-            right: 24px;
-            background: #1e293b;
+            bottom: 22px;
+            right: 22px;
+            background: #0f172a;
             color: white;
-            padding: 14px 20px;
+            padding: 13px 18px;
             border-radius: 14px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.25);
             z-index: 100;
             transform: translateY(120px);
             opacity: 0;
-            transition: all 0.35s ease;
-            max-width: 340px;
-            font-weight: 500;
+            transition: all 0.3s ease;
+            max-width: 350px;
+            font-size: 0.9rem;
         }
         #toast.show { transform: translateY(0); opacity: 1; }
 
-        /* Таблица рейтинга */
-        table { width: 100%; border-collapse: collapse; margin-top: 12px; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #e2e8f0; }
-        th { color: var(--muted); font-size: 0.85rem; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { padding: 11px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+        th { color: var(--muted); font-size: 0.84rem; }
     </style>
 </head>
 <body>
 
-    <!-- Фоновый школьный декор -->
-    <div class="bg-decor" style="top: 12%; left: 4%;">🎒</div>
-    <div class="bg-decor" style="top: 35%; right: 5%; animation-delay: 1.5s;">🧭</div>
-    <div class="bg-decor" style="bottom: 18%; left: 6%; animation-delay: 3s;">📚</div>
-    <div class="bg-decor" style="bottom: 28%; right: 8%; animation-delay: 4s;">🎓</div>
-    <div class="bg-decor" style="top: 65%; left: 2%; animation-delay: 2s;">🧑🏻‍🎓</div>
+    <div class="bg-decor" style="top: 12%; left: 3%;">🎒</div>
+    <div class="bg-decor" style="top: 38%; right: 4%; animation-delay: 1.5s;">🧭</div>
+    <div class="bg-decor" style="bottom: 18%; left: 5%; animation-delay: 3s;">📚</div>
+    <div class="bg-decor" style="bottom: 25%; right: 6%; animation-delay: 4s;">🎓</div>
 
-    <!-- ЭКРАН АВТОРИЗАЦИИ / РЕГИСТРАЦИИ -->
+    <!-- АВТОРИЗАЦИЯ (1 АККАУНТ НА УСТРОЙСТВО) -->
     <div id="auth-screen" class="card">
-        <div style="text-align: center; margin-bottom: 20px;">
-            <div style="font-size: 3rem;">🌿🏫</div>
+        <div style="text-align: center; margin-bottom: 18px;">
+            <div style="font-size: 2.8rem;">🏫🧭</div>
             <h2 style="color: var(--primary); margin-top: 6px;">SchoolQuest</h2>
-            <p style="color: var(--muted); font-size: 0.9rem;">Жаңа оқушыларға арналған мектеп навигаторы</p>
+            <p style="color: var(--muted); font-size: 0.88rem;">Жаңа оқушыға арналған мектеп бағдары</p>
         </div>
 
-        <div style="display: flex; gap: 8px; margin-bottom: 18px;">
-            <button id="tab-login" class="btn" style="flex:1;" onclick="switchAuthMode('login')">Кіру (Login)</button>
+        <div id="device-lock-notice" style="display:none; background:#fffbeb; border:1px solid #fde68a; color:#92400e; padding:10px 12px; border-radius:12px; font-size:0.84rem; margin-bottom:14px;">
+            🔒 Бұл құрылғыда тіркелген аккаунт бар: <strong id="bound-account-name"></strong>. Бір құрылғыға тек 1 аккаунт рұқсат етіледі.
+        </div>
+
+        <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+            <button id="tab-login" class="btn" style="flex:1;" onclick="switchAuthMode('login')">Кіру</button>
             <button id="tab-reg" class="btn btn-outline" style="flex:1;" onclick="switchAuthMode('register')">Тіркелу</button>
         </div>
 
         <div class="input-group">
             <label>Логин (оқушы аты)</label>
-            <input type="text" id="auth-username" placeholder="Мысалы: aidos_7a">
+            <input type="text" id="auth-username" placeholder="Мысалы: aidyn_9b">
         </div>
         <div class="input-group">
-            <label>Құпия сөз (Пароль)</label>
+            <label>Құпия сөз</label>
             <input type="password" id="auth-password" placeholder="••••••">
         </div>
         <div class="input-group" id="class-group" style="display: none;">
-            <label>Сыныбың</label>
-            <input type="text" id="auth-grade" placeholder="Мысалы: 5 «Ә» немесе 7 «Б»">
+            <label>Сыныбыңды таңда</label>
+            <select id="auth-grade">
+                <option value="">-- Сыныпты таңдаңыз --</option>
+                <option value="8А">8А</option><option value="8Ә">8Ә</option><option value="8Б">8Б</option>
+                <option value="8В">8В</option><option value="8Г">8Г</option><option value="8К">8К</option><option value="8Л">8Л</option>
+                <option value="9А">9А</option><option value="9Ә">9Ә</option><option value="9Б">9Б</option>
+                <option value="9В">9В</option><option value="9Г">9Г</option><option value="9К">9К</option><option value="9Л">9Л</option>
+                <option value="10А">10А</option><option value="10Ә">10Ә</option><option value="10Б">10Б</option><option value="10К">10К</option>
+                <option value="11А">11А</option><option value="11Ә">11Ә</option><option value="11Б">11Б</option><option value="11К">11К</option>
+            </select>
         </div>
 
-        <button class="btn" style="width: 100%; margin-top: 6px;" onclick="handleAuth()">Жалғастыру 🚀</button>
-        <p style="font-size: 0.8rem; color: var(--muted); text-align: center; margin-top: 12px;">
-            Барлық ұпайлар мен квесттер сенің аккаунтыңда сақталады.
-        </p>
+        <button class="btn" style="width: 100%; margin-top: 4px;" onclick="handleAuth()">Жалғастыру 🚀</button>
     </div>
 
-    <!-- ОСНОВНОЕ ПРИЛОЖЕНИЕ -->
+    <!-- ОСНОВНОЙ ИНТЕРФЕЙС -->
     <div id="app-wrapper" style="display: none;">
         <header>
-            <h1>🌿 SchoolQuest</h1>
-            <p>Мектебіңді зертте. Квесттерді орында. Кешбэк жина!</p>
+            <h1>🏫 SchoolQuest</h1>
+            <p>Мектеп сызбасы • Постер-ориентаторлар • Сыныптық квесттер • Кешбэк</p>
             <div class="user-bar">
-                <span>👋 Сәлем, <strong id="display-user">Оқушы</strong> (<span id="display-grade"></span>)</span>
-                <div style="display: flex; gap: 8px; align-items: center;">
+                <span>👋 <strong id="display-user"></strong> (<span id="display-grade"></span>)</span>
+                <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
                     <span class="badge-pill">⭐ <span id="header-stars">0</span></span>
                     <span class="badge-pill">Бүгін: <span id="header-daily">0</span>/100 ⭐</span>
-                    <button onclick="logout()" style="background: rgba(255,255,255,0.2); border:none; color:white; padding:4px 10px; border-radius:8px; cursor:pointer;">Шығу</button>
+                    <button onclick="logout()" style="background: rgba(255,255,255,0.22); border:none; color:white; padding:4px 10px; border-radius:8px; cursor:pointer;">Шығу</button>
                 </div>
             </div>
         </header>
 
         <nav>
             <button class="active" onclick="showSection('home', this)">🏠 Басты бет</button>
-            <button onclick="showSection('map', this)">🗺️ Мектеп картасы (3D)</button>
-            <button onclick="showSection('quests', this)">🎯 Күнделікті квесттер</button>
+            <button onclick="showSection('map', this)">🗺️ Мектеп картасы</button>
+            <button onclick="showSection('quests', this)">🎯 Квесттер</button>
             <button onclick="showSection('shop', this)">🎁 Кешбэк дүкені</button>
             <button onclick="showSection('rating', this)">🏆 Рейтинг</button>
         </nav>
 
         <main>
-            <!-- 1. БАСТЫ БЕТ -->
+            <!-- БАСТЫ БЕТ -->
             <section id="sec-home" class="section active">
                 <div class="card">
-                    <h2>Қош келдің, <span id="welcome-name">Достым</span>! 🎒</h2>
+                    <h2>Сәлем, <span id="welcome-name"></span>! 🎒</h2>
                     <p style="color: var(--muted); margin-top: 6px;">
-                        Мектепке тез үйреніп кету үшін 3D-картамен кабинеттерді тап, жолдағы жұлдызшаларды жина және оларды мектеп кешбэгіне айырбаста!
+                        Мектепке тез бейімделу үшін сызба арқылы кабинеттерді тап, қабырғадағы постер-кодтармен картаны бағытта және квесттерді орында.
                     </p>
 
                     <div class="hero-balance">
                         <div class="stars-count">⭐ <span id="main-stars">0</span> жұлдызша</div>
-                        <p style="opacity: 0.9; margin-top: 4px;">Сенің жинаған кешбэк балансың</p>
-                        
+                        <p style="opacity: 0.9; margin-top: 4px;">Кешбэк балансы</p>
                         <div class="limit-bar-wrap">
                             <div class="limit-bar-fill" id="daily-progress-bar"></div>
                         </div>
-                        <small>Күнделікті лимит: <strong id="daily-limit-text">0 / 100</strong> ⭐ (лимит толса да, картамен шексіз жүре аласың)</small>
+                        <small>Күндік лимит: <strong id="daily-limit-text">0 / 100</strong> ⭐ (сызбамен және постерлермен жүру шексіз)</small>
                     </div>
 
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 16px;">
-                        <div style="background: #f0fdf4; padding: 16px; border-radius: 14px; border: 1px solid #bbf7d0;">
-                            <h4>🧭 Жаңа оқушыға көмек</h4>
-                            <p style="font-size: 0.88rem; color: #166534; margin-top: 6px;">Қай кабинет қай қабатта екенін білмейсің бе? «Мектеп картасы» бөлімінде кабинетті таңда — 3D-тақта жолды көрсетеді.</p>
-                        </div>
-                        <div style="background: #fffbeb; padding: 16px; border-radius: 14px; border: 1px solid #fde68a;">
-                            <h4>⏰ Қоңырау кестесі (Естелік)</h4>
-                            <p style="font-size: 0.88rem; color: #92400e; margin-top: 6px;">1-сабақ: 08:30 • Үлкен үзіліс (Асхана): 10:15 • Кітапхана үзілісте ашық.</p>
-                        </div>
+                    <div class="info-box">
+                        <h3>⏰ Қоңырау кестесі (әр сабақ 45 минут)</h3>
+                        <table class="bell-table">
+                            <thead>
+                                <tr><th>Сабақ</th><th>Уақыты</th><th>Үзіліс</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1-сабақ</td><td>08:00 – 08:45</td><td>5 мин</td></tr>
+                                <tr><td>2-сабақ</td><td>08:50 – 09:35</td><td>15 мин</td></tr>
+                                <tr><td>3-сабақ</td><td>09:50 – 10:35</td><td>5 мин</td></tr>
+                                <tr><td>4-сабақ</td><td>10:40 – 11:25</td><td>15 мин</td></tr>
+                                <tr><td>5-сабақ</td><td>11:40 – 12:25</td><td>5 мин</td></tr>
+                                <tr><td>6-сабақ</td><td>12:30 – 13:15</td><td>5 мин</td></tr>
+                                <tr><td>7-сабақ</td><td>13:20 – 14:05</td><td>—</td></tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </section>
 
-            <!-- 2. МЕКТЕП КАРТАСЫ (3D ИНТЕРАКТИВНАЯ ДОСКА) -->
+            <!-- МЕКТЕП КАРТАСЫ -->
             <section id="sec-map" class="section">
                 <div class="card">
-                    <h2>🖥️ Интерактивті 3D Мектеп Тақтасы</h2>
-                    <p style="color: var(--muted); font-size: 0.9rem; margin-bottom: 14px;">
-                        Кабинетті таңдаңыз — тақтада бағыт сызылады және жол бойында ⭐ жұлдызшалар пайда болады. Геолокацияны қосып жүрсеңіз немесе «Қадам жасау» батырмасын бассаңыз, жұлдызшалар балансқа түседі!
+                    <h2>🗺️ Мектеп картасы және постер-ориентаторлар</h2>
+                    <p style="color: var(--muted); font-size: 0.88rem; margin-bottom: 14px;">
+                        GitHub репозиториіндегі сызбалар (<code>чертеж1</code>, <code>чертеж2</code>...) қолданылады. Кабинетті таңдап, орналасуын көріңіз және қабырғадағы постер кодын енгізіп, картаны қажетті бағытқа бұрыңыз.
                     </p>
 
-                    <div class="map-controls">
-                        <div class="floor-tabs">
-                            <button class="floor-btn active" onclick="setFloor(1, this)">1-қабат</button>
-                            <button class="floor-btn" onclick="setFloor(2, this)">2-қабат</button>
-                        </div>
-
-                        <select id="room-select" onchange="buildRoute(this.value)" style="padding: 9px 14px; border-radius: 10px; border: 2px solid var(--primary); font-weight: 600; flex: 1; min-width: 200px;">
-                            <option value="">-- Баратын кабинетті таңдаңыз --</option>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 14px;">
+                        <select id="plan-select" onchange="changePlan(this.value)" style="padding: 9px 12px; border-radius: 10px; border: 2px solid var(--primary); font-weight: 600;">
+                            <option value="0">📐 Чертёж 1 (1-қабат)</option>
+                            <option value="1">📐 Чертёж 2 (2-қабат)</option>
                         </select>
 
-                        <button class="btn btn-outline" onclick="toggle3DAngle()">🔄 3D / 2D Көрініс</button>
-                    </div>
+                        <select id="room-select" onchange="selectRoom(this.value)" style="padding: 9px 12px; border-radius: 10px; border: 2px solid var(--primary); font-weight: 600; flex: 1; min-width: 210px;">
+                            <option value="">-- Кабинетті таңдаңыз --</option>
+                        </select>
 
-                    <!-- 3D СЦЕНА -->
-                    <div class="board-3d-viewport">
-                        <div class="board-header-tag">SMART BOARD 3D • <span id="board-floor-label">1-ҚАБАТ</span></div>
-                        
-                        <div class="school-3d-scene" id="school-scene">
-                            <div class="corridor"></div>
-                            <!-- SVG слой для линии маршрута -->
-                            <svg id="route-svg" viewBox="0 0 680 410" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:15;">
-                                <path id="route-path" d="" fill="none" stroke="#f59e0b" stroke-width="6" stroke-dasharray="12 8" stroke-linecap="round"/>
-                            </svg>
-
-                            <div id="rooms-container"></div>
-                            <div id="stars-container"></div>
-
-                            <!-- Декоративные элементы на схеме -->
-                            <div class="scene-prop" style="top: 43%; left: 13%;">🪴</div>
-                            <div class="scene-prop" style="top: 43%; right: 13%;">🪴</div>
-                            <div class="scene-prop" style="top: 46%; left: 32%;">🧑‍🤝‍🧑</div>
-                            <div class="scene-prop" style="top: 44%; left: 66%;">👩‍🏫</div>
-
-                            <div class="entrance-gate">🚪 КІРУ</div>
-                            <div class="student-avatar-3d" id="player-marker" style="left: 50%; top: 88%;">🧑🏻‍🎓</div>
+                        <div class="compass-badge">
+                            🧭 Бағдар: <span id="compass-angle">0°</span>
                         </div>
                     </div>
 
-                    <!-- Панель геолокации -->
-                    <div class="gps-panel">
-                        <div>
-                            <strong id="gps-status">📍 Геолокация: Өшірулі</strong>
-                            <div style="font-size: 0.82rem; color: var(--muted);" id="gps-coords">Маршрут бойынша жүру үшін GPS рұқсатын беріңіз</div>
+                    <div class="blueprint-stage">
+                        <div class="blueprint-frame" id="blueprint-frame">
+                            <img id="blueprint-img" src="чертеж1.png" alt="Мектеп сызбасы" onerror="handlePlanImageError(this)">
+                            <div id="room-pin" class="room-pin" style="display: none;">📍 Кабинет</div>
                         </div>
+                        <div id="plan-fallback-msg" style="display:none; color:#fbbf24; font-size:0.85rem; text-align:center; margin-top:8px;">
+                            Файл табылмады: репозиторийге <code>чертеж1.png</code> (немесе <code>чертеж2.png</code>) файлын жүктеңіз.
+                        </div>
+                    </div>
+
+                    <div id="room-details" class="info-box" style="display: none;">
+                        <h3 id="rd-title"></h3>
+                        <p id="rd-meta" style="font-size: 0.9rem; margin-top: 4px;"></p>
+                        <p id="rd-pos" style="font-size: 0.88rem; color: var(--muted); margin-top: 4px;"></p>
+                    </div>
+
+                    <div class="info-box">
+                        <h3>🪧 Қабырғадағы постер-ориентатор коды</h3>
+                        <p style="font-size: 0.85rem; color: var(--muted); margin: 4px 0 10px;">
+                            Мектептегі постер кодын жазыңыз (мысалы: <code>POST-NORTH</code>, <code>POST-EAST</code>, <code>POST-SOUTH</code>, <code>POST-WEST</code> немесе кабинет коды). Әр жаңа постер картаны бұрып, жұлдызша береді.
+                        </p>
                         <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                            <button class="btn" onclick="requestGPS()">📡 Геолокацияны қосу</button>
-                            <button class="btn btn-gold" id="sim-btn" onclick="simulateWalk()" disabled>🚶‍♂️ Маршрутпен жүру (Тест)</button>
+                            <input type="text" id="poster-code-input" placeholder="Постер кодын жаз (мыс: POST-EAST)" style="flex: 1; min-width: 200px; padding: 10px 12px; border: 2px solid #cbd5e1; border-radius: 10px;">
+                            <button class="btn btn-gold" onclick="applyPosterOrientation()">🔄 Картаны бұру (+10 ⭐)</button>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- 3. КВЕСТТЕР -->
+            <!-- КВЕСТТЕР -->
             <section id="sec-quests" class="section">
                 <div class="card">
                     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
                         <div>
-                            <h2>🎯 Бүгінгі квесттер</h2>
-                            <p style="color: var(--muted); font-size: 0.9rem;">Квесттер күн сайын жаңарады және 14 күн бойы қайталанбайды. Әр квест күніне 1 рет орындалады.</p>
+                            <h2>🎯 <span id="quest-grade-label"></span> сыныбына арналған квесттер</h2>
+                            <p style="color: var(--muted); font-size: 0.88rem;">Күн сайын жаңарады, 14 күн қайталанбайды, әр квест күніне 1 рет орындалады.</p>
                         </div>
                         <span class="badge-pill" style="background: #fef3c7; color: #b45309;">Лимит: <span id="quest-daily-status">0/100</span> ⭐</span>
                     </div>
-
                     <div class="grid-cards" id="quests-list"></div>
                 </div>
             </section>
 
-            <!-- 4. КЕШБЭК ДҮКЕНІ -->
+            <!-- КЕШБЭК ДҮКЕНІ -->
             <section id="sec-shop" class="section">
                 <div class="card">
-                    <h2>🎁 Мектеп Кешбэк Дүкені</h2>
-                    <p style="color: var(--muted); font-size: 0.9rem;">Жинаған жұлдызшаларыңды мектеп ішіндегі бонустар мен сыйлықтарға айырбаста!</p>
-
+                    <h2>🎁 Кешбэк дүкені</h2>
+                    <p style="color: var(--muted); font-size: 0.88rem;">Жинаған жұлдызшаларыңды мектеп бонустарына айырбаста.</p>
                     <div class="grid-cards" id="shop-list"></div>
 
-                    <h3 style="margin-top: 24px;">🎟️ Менің купондарым</h3>
-                    <div id="my-coupons" style="margin-top: 10px; color: var(--muted); font-size: 0.9rem;">Әзірге сатып алынған купондар жоқ.</div>
+                    <h3 style="margin-top: 22px;">🎟️ Менің купондарым</h3>
+                    <div id="my-coupons" style="margin-top: 10px; color: var(--muted); font-size: 0.9rem;">Әзірге купондар жоқ.</div>
                 </div>
             </section>
 
-            <!-- 5. РЕЙТИНГ -->
+            <!-- РЕЙТИНГ -->
             <section id="sec-rating" class="section">
                 <div class="card">
-                    <h2>🏆 Мектеп зерттеушілерінің рейтингі</h2>
-                    <p style="color: var(--muted); font-size: 0.9rem;">Ең белсенді жаңа оқушылар тізімі</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                        <div>
+                            <h2>🏆 Оқушылар рейтингі</h2>
+                            <p id="rating-source-note" style="color: var(--muted); font-size: 0.88rem;">Ортақ базадан жүктелуде...</p>
+                        </div>
+                        <button class="btn btn-outline" onclick="renderRating()">↻ Жаңарту</button>
+                    </div>
                     <table>
                         <thead>
-                            <tr>
-                                <th>Орын</th>
-                                <th>Оқушы</th>
-                                <th>Сынып</th>
-                                <th>Жинаған жұлдызша</th>
-                            </tr>
+                            <tr><th>#</th><th>Оқушы</th><th>Сынып</th><th>Жұлдызша</th></tr>
                         </thead>
                         <tbody id="rating-tbody"></tbody>
                     </table>
@@ -641,136 +509,212 @@
         </main>
     </div>
 
-    <div id="toast">Хабарлама</div>
+    <div id="toast"></div>
 
     <script>
-        /* ================= БАЗА ДАННЫХ И СОСТОЯНИЕ ================= */
+        /* ================= НАСТРОЙКИ И БАЗА ================= */
         const DAILY_LIMIT = 100;
-        let authMode = 'login';
-        let currentUser = null;
-        let currentFloor = 1;
-        let activeRoute = null;
-        let gpsWatchId = null;
+        const DEVICE_LOCK_KEY = 'sq_device_bound_user';
+        const USERS_DB_KEY = 'sq_real_users_db';
+        const ACTIVE_SESSION_KEY = 'sq_active_session';
 
-        // Кабинеты по этажам (координаты в % для 3D схемы)
-        const SCHOOL_ROOMS = {
-            1: [
-                { id: 'canteen', name: 'Асхана', icon: '🍲', x: 20, y: 18, w: 22, h: 18, desc: 'Ыстық тамақ пен буфет (1-қабат, сол қанат)' },
-                { id: 'med', name: 'Медпункт', icon: '🩺', x: 46, y: 18, w: 18, h: 18, desc: 'Алғашқы медициналық көмек кабинеті' },
-                { id: 'gym', name: 'Спорт зал', icon: '🏀', x: 70, y: 18, w: 22, h: 18, desc: 'Дене шынықтыру залы мен киім ауыстыру бөлмесі' },
-                { id: 'guard', name: 'Күзет / Гардероб', icon: '🧥', x: 16, y: 68, w: 22, h: 18, desc: 'Сырт киім ілетін орын және кіреберіс' },
-                { id: 'assembly', name: 'Мәжіліс залы', icon: '🎭', x: 66, y: 68, w: 24, h: 18, desc: 'Мектеп іс-шаралары өтетін үлкен зал' }
+        // Подключение к вашей таблице students в Supabase
+        const CLOUD_SYNC_CONFIG = {
+            enabled: true,
+            endpoint: 'https://hmpsxafccltbaxtroksz.supabase.co/rest/v1/students',
+            apiKey: 'sb_publishable_fMP_Al4M9XbtDWyhOn96jA_3C97eNDs'
+        };
+
+        const FLOOR_PLANS = [
+            { id: 0, title: 'Чертёж 1 (1-қабат)', file: 'чертеж1.png' },
+            { id: 1, title: 'Чертёж 2 (2-қабат)', file: 'чертеж2.png' }
+        ];
+
+        const ROOMS_DATA = [
+            { id: 'r101', name: '101 кабинет (Физика)', floorIndex: 0, floorText: '1-қабат', block: 'А блогы', locationDesc: 'Басты кіреберістен оңға қарай, дәліздің соңында', x: 72, y: 34, posterAngle: 90 },
+            { id: 'r102', name: '102 кабинет (Химия)', floorIndex: 0, floorText: '1-қабат', block: 'А блогы', locationDesc: '101-кабинетке қарама-қарсы, оң жақ қанат', x: 72, y: 62, posterAngle: 90 },
+            { id: 'gym1', name: 'Спортзал', floorIndex: 0, floorText: '1-қабат', block: 'Б блогы', locationDesc: 'Сол қанаттағы өткел арқылы спорт аймағына', x: 24, y: 50, posterAngle: 270 },
+            { id: 'lib2', name: 'Кітапхана', floorIndex: 1, floorText: '2-қабат', block: 'Орталық блок', locationDesc: '2-қабат баспалдағынан тікелей өткенде, сол жақта', x: 30, y: 35, posterAngle: 0 },
+            { id: 'it204', name: '204 кабинет (Информатика)', floorIndex: 1, floorText: '2-қабат', block: 'С блогы', locationDesc: '2-қабаттың оң қанатында, терезе бойында', x: 76, y: 40, posterAngle: 180 },
+            { id: 'adm205', name: '205 кабинет (Тәрбие / Завуч)', floorIndex: 1, floorText: '2-қабат', block: 'Орталық блок', locationDesc: 'Кітапхана жанындағы әкімшілік дәлізінде', x: 52, y: 30, posterAngle: 0 }
+        ];
+
+        const POSTER_ORIENTATORS = {
+            'POST-NORTH': { angle: 0, label: 'Солтүстік бағыт (0°)' },
+            'POST-EAST':  { angle: 90, label: 'Шығыс бағыт (90°)' },
+            'POST-SOUTH': { angle: 180, label: 'Оңтүстік бағыт (180°)' },
+            'POST-WEST':  { angle: 270, label: 'Батыс бағыт (270°)' },
+            'POST-101':   { angle: 90, label: '101/102 кабинет бағыты' },
+            'POST-LIB':   { angle: 0, label: 'Кітапхана бағыты' },
+            'POST-IT':    { angle: 180, label: '204 Информатика бағыты' }
+        };
+
+        const QUEST_BANK_BY_TIER = {
+            8: [
+                { id: '8q1', title: '8-сынып бағыты: Физика кабинеті', desc: '101-кабинеттің қай блокта орналасқанын сызбадан тап.', reward: 25 },
+                { id: '8q2', title: 'Кітапхана қоры', desc: '8-сынып оқулықтары берілетін бөлімнің орнын белгіле.', reward: 25 },
+                { id: '8q3', title: 'Спортзалға өткел', desc: 'Спортзалға қай блок арқылы өтуге болатынын тексер.', reward: 20 },
+                { id: '8q4', title: 'Постер-бағдар', desc: 'Кез келген 1 постер кодын енгізіп, картаны бұр.', reward: 20 },
+                { id: '8q5', title: 'Тәртіп және уақыт', desc: 'Екінші үзілістің (15 мин) уақытын кестеден тексер.', reward: 20 },
+                { id: '8q6', title: 'Химия кабинеті', desc: '102-кабинеттің сызбадағы орнын қара.', reward: 25 }
             ],
-            2: [
-                { id: 'library', name: 'Кітапхана', icon: '📚', x: 18, y: 18, w: 22, h: 18, desc: 'Оқулықтар мен көркем әдебиет қоры' },
-                { id: 'info', name: 'Информатика (204)', icon: '💻', x: 45, y: 18, w: 20, h: 18, desc: 'Компьютерлік сынып және робототехника' },
-                { id: 'director', name: 'Директор / Завуч', icon: '📋', x: 70, y: 18, w: 22, h: 18, desc: 'Әкімшілік, анықтама алу бөлмесі' },
-                { id: 'math', name: 'Математика (201)', icon: '📐', x: 18, y: 68, w: 22, h: 18, desc: 'Алгебра және геометрия кабинеті' },
-                { id: 'kazakh', name: 'Қазақ тілі (208)', icon: '📖', x: 66, y: 68, w: 22, h: 18, desc: 'Мемлекеттік тіл және әдебиет кабинеті' }
+            9: [
+                { id: '9q1', title: '9-сынып: Информатика кабинеті', desc: '204-кабинеттің 2-қабаттағы орнын сызбадан анықта.', reward: 30 },
+                { id: '9q2', title: 'Оқу жоспары мен кеңес', desc: '205-кабинеттің қай бөлікте екенін тап.', reward: 25 },
+                { id: '9q3', title: 'Бағытты тексеру', desc: '2 түрлі кабинетті қатар таңдап, блоктарын салыстыр.', reward: 25 },
+                { id: '9q4', title: 'Постер-навигация', desc: 'Постер коды арқылы картаны 90° немесе 180° бұр.', reward: 25 },
+                { id: '9q5', title: 'Сабақ кестесі', desc: '4-сабақтың аяқталу уақытын (11:25) еске түсір.', reward: 20 },
+                { id: '9q6', title: 'Кітапхана анықтамасы', desc: 'Кітапхананың қабаты мен орнын сызбадан белгіле.', reward: 25 }
+            ],
+            10: [
+                { id: '10q1', title: '10-сынып: Зертханалық аймақ', desc: '101 және 102 кабинеттердің орналасуын тексер.', reward: 30 },
+                { id: '10q2', title: 'Бейіндік дайындық', desc: '204-кабинетті таңдап, бағытын анықта.', reward: 30 },
+                { id: '10q3', title: 'Постер-ориентатор', desc: 'Постер кодын қолданып, бағдарды жаңарт.', reward: 25 },
+                { id: '10q4', title: 'Қабаттар арасы', desc: '1-қабат пен 2-қабат сызбаларын салыстыр.', reward: 25 },
+                { id: '10q5', title: 'Уақыт менеджменті', desc: '6-сабақ кестесін (12:30–13:15) тексер.', reward: 20 },
+                { id: '10q6', title: 'Әкімшілік бағыты', desc: '205-кабинеттің орнын тап.', reward: 25 }
+            ],
+            11: [
+                { id: '11q1', title: '11-сынып: Қорытынды бағыт', desc: 'Мектептегі негізгі кабинеттердің блоктарын пысықта.', reward: 35 },
+                { id: '11q2', title: 'Кеңес алу нүктесі', desc: '205-кабинетті сызбадан тауып, орнын тексер.', reward: 30 },
+                { id: '11q3', title: 'Компьютерлік аймақ', desc: '204-кабинетке бағыт құр.', reward: 30 },
+                { id: '11q4', title: 'Постер-бағдарлау', desc: 'Постер кодымен картаның бағытын өзгерт.', reward: 25 },
+                { id: '11q5', title: '7-сабақ тәртібі', desc: '7-сабақтың уақытын (13:20–14:05) тексер.', reward: 20 },
+                { id: '11q6', title: 'Кітапхана ресурстары', desc: '2-қабаттағы кітапхананың орнын раста.', reward: 25 }
             ]
         };
 
-        // 15 уникальных квестов для ротации на 14+ дней (без повторов 2 недели)
-        const ALL_QUESTS = [
-            { id: 'q1', title: 'Асхананы тап', desc: '3D картадан Асханаға маршрут құрып, орналасуын тексер.', reward: 25 },
-            { id: 'q2', title: 'Кітапханаға саяхат', desc: '2-қабаттағы кітапхананы тауып, жұмыс уақытын біл.', reward: 30 },
-            { id: 'q3', title: 'Қауіпсіздік ережесі', desc: 'Медпункт қай қабатта орналасқанын картадан анықта.', reward: 20 },
-            { id: 'q4', title: 'Спорт залға жол', desc: 'Спорт залға дейінгі маршрутты іске қос.', reward: 25 },
-            { id: 'q5', title: 'Әкімшілікпен танысу', desc: 'Анықтама алу үшін Завуч кабинетін картадан тап.', reward: 30 },
-            { id: 'q6', title: 'IT аймақ', desc: '204-ші Информатика кабинетіне жол сал.', reward: 25 },
-            { id: 'q7', title: 'Жаңа дос тап', desc: 'Сыныптасыңмен танысып, оған осы сайтты көрсет.', reward: 35 },
-            { id: 'q8', title: 'Гардероб тәртібі', desc: '1-қабаттағы гардероб аймағын зертте.', reward: 20 },
-            { id: 'q9', title: 'Мәжіліс залы', desc: 'Мектеп концерттері өтетін залды картадан белгіле.', reward: 25 },
-            { id: 'q10', title: 'Математика әлемі', desc: '201-кабинетке маршрут құрып, жұлдызша жина.', reward: 25 },
-            { id: 'q11', title: 'Қазақ тілі кабинеті', desc: '208-кабинеттің орнын 3D тақтадан тексер.', reward: 25 },
-            { id: 'q12', title: 'Таза мектеп', desc: 'Үзілісте қоқысты арнайы жәшікке тастап, белгіле.', reward: 30 },
-            { id: 'q13', title: 'Мұғалімге сәлем', desc: 'Кезекші мұғаліммен сыпайы амандас.', reward: 20 },
-            { id: 'q14', title: 'Қоңырау кестесін жатта', desc: 'Басты беттегі қоңырау кестесімен танысып шық.', reward: 20 },
-            { id: 'q15', title: 'Мектеп мақтанышы', desc: 'Кемінде 2 түрлі кабинетке маршрут құрып көр.', reward: 35 }
-        ];
-
-        // Товары для школьного кешбэка
         const SHOP_ITEMS = [
-            { id: 's1', title: '🥐 Буфетке 200₸ жеңілдік', desc: 'Асханада бәліш немесе шай алуға арналған QR-купон.', cost: 80 },
-            { id: 's2', title: '⚡ Кезексіз өту билеті', desc: 'Асханада немесе гардеробта 1 рет кезексіз өту құқығы.', cost: 120 },
-            { id: 's3', title: '🖊️ SchoolQuest фирменді қаламы', desc: 'Мектеп кеңсесінен сыйлық қалам мен стикерпак.', cost: 150 },
-            { id: 's4', title: '🌟 ТЖБ/БЖБ-ға +1 кеңес', desc: 'Мұғалімнен қосымша кеңес алу купоны.', cost: 250 }
+            { id: 'sp1', title: '⚡ Кезексіз өту билеті', desc: 'Мектеп ішіндегі кезекте 1 рет алға өту купоны.', cost: 90 },
+            { id: 'sp2', title: '🖊️ SchoolQuest қалам мен стикер', desc: 'Мектеп белгісі бар фирменді қалам және жапсырмалар.', cost: 130 },
+            { id: 'sp3', title: '📘 Пән бойынша жеке кеңес', desc: 'Мұғалімнен күрделі тақырып бойынша қосымша кеңес.', cost: 200 }
         ];
 
-        /* ================= АВТОРИЗАЦИЯ И ХРАНЕНИЕ ================= */
+        let authMode = 'login';
+        let currentUser = null;
+        let currentMapAngle = 0;
+
+        /* ================= ПОМОЩНИКИ ДАТЫ И ХРАНЕНИЯ ================= */
         function getTodayStr() {
             return new Date().toISOString().split('T')[0];
         }
 
         function getUsersDB() {
-            return JSON.parse(localStorage.getItem('sq_users_db') || '{}');
+            return JSON.parse(localStorage.getItem(USERS_DB_KEY) || '{}');
         }
 
         function saveUsersDB(db) {
-            localStorage.setItem('sq_users_db', JSON.stringify(db));
+            localStorage.setItem(USERS_DB_KEY, JSON.stringify(db));
         }
 
+        function getGradeTier(gradeStr) {
+            const match = String(gradeStr || '').match(/^(8|9|10|11)/);
+            return match ? parseInt(match[1], 10) : 8;
+        }
+
+        function getSupabaseHeaders(extra = {}) {
+            return {
+                'Content-Type': 'application/json',
+                'apikey': CLOUD_SYNC_CONFIG.apiKey,
+                'Authorization': `Bearer ${CLOUD_SYNC_CONFIG.apiKey}`,
+                ...extra
+            };
+        }
+
+        /* ================= АВТОРИЗАЦИЯ (1 АККАУНТ НА УСТРОЙСТВО) ================= */
         function switchAuthMode(mode) {
             authMode = mode;
             document.getElementById('tab-login').className = mode === 'login' ? 'btn' : 'btn btn-outline';
             document.getElementById('tab-reg').className = mode === 'register' ? 'btn' : 'btn btn-outline';
             document.getElementById('class-group').style.display = mode === 'register' ? 'block' : 'none';
+            refreshDeviceLockUI();
+        }
+
+        function refreshDeviceLockUI() {
+            const boundUser = localStorage.getItem(DEVICE_LOCK_KEY);
+            const notice = document.getElementById('device-lock-notice');
+            if (boundUser) {
+                notice.style.display = 'block';
+                document.getElementById('bound-account-name').textContent = boundUser;
+            } else {
+                notice.style.display = 'none';
+            }
         }
 
         function handleAuth() {
             const username = document.getElementById('auth-username').value.trim();
             const password = document.getElementById('auth-password').value.trim();
-            const grade = document.getElementById('auth-grade').value.trim() || '7 «А»';
+            const grade = document.getElementById('auth-grade').value;
 
             if (!username || !password) {
-                showToast('⚠️ Логин мен құпия сөзді толтырыңыз!');
+                showToast('⚠️ Логин мен құпия сөзді енгізіңіз.');
                 return;
             }
 
             const db = getUsersDB();
+            const boundUser = localStorage.getItem(DEVICE_LOCK_KEY);
 
             if (authMode === 'register') {
-                if (db[username]) {
-                    showToast('⚠️ Бұл логин бос емес, басқасын таңдаңыз!');
+                if (!grade) {
+                    showToast('⚠️ Сыныбыңызды таңдаңыз.');
                     return;
                 }
+                if (boundUser && boundUser !== username) {
+                    showToast(`🔒 Бұл құрылғыда «${boundUser}» аккаунты тіркелген. Жаңа аккаунт ашу мүмкін емес.`);
+                    return;
+                }
+                if (db[username]) {
+                    showToast('⚠️ Бұл логин бос емес.');
+                    return;
+                }
+
                 db[username] = {
                     username,
                     password,
                     grade,
-                    stars: 10, // Приветственный бонус
+                    stars: 0,
                     dailyDate: getTodayStr(),
                     dailyEarned: 0,
                     completedQuestsToday: [],
+                    usedPostersToday: [],
                     coupons: []
                 };
                 saveUsersDB(db);
+                localStorage.setItem(DEVICE_LOCK_KEY, username);
+                syncUserToCloud(db[username]);
                 loginSuccess(db[username]);
-                showToast('🎉 Тіркелу сәтті өтті! +10 бастапқы жұлдызша!');
+                showToast('🎉 Аккаунт құрылды!');
             } else {
-                if (!db[username] || db[username].password !== password) {
-                    showToast('❌ Логин немесе құпия сөз қате!');
+                if (boundUser && boundUser !== username) {
+                    showToast(`🔒 Бұл құрылғы тек «${boundUser}» аккаунтына бекітілген.`);
                     return;
                 }
+                if (!db[username] || db[username].password !== password) {
+                    showToast('❌ Логин немесе құпия сөз қате.');
+                    return;
+                }
+                localStorage.setItem(DEVICE_LOCK_KEY, username);
+                syncUserToCloud(db[username]);
                 loginSuccess(db[username]);
-                showToast(`👋 Қайта оралуыңмен, ${username}!`);
+                showToast(`👋 Қош келдің, ${username}!`);
             }
         }
 
         function loginSuccess(user) {
             currentUser = user;
             checkDailyReset();
-            localStorage.setItem('sq_active_user', user.username);
+            sessionStorage.setItem(ACTIVE_SESSION_KEY, user.username);
             document.getElementById('auth-screen').style.display = 'none';
             document.getElementById('app-wrapper').style.display = 'block';
             renderAll();
         }
 
         function logout() {
-            localStorage.removeItem('sq_active_user');
+            sessionStorage.removeItem(ACTIVE_SESSION_KEY);
             currentUser = null;
             document.getElementById('app-wrapper').style.display = 'none';
             document.getElementById('auth-screen').style.display = 'block';
+            refreshDeviceLockUI();
         }
 
         function checkDailyReset() {
@@ -779,246 +723,200 @@
                 currentUser.dailyDate = today;
                 currentUser.dailyEarned = 0;
                 currentUser.completedQuestsToday = [];
-                persistCurrentUser();
+                currentUser.usedPostersToday = [];
+                persistUser();
             }
         }
 
-        function persistCurrentUser() {
+        function persistUser() {
             const db = getUsersDB();
             db[currentUser.username] = currentUser;
             saveUsersDB(db);
+            syncUserToCloud(currentUser);
         }
 
-        /* ================= НАЧИСЛЕНИЕ ЗВЕЗД С УЧЕТОМ ЛИМИТА 100/ДЕНЬ ================= */
-        function addStars(amount, reason) {
-            checkDailyReset();
-            const remaining = DAILY_LIMIT - currentUser.dailyEarned;
+        /* ================= СИНХРОНИЗАЦИЯ С SUPABASE ================= */
+        function syncUserToCloud(userObj) {
+            if (!CLOUD_SYNC_CONFIG.enabled || !CLOUD_SYNC_CONFIG.endpoint || !CLOUD_SYNC_CONFIG.apiKey) return;
 
-            if (remaining <= 0) {
-                showToast(`🛑 Бүгінгі лимит (100 ⭐) толды! Ертең қайта жинай аласың, ал картамен жүру шексіз.`);
+            const payload = {
+                username: userObj.username,
+                grade: userObj.grade,
+                stars: userObj.stars,
+                daily_date: userObj.dailyDate,
+                daily_earned: userObj.dailyEarned,
+                updated_at: new Date().toISOString()
+            };
+
+            fetch(`${CLOUD_SYNC_CONFIG.endpoint}?on_conflict=username`, {
+                method: 'POST',
+                headers: getSupabaseHeaders({
+                    'Prefer': 'resolution=merge-duplicates,return=minimal'
+                }),
+                body: JSON.stringify(payload)
+            }).then((res) => {
+                if (!res.ok) {
+                    console.warn('Supabase sync status:', res.status);
+                }
+            }).catch((err) => {
+                console.warn('Supabase sync error:', err);
+            });
+        }
+
+        /* ================= НАЧИСЛЕНИЕ ЗВЕЗД (ЛИМИТ 100 / ДЕНЬ) ================= */
+        function addStars(amount, label) {
+            checkDailyReset();
+            const left = DAILY_LIMIT - currentUser.dailyEarned;
+            if (left <= 0) {
+                showToast('🛑 Бүгінгі 100 ⭐ лимиті толды. Сызба мен постерлерді шексіз қолдана бере аласың.');
                 return 0;
             }
-
-            const actualAdd = Math.min(amount, remaining);
-            currentUser.stars += actualAdd;
-            currentUser.dailyEarned += actualAdd;
-            persistCurrentUser();
-            updateUIStats();
-
-            if (actualAdd < amount) {
-                showToast(`⭐ +${actualAdd} жұлдызша (${reason}). Күндік лимит 100/100 толды!`);
-            } else {
-                showToast(`⭐ +${actualAdd} жұлдызша! (${reason})`);
-            }
-            return actualAdd;
+            const added = Math.min(amount, left);
+            currentUser.stars += added;
+            currentUser.dailyEarned += added;
+            persistUser();
+            updateHeaderAndHome();
+            showToast(`⭐ +${added} жұлдызша (${label})`);
+            return added;
         }
 
-        /* ================= 3D КАРТА ШКОЛЫ И МАРШРУТЫ ================= */
-        function setFloor(floor, btn) {
-            currentFloor = floor;
-            document.querySelectorAll('.floor-btn').forEach(b => b.classList.remove('active'));
-            if (btn) btn.classList.add('active');
-            document.getElementById('board-floor-label').textContent = `${floor}-ҚАБАТ`;
-            activeRoute = null;
-            document.getElementById('route-path').setAttribute('d', '');
-            document.getElementById('stars-container').innerHTML = '';
-            document.getElementById('sim-btn').disabled = true;
-            renderMapFloor();
+        /* ================= КАРТА И ПОСТЕРЫ-ОРИЕНТАТОРЫ ================= */
+        function changePlan(indexStr) {
+            const idx = parseInt(indexStr, 10) || 0;
+            const plan = FLOOR_PLANS[idx] || FLOOR_PLANS[0];
+            const img = document.getElementById('blueprint-img');
+            document.getElementById('plan-fallback-msg').style.display = 'none';
+            img.src = plan.file;
+            img.alt = plan.title;
+            populateRoomsForPlan(idx);
         }
 
-        function renderMapFloor() {
-            const container = document.getElementById('rooms-container');
+        function handlePlanImageError() {
+            document.getElementById('plan-fallback-msg').style.display = 'block';
+        }
+
+        function populateRoomsForPlan(floorIndex) {
             const select = document.getElementById('room-select');
-            container.innerHTML = '';
-            select.innerHTML = '<option value="">-- Баратын кабинетті таңдаңыз --</option>';
-
-            SCHOOL_ROOMS[currentFloor].forEach(room => {
-                // Кнопка кабинета на 3D доске
-                const div = document.createElement('div');
-                div.className = 'room-3d';
-                div.id = `room-${room.id}`;
-                div.style.left = room.x + '%';
-                div.style.top = room.y + '%';
-                div.style.width = room.w + '%';
-                div.style.height = room.h + '%';
-                div.innerHTML = `<span class="icon">${room.icon}</span><span>${room.name}</span>`;
-                div.onclick = () => {
-                    select.value = room.id;
-                    buildRoute(room.id);
-                };
-                container.appendChild(div);
-
-                // Пункт в выпадающем списке
+            select.innerHTML = '<option value="">-- Кабинетті таңдаңыз --</option>';
+            ROOMS_DATA.filter(r => r.floorIndex === floorIndex).forEach(r => {
                 const opt = document.createElement('option');
-                opt.value = room.id;
-                opt.textContent = `${room.icon} ${room.name}`;
+                opt.value = r.id;
+                opt.textContent = `${r.name} (${r.block})`;
                 select.appendChild(opt);
             });
-
-            // Сброс позиции ученика ко входу/лестнице
-            const marker = document.getElementById('player-marker');
-            marker.style.left = '50%';
-            marker.style.top = '88%';
+            document.getElementById('room-pin').style.display = 'none';
+            document.getElementById('room-details').style.display = 'none';
         }
 
-        function buildRoute(roomId) {
-            document.querySelectorAll('.room-3d').forEach(r => r.classList.remove('target-room'));
-            const starsContainer = document.getElementById('stars-container');
-            starsContainer.innerHTML = '';
-
+        function selectRoom(roomId) {
+            const pin = document.getElementById('room-pin');
+            const details = document.getElementById('room-details');
             if (!roomId) {
-                document.getElementById('route-path').setAttribute('d', '');
-                document.getElementById('sim-btn').disabled = true;
+                pin.style.display = 'none';
+                details.style.display = 'none';
                 return;
             }
-
-            const room = SCHOOL_ROOMS[currentFloor].find(r => r.id === roomId);
+            const room = ROOMS_DATA.find(r => r.id === roomId);
             if (!room) return;
 
-            document.getElementById(`room-${room.id}`).classList.add('target-room');
-            showToast(`🧭 Бағыт: ${room.name} — ${room.desc}`);
+            pin.style.display = 'block';
+            pin.style.left = room.x + '%';
+            pin.style.top = room.y + '%';
+            pin.textContent = `📍 ${room.name}`;
 
-            // Точки маршрута (от входа 50%, 88% через коридор 50% до кабинета)
-            const targetX = room.x + room.w / 2;
-            const targetY = room.y + room.h / 2;
-
-            const waypoints = [
-                { x: 50, y: 88 },
-                { x: 50, y: 50 },
-                { x: targetX, y: 50 },
-                { x: targetX, y: targetY }
-            ];
-
-            // Рисуем SVG линию (координаты viewBox 680x410)
-            const svgPoints = waypoints.map(p => `${(p.x / 100) * 680},${(p.y / 100) * 410}`);
-            document.getElementById('route-path').setAttribute('d', 'M ' + svgPoints.join(' L '));
-
-            // Расставляем 3 звездочки вдоль дороги
-            const starSpots = [
-                { x: 50, y: 68, collected: false, reward: 5 },
-                { x: (50 + targetX) / 2, y: 50, collected: false, reward: 5 },
-                { x: targetX, y: (50 + targetY) / 2, collected: false, reward: 10 }
-            ];
-
-            activeRoute = { room, waypoints, stars: starSpots, step: 0 };
-            document.getElementById('sim-btn').disabled = false;
-
-            starSpots.forEach((st, idx) => {
-                const el = document.createElement('div');
-                el.className = 'route-star';
-                el.id = `r-star-${idx}`;
-                el.style.left = st.x + '%';
-                el.style.top = st.y + '%';
-                el.textContent = '⭐';
-                el.title = `+${st.reward} жұлдызша`;
-                starsContainer.appendChild(el);
-            });
+            details.style.display = 'block';
+            document.getElementById('rd-title').textContent = room.name;
+            document.getElementById('rd-meta').textContent = `Қабат: ${room.floorText} • Блок: ${room.block}`;
+            document.getElementById('rd-pos').textContent = `Сызбадағы орны: ${room.locationDesc}`;
         }
 
-        function toggle3DAngle() {
-            document.getElementById('school-scene').classList.toggle('flat-view');
+        function setMapAngle(deg) {
+            currentMapAngle = ((deg % 360) + 360) % 360;
+            document.getElementById('blueprint-frame').style.transform = `rotate(${currentMapAngle}deg)`;
+            document.getElementById('compass-angle').textContent = `${currentMapAngle}°`;
         }
 
-        /* ================= ГЕОЛОКАЦИЯ И ПРОХОЖДЕНИЕ МАРШРУТА ================= */
-        function requestGPS() {
-            if (!navigator.geolocation) {
-                showToast('❌ Браузер геолокацияны қолдамайды.');
+        function applyPosterOrientation() {
+            const rawCode = document.getElementById('poster-code-input').value.trim().toUpperCase();
+            if (!rawCode) {
+                showToast('⚠️ Постер кодын енгізіңіз.');
                 return;
             }
-            document.getElementById('gps-status').textContent = '📡 Геолокация: Сұралуда...';
-            gpsWatchId = navigator.geolocation.watchPosition(
-                (pos) => {
-                    const { latitude, longitude } = pos.coords;
-                    document.getElementById('gps-status').textContent = '🟢 Геолокация: Белсенді (GPS қосулы)';
-                    document.getElementById('gps-coords').textContent = `Координат: ${latitude.toFixed(5)}, ${longitude.toFixed(5)} — қозғалыс бақылануда`;
-                    if (activeRoute) {
-                        advancePlayerOnRoute();
-                    }
-                },
-                (err) => {
-                    document.getElementById('gps-status').textContent = '🔴 Геолокация: Рұқсат берілмеді';
-                    document.getElementById('gps-coords').textContent = 'Браузер баптауынан геолокацияға рұқсат беріңіз немесе «Маршрутпен жүру» батырмасын қолданыңыз.';
-                    showToast('⚠️ Геолокацияға рұқсат берілмеді.');
-                },
-                { enableHighAccuracy: true, maximumAge: 3000 }
-            );
-        }
 
-        // Симуляция шагов по маршруту для проверки сбора звездочек
-        function simulateWalk() {
-            if (!activeRoute) return;
-            advancePlayerOnRoute();
-        }
+            let targetAngle = null;
+            let orientLabel = '';
 
-        function advancePlayerOnRoute() {
-            if (!activeRoute) return;
-            const marker = document.getElementById('player-marker');
-            activeRoute.step++;
-
-            if (activeRoute.step < activeRoute.waypoints.length) {
-                const pt = activeRoute.waypoints[activeRoute.step];
-                marker.style.left = pt.x + '%';
-                marker.style.top = pt.y + '%';
-
-                // Проверяем сбор соответствующей звездочки
-                const starIdx = activeRoute.step - 1;
-                if (activeRoute.stars[starIdx] && !activeRoute.stars[starIdx].collected) {
-                    activeRoute.stars[starIdx].collected = true;
-                    document.getElementById(`r-star-${starIdx}`).classList.add('collected');
-                    addStars(activeRoute.stars[starIdx].reward, 'Маршруттағы жұлдызша');
+            if (POSTER_ORIENTATORS[rawCode]) {
+                targetAngle = POSTER_ORIENTATORS[rawCode].angle;
+                orientLabel = POSTER_ORIENTATORS[rawCode].label;
+            } else {
+                const matchedRoom = ROOMS_DATA.find(r => r.id.toUpperCase() === rawCode);
+                if (matchedRoom) {
+                    targetAngle = matchedRoom.posterAngle;
+                    orientLabel = `${matchedRoom.name} бағыты`;
                 }
+            }
 
-                if (activeRoute.step === activeRoute.waypoints.length - 1) {
-                    showToast(`🏁 Сен «${activeRoute.room.name}» кабинетіне жеттің!`);
-                    document.getElementById('sim-btn').disabled = true;
-                }
+            if (targetAngle === null) {
+                showToast('❌ Код табылмады. Мысалы: POST-NORTH, POST-EAST, POST-SOUTH, POST-WEST немесе R101.');
+                return;
+            }
+
+            setMapAngle(targetAngle);
+            checkDailyReset();
+
+            if (!currentUser.usedPostersToday.includes(rawCode)) {
+                currentUser.usedPostersToday.push(rawCode);
+                addStars(10, `Постер ${rawCode}`);
+                persistUser();
+            } else {
+                showToast(`🧭 Карта «${orientLabel}» бойынша бұрылды (бұл постер бүгін белгіленген).`);
             }
         }
 
-        /* ================= КВЕСТЫ (РОТАЦИЯ 14 ДНЕЙ БЕЗ ПОВТОРОВ) ================= */
-        function getTodaysQuests() {
-            // Вычисляем номер дня от эпохи, цикл 14 дней (каждый день 3 разных квеста)
-            const dayIndex = Math.floor(Date.now() / 86400000);
-            const cycleDay = dayIndex % 14;
-            const quests = [];
+        /* ================= КВЕСТЫ ПО КЛАССУ (РОТАЦИЯ 14 ДНЕЙ) ================= */
+        function getQuestsForStudent() {
+            const tier = getGradeTier(currentUser.grade);
+            const pool = QUEST_BANK_BY_TIER[tier] || QUEST_BANK_BY_TIER[8];
+            const dayNum = Math.floor(Date.now() / 86400000);
+            const cycleDay = dayNum % 14;
+            const selected = [];
             for (let i = 0; i < 3; i++) {
-                // Смещение гарантирует, что за 14 дней наборы не повторяются
-                const qIdx = (cycleDay * 3 + i) % ALL_QUESTS.length;
-                quests.push(ALL_QUESTS[qIdx]);
+                selected.push(pool[(cycleDay + i) % pool.length]);
             }
-            return quests;
+            return selected;
         }
 
         function renderQuests() {
+            const tier = getGradeTier(currentUser.grade);
+            document.getElementById('quest-grade-label').textContent = `${tier}-сынып`;
             const list = document.getElementById('quests-list');
             list.innerHTML = '';
-            const todays = getTodaysQuests();
 
-            todays.forEach(q => {
-                const isDone = currentUser.completedQuestsToday.includes(q.id);
-                const div = document.createElement('div');
-                div.className = 'quest-item';
-                div.innerHTML = `
+            getQuestsForStudent().forEach(q => {
+                const done = currentUser.completedQuestsToday.includes(q.id);
+                const card = document.createElement('div');
+                card.className = 'quest-item';
+                card.innerHTML = `
                     <div>
                         <span class="reward-tag">+${q.reward} ⭐</span>
-                        <h3 style="margin-top: 8px;">${q.title}</h3>
-                        <p style="font-size: 0.88rem; color: var(--muted); margin-top: 4px;">${q.desc}</p>
+                        <h3 style="margin-top:8px;">${q.title}</h3>
+                        <p style="font-size:0.88rem; color:var(--muted); margin-top:4px;">${q.desc}</p>
                     </div>
-                    <button class="btn ${isDone ? 'btn-outline' : ''}" ${isDone ? 'disabled' : ''} onclick="completeQuest('${q.id}', ${q.reward}, '${q.title}')">
-                        ${isDone ? '✅ Бүгін орындалды' : 'Орындадым!'}
+                    <button class="btn ${done ? 'btn-outline' : ''}" ${done ? 'disabled' : ''} onclick="completeQuest('${q.id}', ${q.reward}, '${q.title.replace(/'/g, '')}')">
+                        ${done ? '✅ Бүгін орындалды' : 'Орындадым'}
                     </button>
                 `;
-                list.appendChild(div);
+                list.appendChild(card);
             });
         }
 
         function completeQuest(qId, reward, title) {
             checkDailyReset();
             if (currentUser.completedQuestsToday.includes(qId)) return;
-
             currentUser.completedQuestsToday.push(qId);
-            addStars(reward, `Квест: ${title}`);
-            persistCurrentUser();
+            addStars(reward, title);
+            persistUser();
             renderQuests();
         }
 
@@ -1027,67 +925,94 @@
             const list = document.getElementById('shop-list');
             list.innerHTML = '';
             SHOP_ITEMS.forEach(item => {
-                const canBuy = currentUser.stars >= item.cost;
-                const div = document.createElement('div');
-                div.className = 'shop-item';
-                div.innerHTML = `
+                const canAfford = currentUser.stars >= item.cost;
+                const card = document.createElement('div');
+                card.className = 'shop-item';
+                card.innerHTML = `
                     <div>
                         <span class="reward-tag">${item.cost} ⭐</span>
-                        <h3 style="margin-top: 8px;">${item.title}</h3>
-                        <p style="font-size: 0.88rem; color: var(--muted); margin-top: 4px;">${item.desc}</p>
+                        <h3 style="margin-top:8px;">${item.title}</h3>
+                        <p style="font-size:0.88rem; color:var(--muted); margin-top:4px;">${item.desc}</p>
                     </div>
-                    <button class="btn btn-gold" ${canBuy ? '' : 'disabled'} onclick="buyItem('${item.id}')">
-                        ${canBuy ? 'Айырбастау 🎁' : 'Жұлдызша жеткіліксіз'}
+                    <button class="btn btn-gold" ${canAfford ? '' : 'disabled'} onclick="buyShopItem('${item.id}')">
+                        ${canAfford ? 'Алу' : 'Жұлдызша аз'}
                     </button>
                 `;
-                list.appendChild(div);
+                list.appendChild(card);
             });
 
             const couponsEl = document.getElementById('my-coupons');
             if (currentUser.coupons && currentUser.coupons.length > 0) {
-                couponsEl.innerHTML = currentUser.coupons.map(c => 
-                    `<div style="background:#ecfdf5; border:1px dashed #10b981; padding:10px 14px; border-radius:10px; margin-bottom:8px; color:#065f46; font-weight:600;">
-                        🎟️ ${c.title} — Код: <span style="font-family:monospace; background:white; padding:2px 6px; border-radius:4px;">${c.code}</span>
+                couponsEl.innerHTML = currentUser.coupons.map(c =>
+                    `<div style="background:#ecfdf5; border:1px solid #a7f3d0; padding:9px 12px; border-radius:10px; margin-bottom:6px; color:#065f46; font-weight:600;">
+                        🎟️ ${c.title} — Код: <code>${c.code}</code>
                     </div>`
                 ).join('');
+            } else {
+                couponsEl.textContent = 'Әзірге купондар жоқ.';
             }
         }
 
-        function buyItem(itemId) {
-            const item = SHOP_ITEMS.find(i => i.id === itemId);
+        function buyShopItem(id) {
+            const item = SHOP_ITEMS.find(x => x.id === id);
             if (!item || currentUser.stars < item.cost) return;
-
             currentUser.stars -= item.cost;
             const code = 'SQ-' + Math.floor(1000 + Math.random() * 9000);
             currentUser.coupons.push({ title: item.title, code });
-            persistCurrentUser();
+            persistUser();
             renderAll();
-            showToast(`🎉 Сәтті сатып алынды! Купон коды: ${code}`);
+            showToast(`🎟️ Купон алынды: ${code}`);
         }
 
-        /* ================= РЕЙТИНГ И ОБНОВЛЕНИЕ ИНТЕРФЕЙСА ================= */
-        function renderRating() {
-            const db = getUsersDB();
-            const players = Object.values(db);
-            // Добавим пару демо-учеников для живой таблицы, если пользователь пока один
-            if (players.length < 3) {
-                players.push({ username: 'Aruzhan_7B', grade: '7 «Б»', stars: 145 });
-                players.push({ username: 'Daniyar_5A', grade: '5 «А»', stars: 95 });
-            }
-            players.sort((a, b) => b.stars - a.stars);
-
+        /* ================= РЕЙТИНГ (ОБЩИЙ ИЗ SUPABASE + ЛОКАЛЬНЫЙ РЕЗЕРВ) ================= */
+        function renderRatingRows(list) {
             const tbody = document.getElementById('rating-tbody');
-            tbody.innerHTML = players.map((p, i) => `
-                <tr style="${p.username === currentUser.username ? 'background:#ecfdf5; font-weight:bold;' : ''}">
-                    <td>${i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : i + 1}</td>
-                    <td>${p.username} ${p.username === currentUser.username ? '(Сен)' : ''}</td>
-                    <td>${p.grade || '-'}</td>
-                    <td>⭐ ${p.stars}</td>
+            if (!list.length) {
+                tbody.innerHTML = '<tr><td colspan="4" style="color:var(--muted);">Әзірге тіркелген оқушылар жоқ.</td></tr>';
+                return;
+            }
+            tbody.innerHTML = list.map((u, idx) => `
+                <tr style="${currentUser && u.username === currentUser.username ? 'background:#ecfdf5; font-weight:700;' : ''}">
+                    <td>${idx + 1}</td>
+                    <td>${u.username} ${currentUser && u.username === currentUser.username ? '(Сен)' : ''}</td>
+                    <td>${u.grade}</td>
+                    <td>⭐ ${u.stars}</td>
                 </tr>
             `).join('');
         }
 
-        function updateUIStats() {
+        async function renderRating() {
+            const noteEl = document.getElementById('rating-source-note');
+            const localList = Object.values(getUsersDB()).sort((a, b) => b.stars - a.stars);
+
+            if (!CLOUD_SYNC_CONFIG.enabled || !CLOUD_SYNC_CONFIG.endpoint || !CLOUD_SYNC_CONFIG.apiKey) {
+                noteEl.textContent = 'Жергілікті деректер (офлайн режим)';
+                renderRatingRows(localList);
+                return;
+            }
+
+            try {
+                const res = await fetch(
+                    `${CLOUD_SYNC_CONFIG.endpoint}?select=username,grade,stars&order=stars.desc`,
+                    {
+                        method: 'GET',
+                        headers: getSupabaseHeaders()
+                    }
+                );
+                if (!res.ok) {
+                    throw new Error(`HTTP ${res.status}`);
+                }
+                const cloudRows = await res.json();
+                noteEl.textContent = 'Supabase ортақ базасынан алынған тізім';
+                renderRatingRows(Array.isArray(cloudRows) ? cloudRows : localList);
+            } catch (err) {
+                noteEl.textContent = 'Желі байланысы жоқ — құрылғыдағы деректер көрсетілді';
+                renderRatingRows(localList);
+            }
+        }
+
+        /* ================= ОБНОВЛЕНИЕ UI ================= */
+        function updateHeaderAndHome() {
             document.getElementById('display-user').textContent = currentUser.username;
             document.getElementById('display-grade').textContent = currentUser.grade;
             document.getElementById('welcome-name').textContent = currentUser.username;
@@ -1096,14 +1021,12 @@
             document.getElementById('header-daily').textContent = currentUser.dailyEarned;
             document.getElementById('daily-limit-text').textContent = `${currentUser.dailyEarned} / ${DAILY_LIMIT}`;
             document.getElementById('quest-daily-status').textContent = `${currentUser.dailyEarned}/${DAILY_LIMIT}`;
-
-            const pct = Math.min(100, (currentUser.dailyEarned / DAILY_LIMIT) * 100);
-            document.getElementById('daily-progress-bar').style.width = pct + '%';
+            document.getElementById('daily-progress-bar').style.width = Math.min(100, (currentUser.dailyEarned / DAILY_LIMIT) * 100) + '%';
         }
 
         function renderAll() {
-            updateUIStats();
-            renderMapFloor();
+            updateHeaderAndHome();
+            changePlan(document.getElementById('plan-select').value || '0');
             renderQuests();
             renderShop();
             renderRating();
@@ -1122,12 +1045,12 @@
             const t = document.getElementById('toast');
             t.textContent = msg;
             t.classList.add('show');
-            setTimeout(() => t.classList.remove('show'), 3600);
+            setTimeout(() => t.classList.remove('show'), 3400);
         }
 
-        // Автоматический вход, если сессия уже сохранена
         window.onload = () => {
-            const activeName = localStorage.getItem('sq_active_user');
+            refreshDeviceLockUI();
+            const activeName = sessionStorage.getItem(ACTIVE_SESSION_KEY);
             const db = getUsersDB();
             if (activeName && db[activeName]) {
                 loginSuccess(db[activeName]);
