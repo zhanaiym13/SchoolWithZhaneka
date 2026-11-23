@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+
+<html lang="kk">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SchoolQuest</title>
+
+<style>
+
+* { box-sizing: border-box; }
+
+body {
+
+  margin: 0;
+
+  font-family: Arial, sans-serif;
+
+  background: #f1f5f2;
+
+  color: #183b32;
+
+}
+
+header {
+
+  background: #075c48;
+
+  color: white;
+
+  padding: 25px 20px;
+
+  text-align: center;
+
+}
+
+header h1 { margin: 0; }
+
+nav {
+
+  display: flex;
+
+  justify-content: center;
+
+  gap: 10px;
+
+  flex-wrap: wrap;
+
+  padding: 15px;
+
+  background: white;
+
+}
+
+nav button {
+
+  border: 0;
+
+  padding: 12px 18px;
+
+  border-radius: 10px;
+
+  background: #e2eee8;
+
+  color: #075c48;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+}
+
+nav button:hover { background: #b9ddca; }
+
+main {
+
+  max-width: 850px;
+
+  margin: auto;
+
+  padding: 20px;
+
+}
+
+.section {
+
+  display: none;
+
+  background: white;
+
+  padding: 22px;
+
+  border-radius: 15px;
+
+  margin-bottom: 20px;
+
+}
+
+.section.active { display: block; }
+
+.points {
+
+  background: #075c48;
+
+  color: white;
+
+  padding: 20px;
+
+  border-radius: 14px;
+
+  text-align: center;
+
+}
+
+.map {
+
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 12px;
+
+}
+
+.room {
+
+  background: #e2eee8;
+
+  padding: 25px 10px;
+
+  border-radius: 12px;
+
+  text-align: center;
+
+  cursor: pointer;
+
+  font-weight: bold;
+
+}
+
+.room:hover { background: #b9ddca; }
+
+.quest {
+
+  border: 1px solid #d5e4dc;
+
+  padding: 15px;
+
+  border-radius: 12px;
+
+  margin: 12px 0;
+
+}
+
+.quest button {
+
+  background: #075c48;
+
+  color: white;
+
+  border: none;
+
+  border-radius: 8px;
+
+  padding: 10px 15px;
+
+  cursor: pointer;
+
+}
+
+input {
+
+  padding: 10px;
+
+  width: 100%;
+
+  margin: 10px 0;
+
+  border: 1px solid #aaa;
+
+  border-radius: 8px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+  <h1>🌿 SchoolQuest</h1>
+
+  <p>Мектебіңді зертте. Квесттерді орында. Жеңімпаз бол!</p>
+
+</header>
+
+<nav>
+
+  <button onclick="showPage('home')">Басты бет</button>
+
+  <button onclick="showPage('map')">Мектеп картасы</button>
+
+  <button onclick="showPage('quests')">Квесттер</button>
+
+  <button onclick="showPage('rating')">Рейтинг</button>
+
+</nav>
+
+<main>
+
+<section id="home" class="section active">
+
+  <h2>Қош келдің!</h2>
+
+  <p>SchoolQuest — мектебіңді ойын арқылы зерттеуге арналған қосымша.</p>
+
+  <div class="points">
+
+    <h2>⭐ <span id="points">0</span> ұпай</h2>
+
+    <p>Сенің жинаған ұпайың</p>
+
+  </div>
+
+  <h3>Бүгінгі мақсатың</h3>
+
+  <p>Кем дегенде бір квест орында!</p>
+
+</section>
+
+<section id="map" class="section">
+
+  <h2>🗺️ Мектеп картасы</h2>
+
+  <p>Бөлмені басып, ол туралы ақпарат ал.</p>
+
+  <div class="map">
+
+    <div class="room" onclick="info('📚 Кітапхана','Бұл жерде кітап оқуға және ізденуге болады.')">📚 Кітапхана</div>
+
+    <div class="room" onclick="info('🍽️ Асхана','Мектеп асханасы.')">🍽️ Асхана</div>
+
+    <div class="room" onclick="info('🧪 Зертхана','Тәжірибе жасауға арналған кабинет.')">🧪 Зертхана</div>
+
+    <div class="room" onclick="info('💻 Информатика','Компьютерлік технологиялар кабинеті.')">💻 Информатика</div>
+
+    <div class="room" onclick="info('🏫 Акт залы','Мектеп іс-шаралары өтетін орын.')">🏫 Акт залы</div>
+
+    <div class="room" onclick="info('⚽ Спорт зал','Дене шынықтыруға арналған зал.')">⚽ Спорт зал</div>
+
+  </div>
+
+  <p id="roomInfo">Бөлмені таңда.</p>
+
+</section>
+
+<section id="quests" class="section">
+
+  <h2>🎯 Квесттер</h2>
+
+  <div class="quest">
+
+    <h3>1. Кітап әлемі</h3>
+
+    <p>Мектеп кітапханасын тап!</p>
+
+    <button onclick="completeQuest(1)">Орындадым +10</button>
+
+  </div>
+
+  <div class="quest">
+
+    <h3>2. Білімді тексер</h3>
+
+    <p>Қазақстанның астанасы қай қала?</p>
+
+    <input id="answer" placeholder="Жауабыңды жаз">
+
+    <button onclick="checkAnswer()">Жауап беру</button>
+
+  </div>
+
+  <div class="quest">
+
+    <h3>3. Зерттеуші</h3>
+
+    <p>Мектептегі зертхананы тап!</p>
+
+    <button onclick="completeQuest(3)">Орындадым +10</button>
+
+  </div>
+
+</section>
+
+<section id="rating" class="section">
+
+  <h2>🏆 Оқушылар рейтингі</h2>
+
+  <p>1. Сен — <span id="ratingPoints">0</span> ұпай</p>
+
+  <p>Бұл әзірге жеке демо-рейтинг.</p>
+
+</section>
+
+</main>
+
+<script>
+
+let score = 0;
+
+let completed = [];
+
+function showPage(page) {
+
+  document.querySelectorAll('.section').forEach(s => {
+
+    s.classList.remove('active');
+
+  });
+
+  document.getElementById(page).classList.add('active');
+
+}
+
+function info(title, description) {
+
+  document.getElementById('roomInfo').innerHTML =
+
+    '<b>' + title + '</b><br>' + description;
+
+}
+
+function completeQuest(id) {
+
+  if (completed.includes(id)) {
+
+    alert('Бұл квестті орындап қойдың!');
+
+    return;
+
+  }
+
+  completed.push(id);
+
+  score += 10;
+
+  updatePoints();
+
+  alert('Жарайсың! 10 ұпай алдың ⭐');
+
+}
+
+function checkAnswer() {
+
+  let answer = document.getElementById('answer').value
+
+    .trim().toLowerCase();
+
+  if (answer === 'астана') {
+
+    completeQuest(2);
+
+    document.getElementById('answer').disabled = true;
+
+  } else {
+
+    alert('Қате жауап. Қайта көр!');
+
+  }
+
+}
+
+function updatePoints() {
+
+  document.getElementById('points').innerText = score;
+
+  document.getElementById('ratingPoints').innerText = score;
+
+}
+
+</script>
+
+</body>
+
+</html>
