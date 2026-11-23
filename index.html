@@ -1,391 +1,1138 @@
 <!DOCTYPE html>
-
 <html lang="kk">
-
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>SchoolQuest</title>
-
-<style>
-
-* { box-sizing: border-box; }
-
-body {
-
-  margin: 0;
-
-  font-family: Arial, sans-serif;
-
-  background: #f1f5f2;
-
-  color: #183b32;
-
-}
-
-header {
-
-  background: #075c48;
-
-  color: white;
-
-  padding: 25px 20px;
-
-  text-align: center;
-
-}
-
-header h1 { margin: 0; }
-
-nav {
-
-  display: flex;
-
-  justify-content: center;
-
-  gap: 10px;
-
-  flex-wrap: wrap;
-
-  padding: 15px;
-
-  background: white;
-
-}
-
-nav button {
-
-  border: 0;
-
-  padding: 12px 18px;
-
-  border-radius: 10px;
-
-  background: #e2eee8;
-
-  color: #075c48;
-
-  font-weight: bold;
-
-  cursor: pointer;
-
-}
-
-nav button:hover { background: #b9ddca; }
-
-main {
-
-  max-width: 850px;
-
-  margin: auto;
-
-  padding: 20px;
-
-}
-
-.section {
-
-  display: none;
-
-  background: white;
-
-  padding: 22px;
-
-  border-radius: 15px;
-
-  margin-bottom: 20px;
-
-}
-
-.section.active { display: block; }
-
-.points {
-
-  background: #075c48;
-
-  color: white;
-
-  padding: 20px;
-
-  border-radius: 14px;
-
-  text-align: center;
-
-}
-
-.map {
-
-  display: grid;
-
-  grid-template-columns: repeat(2, 1fr);
-
-  gap: 12px;
-
-}
-
-.room {
-
-  background: #e2eee8;
-
-  padding: 25px 10px;
-
-  border-radius: 12px;
-
-  text-align: center;
-
-  cursor: pointer;
-
-  font-weight: bold;
-
-}
-
-.room:hover { background: #b9ddca; }
-
-.quest {
-
-  border: 1px solid #d5e4dc;
-
-  padding: 15px;
-
-  border-radius: 12px;
-
-  margin: 12px 0;
-
-}
-
-.quest button {
-
-  background: #075c48;
-
-  color: white;
-
-  border: none;
-
-  border-radius: 8px;
-
-  padding: 10px 15px;
-
-  cursor: pointer;
-
-}
-
-input {
-
-  padding: 10px;
-
-  width: 100%;
-
-  margin: 10px 0;
-
-  border: 1px solid #aaa;
-
-  border-radius: 8px;
-
-}
-
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SchoolQuest — Мектепке жолсерік</title>
+    <style>
+        :root {
+            --primary: #0f5c3e;
+            --primary-light: #198754;
+            --accent: #f59e0b;
+            --accent-hover: #d97706;
+            --bg: #f0f4f2;
+            --card: #ffffff;
+            --text: #1e293b;
+            --muted: #64748b;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+
+        body {
+            background-color: var(--bg);
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(15, 92, 62, 0.08) 0%, transparent 25%),
+                radial-gradient(circle at 85% 75%, rgba(245, 158, 11, 0.09) 0%, transparent 25%),
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230f5c3e' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Декоративные плавающие элементы на фоне */
+        .bg-decor {
+            position: fixed;
+            font-size: 2.5rem;
+            opacity: 0.14;
+            pointer-events: none;
+            z-index: 0;
+            animation: float 7s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-18px) rotate(8deg); }
+        }
+
+        /* Шапка */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, #093d29 100%);
+            color: white;
+            padding: 1.5rem 1rem 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+        }
+        header h1 { font-size: 2rem; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        header p { opacity: 0.9; margin-top: 5px; font-size: 0.95rem; }
+
+        .user-bar {
+            max-width: 960px;
+            margin: 12px auto 0;
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(8px);
+            padding: 8px 16px;
+            border-radius: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.9rem;
+        }
+
+        .badge-pill {
+            background: rgba(255,255,255,0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        /* Навигация */
+        nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 14px;
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        nav button {
+            background: #e9f2ee;
+            color: var(--primary);
+            border: none;
+            padding: 10px 16px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.92rem;
+        }
+        nav button:hover, nav button.active {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(15, 92, 62, 0.25);
+        }
+
+        /* Контейнер */
+        main {
+            max-width: 960px;
+            margin: 24px auto;
+            padding: 0 16px 60px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .section { display: none; animation: fadeIn 0.3s ease; }
+        .section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        .card {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            border: 1px solid rgba(15, 92, 62, 0.08);
+        }
+
+        /* Экран входа */
+        #auth-screen {
+            max-width: 420px;
+            margin: 50px auto;
+            position: relative;
+            z-index: 30;
+        }
+        .input-group { margin-bottom: 14px; }
+        .input-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px; color: var(--muted); }
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .input-group input:focus, .input-group select:focus { border-color: var(--primary); }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn:hover { background: var(--primary-light); transform: translateY(-1px); }
+        .btn-gold { background: var(--accent); color: #1e293b; }
+        .btn-gold:hover { background: var(--accent-hover); color: white; }
+        .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
+        .btn-outline:hover { background: var(--primary); color: white; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        /* Карточка баланса */
+        .hero-balance {
+            background: linear-gradient(135deg, var(--primary) 0%, #147a52 100%);
+            color: white;
+            border-radius: 18px;
+            padding: 28px;
+            text-align: center;
+            margin: 18px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-balance .stars-count { font-size: 2.6rem; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .limit-bar-wrap {
+            background: rgba(0,0,0,0.25);
+            border-radius: 20px;
+            height: 12px;
+            max-width: 340px;
+            margin: 14px auto 6px;
+            overflow: hidden;
+        }
+        .limit-bar-fill {
+            background: var(--accent);
+            height: 100%;
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        /* 3D Интерактивная доска / Карта школы */
+        .map-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 16px;
+            align-items: center;
+        }
+        .floor-tabs { display: flex; gap: 6px; }
+        .floor-btn {
+            padding: 8px 14px;
+            border-radius: 10px;
+            border: 2px solid var(--primary);
+            background: white;
+            color: var(--primary);
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .floor-btn.active { background: var(--primary); color: white; }
+
+        .board-3d-viewport {
+            background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+            border-radius: 18px;
+            padding: 20px;
+            perspective: 1100px;
+            overflow: hidden;
+            position: relative;
+            border: 6px solid #475569;
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.6), 0 12px 24px rgba(0,0,0,0.15);
+        }
+
+        .board-header-tag {
+            position: absolute;
+            top: 10px;
+            left: 14px;
+            background: rgba(255,255,255,0.12);
+            color: #94a3b8;
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 8px;
+            z-index: 5;
+        }
+
+        .school-3d-scene {
+            width: 100%;
+            max-width: 680px;
+            height: 410px;
+            margin: 15px auto;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: rotateX(34deg) rotateZ(-8deg);
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            background: #e2e8f0;
+            border-radius: 16px;
+            box-shadow: 0 22px 0 #94a3b8, 0 30px 45px rgba(0,0,0,0.5);
+            border: 4px solid #cbd5e1;
+        }
+        .school-3d-scene.flat-view {
+            transform: rotateX(0deg) rotateZ(0deg);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        /* Коридор школы */
+        .corridor {
+            position: absolute;
+            left: 10%;
+            top: 38%;
+            width: 80%;
+            height: 24%;
+            background: repeating-linear-gradient(90deg, #f8fafc 0px, #f8fafc 28px, #e2e8f0 28px, #e2e8f0 30px);
+            border-top: 2px dashed #cbd5e1;
+            border-bottom: 2px dashed #cbd5e1;
+        }
+
+        /* 3D Кабинеты */
+        .room-3d {
+            position: absolute;
+            background: linear-gradient(145deg, #ffffff, #f1f5f9);
+            border: 2px solid #64748b;
+            border-radius: 10px;
+            padding: 8px;
+            cursor: pointer;
+            transform: translateZ(14px);
+            box-shadow: 0 10px 0 #64748b, 0 14px 18px rgba(0,0,0,0.25);
+            transition: all 0.25s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #1e293b;
+        }
+        .room-3d:hover {
+            transform: translateZ(24px);
+            background: #ecfdf5;
+            border-color: var(--primary);
+        }
+        .room-3d.target-room {
+            background: #fef3c7;
+            border-color: var(--accent);
+            box-shadow: 0 12px 0 #d97706, 0 0 25px rgba(245, 158, 11, 0.8);
+            transform: translateZ(26px);
+        }
+        .room-3d span.icon { font-size: 1.4rem; margin-bottom: 2px; }
+
+        /* Вход и персонаж */
+        .entrance-gate {
+            position: absolute;
+            bottom: 4px;
+            left: 44%;
+            width: 12%;
+            height: 28px;
+            background: var(--primary);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            transform: translateZ(8px);
+        }
+
+        .student-avatar-3d {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: translate(-50%, -50%) translateZ(28px);
+            transition: left 0.7s ease, top 0.7s ease;
+            z-index: 25;
+            filter: drop-shadow(0 6px 4px rgba(0,0,0,0.4));
+        }
+
+        /* Звездочки на маршруте */
+        .route-star {
+            position: absolute;
+            font-size: 1.35rem;
+            transform: translate(-50%, -50%) translateZ(22px);
+            animation: pulseStar 1.2s infinite alternate;
+            cursor: pointer;
+            z-index: 20;
+            filter: drop-shadow(0 4px 6px rgba(245, 158, 11, 0.6));
+        }
+        .route-star.collected {
+            opacity: 0.25;
+            transform: translate(-50%, -50%) translateZ(10px) scale(0.7);
+            animation: none;
+        }
+        @keyframes pulseStar {
+            from { transform: translate(-50%, -50%) translateZ(20px) scale(1); }
+            to { transform: translate(-50%, -50%) translateZ(32px) scale(1.25); }
+        }
+
+        /* Декоративные человечки и растения на 3D сцене */
+        .scene-prop {
+            position: absolute;
+            font-size: 1.15rem;
+            transform: translateZ(14px);
+            pointer-events: none;
+            opacity: 0.85;
+        }
+
+        .gps-panel {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 14px;
+            margin-top: 14px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Квесты и Магазин */
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+        .quest-item, .shop-item {
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 18px;
+            background: #fafafa;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 12px;
+            transition: transform 0.2s;
+        }
+        .quest-item:hover, .shop-item:hover { transform: translateY(-3px); border-color: var(--primary); }
+        .reward-tag {
+            display: inline-block;
+            background: #fef3c7;
+            color: #b45309;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+        }
+
+        /* Уведомления (Toast) */
+        #toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #1e293b;
+            color: white;
+            padding: 14px 20px;
+            border-radius: 14px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+            z-index: 100;
+            transform: translateY(120px);
+            opacity: 0;
+            transition: all 0.35s ease;
+            max-width: 340px;
+            font-weight: 500;
+        }
+        #toast.show { transform: translateY(0); opacity: 1; }
+
+        /* Таблица рейтинга */
+        table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+        th { color: var(--muted); font-size: 0.85rem; }
+    </style>
 </head>
-
 <body>
 
-<header>
-
-  <h1>🌿 SchoolQuest</h1>
-
-  <p>Мектебіңді зертте. Квесттерді орында. Жеңімпаз бол!</p>
-
-</header>
-
-<nav>
-
-  <button onclick="showPage('home')">Басты бет</button>
-
-  <button onclick="showPage('map')">Мектеп картасы</button>
-
-  <button onclick="showPage('quests')">Квесттер</button>
-
-  <button onclick="showPage('rating')">Рейтинг</button>
-
-</nav>
-
-<main>
-
-<section id="home" class="section active">
-
-  <h2>Қош келдің!</h2>
-
-  <p>SchoolQuest — мектебіңді ойын арқылы зерттеуге арналған қосымша.</p>
-
-  <div class="points">
-
-    <h2>⭐ <span id="points">0</span> ұпай</h2>
-
-    <p>Сенің жинаған ұпайың</p>
-
-  </div>
-
-  <h3>Бүгінгі мақсатың</h3>
-
-  <p>Кем дегенде бір квест орында!</p>
-
-</section>
-
-<section id="map" class="section">
-
-  <h2>🗺️ Мектеп картасы</h2>
-
-  <p>Бөлмені басып, ол туралы ақпарат ал.</p>
-
-  <div class="map">
-
-    <div class="room" onclick="info('📚 Кітапхана','Бұл жерде кітап оқуға және ізденуге болады.')">📚 Кітапхана</div>
-
-    <div class="room" onclick="info('🍽️ Асхана','Мектеп асханасы.')">🍽️ Асхана</div>
-
-    <div class="room" onclick="info('🧪 Зертхана','Тәжірибе жасауға арналған кабинет.')">🧪 Зертхана</div>
-
-    <div class="room" onclick="info('💻 Информатика','Компьютерлік технологиялар кабинеті.')">💻 Информатика</div>
-
-    <div class="room" onclick="info('🏫 Акт залы','Мектеп іс-шаралары өтетін орын.')">🏫 Акт залы</div>
-
-    <div class="room" onclick="info('⚽ Спорт зал','Дене шынықтыруға арналған зал.')">⚽ Спорт зал</div>
-
-  </div>
-
-  <p id="roomInfo">Бөлмені таңда.</p>
-
-</section>
-
-<section id="quests" class="section">
-
-  <h2>🎯 Квесттер</h2>
-
-  <div class="quest">
-
-    <h3>1. Кітап әлемі</h3>
-
-    <p>Мектеп кітапханасын тап!</p>
-
-    <button onclick="completeQuest(1)">Орындадым +10</button>
-
-  </div>
-
-  <div class="quest">
-
-    <h3>2. Білімді тексер</h3>
-
-    <p>Қазақстанның астанасы қай қала?</p>
-
-    <input id="answer" placeholder="Жауабыңды жаз">
-
-    <button onclick="checkAnswer()">Жауап беру</button>
-
-  </div>
-
-  <div class="quest">
-
-    <h3>3. Зерттеуші</h3>
-
-    <p>Мектептегі зертхананы тап!</p>
-
-    <button onclick="completeQuest(3)">Орындадым +10</button>
-
-  </div>
-
-</section>
-
-<section id="rating" class="section">
-
-  <h2>🏆 Оқушылар рейтингі</h2>
-
-  <p>1. Сен — <span id="ratingPoints">0</span> ұпай</p>
-
-  <p>Бұл әзірге жеке демо-рейтинг.</p>
-
-</section>
-
-</main>
-
-<script>
-
-let score = 0;
-
-let completed = [];
-
-function showPage(page) {
-
-  document.querySelectorAll('.section').forEach(s => {
-
-    s.classList.remove('active');
-
-  });
-
-  document.getElementById(page).classList.add('active');
-
-}
-
-function info(title, description) {
-
-  document.getElementById('roomInfo').innerHTML =
-
-    '<b>' + title + '</b><br>' + description;
-
-}
-
-function completeQuest(id) {
-
-  if (completed.includes(id)) {
-
-    alert('Бұл квестті орындап қойдың!');
-
-    return;
-
-  }
-
-  completed.push(id);
-
-  score += 10;
-
-  updatePoints();
-
-  alert('Жарайсың! 10 ұпай алдың ⭐');
-
-}
-
-function checkAnswer() {
-
-  let answer = document.getElementById('answer').value
-
-    .trim().toLowerCase();
-
-  if (answer === 'астана') {
-
-    completeQuest(2);
-
-    document.getElementById('answer').disabled = true;
-
-  } else {
-
-    alert('Қате жауап. Қайта көр!');
-
-  }
-
-}
-
-function updatePoints() {
-
-  document.getElementById('points').innerText = score;
-
-  document.getElementById('ratingPoints').innerText = score;
-
-}
-
-</script>
-
+    <!-- Фоновый школьный декор -->
+    <div class="bg-decor" style="top: 12%; left: 4%;">🎒</div>
+    <div class="bg-decor" style="top: 35%; right: 5%; animation-delay: 1.5s;">🧭</div>
+    <div class="bg-decor" style="bottom: 18%; left: 6%; animation-delay: 3s;">📚</div>
+    <div class="bg-decor" style="bottom: 28%; right: 8%; animation-delay: 4s;">🎓</div>
+    <div class="bg-decor" style="top: 65%; left: 2%; animation-delay: 2s;">🧑🏻‍🎓</div>
+
+    <!-- ЭКРАН АВТОРИЗАЦИИ / РЕГИСТРАЦИИ -->
+    <div id="auth-screen" class="card">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <div style="font-size: 3rem;">🌿🏫</div>
+            <h2 style="color: var(--primary); margin-top: 6px;">SchoolQuest</h2>
+            <p style="color: var(--muted); font-size: 0.9rem;">Жаңа оқушыларға арналған мектеп навигаторы</p>
+        </div>
+
+        <div style="display: flex; gap: 8px; margin-bottom: 18px;">
+            <button id="tab-login" class="btn" style="flex:1;" onclick="switchAuthMode('login')">Кіру (Login)</button>
+            <button id="tab-reg" class="btn btn-outline" style="flex:1;" onclick="switchAuthMode('register')">Тіркелу</button>
+        </div>
+
+        <div class="input-group">
+            <label>Логин (оқушы аты)</label>
+            <input type="text" id="auth-username" placeholder="Мысалы: aidos_7a">
+        </div>
+        <div class="input-group">
+            <label>Құпия сөз (Пароль)</label>
+            <input type="password" id="auth-password" placeholder="••••••">
+        </div>
+        <div class="input-group" id="class-group" style="display: none;">
+            <label>Сыныбың</label>
+            <input type="text" id="auth-grade" placeholder="Мысалы: 5 «Ә» немесе 7 «Б»">
+        </div>
+
+        <button class="btn" style="width: 100%; margin-top: 6px;" onclick="handleAuth()">Жалғастыру 🚀</button>
+        <p style="font-size: 0.8rem; color: var(--muted); text-align: center; margin-top: 12px;">
+            Барлық ұпайлар мен квесттер сенің аккаунтыңда сақталады.
+        </p>
+    </div>
+
+    <!-- ОСНОВНОЕ ПРИЛОЖЕНИЕ -->
+    <div id="app-wrapper" style="display: none;">
+        <header>
+            <h1>🌿 SchoolQuest</h1>
+            <p>Мектебіңді зертте. Квесттерді орында. Кешбэк жина!</p>
+            <div class="user-bar">
+                <span>👋 Сәлем, <strong id="display-user">Оқушы</strong> (<span id="display-grade"></span>)</span>
+                <div style="display: flex; gap: 8px; align-items: center;">
+                    <span class="badge-pill">⭐ <span id="header-stars">0</span></span>
+                    <span class="badge-pill">Бүгін: <span id="header-daily">0</span>/100 ⭐</span>
+                    <button onclick="logout()" style="background: rgba(255,255,255,0.2); border:none; color:white; padding:4px 10px; border-radius:8px; cursor:pointer;">Шығу</button>
+                </div>
+            </div>
+        </header>
+
+        <nav>
+            <button class="active" onclick="showSection('home', this)">🏠 Басты бет</button>
+            <button onclick="showSection('map', this)">🗺️ Мектеп картасы (3D)</button>
+            <button onclick="showSection('quests', this)">🎯 Күнделікті квесттер</button>
+            <button onclick="showSection('shop', this)">🎁 Кешбэк дүкені</button>
+            <button onclick="showSection('rating', this)">🏆 Рейтинг</button>
+        </nav>
+
+        <main>
+            <!-- 1. БАСТЫ БЕТ -->
+            <section id="sec-home" class="section active">
+                <div class="card">
+                    <h2>Қош келдің, <span id="welcome-name">Достым</span>! 🎒</h2>
+                    <p style="color: var(--muted); margin-top: 6px;">
+                        Мектепке тез үйреніп кету үшін 3D-картамен кабинеттерді тап, жолдағы жұлдызшаларды жина және оларды мектеп кешбэгіне айырбаста!
+                    </p>
+
+                    <div class="hero-balance">
+                        <div class="stars-count">⭐ <span id="main-stars">0</span> жұлдызша</div>
+                        <p style="opacity: 0.9; margin-top: 4px;">Сенің жинаған кешбэк балансың</p>
+                        
+                        <div class="limit-bar-wrap">
+                            <div class="limit-bar-fill" id="daily-progress-bar"></div>
+                        </div>
+                        <small>Күнделікті лимит: <strong id="daily-limit-text">0 / 100</strong> ⭐ (лимит толса да, картамен шексіз жүре аласың)</small>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 16px;">
+                        <div style="background: #f0fdf4; padding: 16px; border-radius: 14px; border: 1px solid #bbf7d0;">
+                            <h4>🧭 Жаңа оқушыға көмек</h4>
+                            <p style="font-size: 0.88rem; color: #166534; margin-top: 6px;">Қай кабинет қай қабатта екенін білмейсің бе? «Мектеп картасы» бөлімінде кабинетті таңда — 3D-тақта жолды көрсетеді.</p>
+                        </div>
+                        <div style="background: #fffbeb; padding: 16px; border-radius: 14px; border: 1px solid #fde68a;">
+                            <h4>⏰ Қоңырау кестесі (Естелік)</h4>
+                            <p style="font-size: 0.88rem; color: #92400e; margin-top: 6px;">1-сабақ: 08:30 • Үлкен үзіліс (Асхана): 10:15 • Кітапхана үзілісте ашық.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. МЕКТЕП КАРТАСЫ (3D ИНТЕРАКТИВНАЯ ДОСКА) -->
+            <section id="sec-map" class="section">
+                <div class="card">
+                    <h2>🖥️ Интерактивті 3D Мектеп Тақтасы</h2>
+                    <p style="color: var(--muted); font-size: 0.9rem; margin-bottom: 14px;">
+                        Кабинетті таңдаңыз — тақтада бағыт сызылады және жол бойында ⭐ жұлдызшалар пайда болады. Геолокацияны қосып жүрсеңіз немесе «Қадам жасау» батырмасын бассаңыз, жұлдызшалар балансқа түседі!
+                    </p>
+
+                    <div class="map-controls">
+                        <div class="floor-tabs">
+                            <button class="floor-btn active" onclick="setFloor(1, this)">1-қабат</button>
+                            <button class="floor-btn" onclick="setFloor(2, this)">2-қабат</button>
+                        </div>
+
+                        <select id="room-select" onchange="buildRoute(this.value)" style="padding: 9px 14px; border-radius: 10px; border: 2px solid var(--primary); font-weight: 600; flex: 1; min-width: 200px;">
+                            <option value="">-- Баратын кабинетті таңдаңыз --</option>
+                        </select>
+
+                        <button class="btn btn-outline" onclick="toggle3DAngle()">🔄 3D / 2D Көрініс</button>
+                    </div>
+
+                    <!-- 3D СЦЕНА -->
+                    <div class="board-3d-viewport">
+                        <div class="board-header-tag">SMART BOARD 3D • <span id="board-floor-label">1-ҚАБАТ</span></div>
+                        
+                        <div class="school-3d-scene" id="school-scene">
+                            <div class="corridor"></div>
+                            <!-- SVG слой для линии маршрута -->
+                            <svg id="route-svg" viewBox="0 0 680 410" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:15;">
+                                <path id="route-path" d="" fill="none" stroke="#f59e0b" stroke-width="6" stroke-dasharray="12 8" stroke-linecap="round"/>
+                            </svg>
+
+                            <div id="rooms-container"></div>
+                            <div id="stars-container"></div>
+
+                            <!-- Декоративные элементы на схеме -->
+                            <div class="scene-prop" style="top: 43%; left: 13%;">🪴</div>
+                            <div class="scene-prop" style="top: 43%; right: 13%;">🪴</div>
+                            <div class="scene-prop" style="top: 46%; left: 32%;">🧑‍🤝‍🧑</div>
+                            <div class="scene-prop" style="top: 44%; left: 66%;">👩‍🏫</div>
+
+                            <div class="entrance-gate">🚪 КІРУ</div>
+                            <div class="student-avatar-3d" id="player-marker" style="left: 50%; top: 88%;">🧑🏻‍🎓</div>
+                        </div>
+                    </div>
+
+                    <!-- Панель геолокации -->
+                    <div class="gps-panel">
+                        <div>
+                            <strong id="gps-status">📍 Геолокация: Өшірулі</strong>
+                            <div style="font-size: 0.82rem; color: var(--muted);" id="gps-coords">Маршрут бойынша жүру үшін GPS рұқсатын беріңіз</div>
+                        </div>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                            <button class="btn" onclick="requestGPS()">📡 Геолокацияны қосу</button>
+                            <button class="btn btn-gold" id="sim-btn" onclick="simulateWalk()" disabled>🚶‍♂️ Маршрутпен жүру (Тест)</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. КВЕСТТЕР -->
+            <section id="sec-quests" class="section">
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                        <div>
+                            <h2>🎯 Бүгінгі квесттер</h2>
+                            <p style="color: var(--muted); font-size: 0.9rem;">Квесттер күн сайын жаңарады және 14 күн бойы қайталанбайды. Әр квест күніне 1 рет орындалады.</p>
+                        </div>
+                        <span class="badge-pill" style="background: #fef3c7; color: #b45309;">Лимит: <span id="quest-daily-status">0/100</span> ⭐</span>
+                    </div>
+
+                    <div class="grid-cards" id="quests-list"></div>
+                </div>
+            </section>
+
+            <!-- 4. КЕШБЭК ДҮКЕНІ -->
+            <section id="sec-shop" class="section">
+                <div class="card">
+                    <h2>🎁 Мектеп Кешбэк Дүкені</h2>
+                    <p style="color: var(--muted); font-size: 0.9rem;">Жинаған жұлдызшаларыңды мектеп ішіндегі бонустар мен сыйлықтарға айырбаста!</p>
+
+                    <div class="grid-cards" id="shop-list"></div>
+
+                    <h3 style="margin-top: 24px;">🎟️ Менің купондарым</h3>
+                    <div id="my-coupons" style="margin-top: 10px; color: var(--muted); font-size: 0.9rem;">Әзірге сатып алынған купондар жоқ.</div>
+                </div>
+            </section>
+
+            <!-- 5. РЕЙТИНГ -->
+            <section id="sec-rating" class="section">
+                <div class="card">
+                    <h2>🏆 Мектеп зерттеушілерінің рейтингі</h2>
+                    <p style="color: var(--muted); font-size: 0.9rem;">Ең белсенді жаңа оқушылар тізімі</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Орын</th>
+                                <th>Оқушы</th>
+                                <th>Сынып</th>
+                                <th>Жинаған жұлдызша</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rating-tbody"></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="toast">Хабарлама</div>
+
+    <script>
+        /* ================= БАЗА ДАННЫХ И СОСТОЯНИЕ ================= */
+        const DAILY_LIMIT = 100;
+        let authMode = 'login';
+        let currentUser = null;
+        let currentFloor = 1;
+        let activeRoute = null;
+        let gpsWatchId = null;
+
+        // Кабинеты по этажам (координаты в % для 3D схемы)
+        const SCHOOL_ROOMS = {
+            1: [
+                { id: 'canteen', name: 'Асхана', icon: '🍲', x: 20, y: 18, w: 22, h: 18, desc: 'Ыстық тамақ пен буфет (1-қабат, сол қанат)' },
+                { id: 'med', name: 'Медпункт', icon: '🩺', x: 46, y: 18, w: 18, h: 18, desc: 'Алғашқы медициналық көмек кабинеті' },
+                { id: 'gym', name: 'Спорт зал', icon: '🏀', x: 70, y: 18, w: 22, h: 18, desc: 'Дене шынықтыру залы мен киім ауыстыру бөлмесі' },
+                { id: 'guard', name: 'Күзет / Гардероб', icon: '🧥', x: 16, y: 68, w: 22, h: 18, desc: 'Сырт киім ілетін орын және кіреберіс' },
+                { id: 'assembly', name: 'Мәжіліс залы', icon: '🎭', x: 66, y: 68, w: 24, h: 18, desc: 'Мектеп іс-шаралары өтетін үлкен зал' }
+            ],
+            2: [
+                { id: 'library', name: 'Кітапхана', icon: '📚', x: 18, y: 18, w: 22, h: 18, desc: 'Оқулықтар мен көркем әдебиет қоры' },
+                { id: 'info', name: 'Информатика (204)', icon: '💻', x: 45, y: 18, w: 20, h: 18, desc: 'Компьютерлік сынып және робототехника' },
+                { id: 'director', name: 'Директор / Завуч', icon: '📋', x: 70, y: 18, w: 22, h: 18, desc: 'Әкімшілік, анықтама алу бөлмесі' },
+                { id: 'math', name: 'Математика (201)', icon: '📐', x: 18, y: 68, w: 22, h: 18, desc: 'Алгебра және геометрия кабинеті' },
+                { id: 'kazakh', name: 'Қазақ тілі (208)', icon: '📖', x: 66, y: 68, w: 22, h: 18, desc: 'Мемлекеттік тіл және әдебиет кабинеті' }
+            ]
+        };
+
+        // 15 уникальных квестов для ротации на 14+ дней (без повторов 2 недели)
+        const ALL_QUESTS = [
+            { id: 'q1', title: 'Асхананы тап', desc: '3D картадан Асханаға маршрут құрып, орналасуын тексер.', reward: 25 },
+            { id: 'q2', title: 'Кітапханаға саяхат', desc: '2-қабаттағы кітапхананы тауып, жұмыс уақытын біл.', reward: 30 },
+            { id: 'q3', title: 'Қауіпсіздік ережесі', desc: 'Медпункт қай қабатта орналасқанын картадан анықта.', reward: 20 },
+            { id: 'q4', title: 'Спорт залға жол', desc: 'Спорт залға дейінгі маршрутты іске қос.', reward: 25 },
+            { id: 'q5', title: 'Әкімшілікпен танысу', desc: 'Анықтама алу үшін Завуч кабинетін картадан тап.', reward: 30 },
+            { id: 'q6', title: 'IT аймақ', desc: '204-ші Информатика кабинетіне жол сал.', reward: 25 },
+            { id: 'q7', title: 'Жаңа дос тап', desc: 'Сыныптасыңмен танысып, оған осы сайтты көрсет.', reward: 35 },
+            { id: 'q8', title: 'Гардероб тәртібі', desc: '1-қабаттағы гардероб аймағын зертте.', reward: 20 },
+            { id: 'q9', title: 'Мәжіліс залы', desc: 'Мектеп концерттері өтетін залды картадан белгіле.', reward: 25 },
+            { id: 'q10', title: 'Математика әлемі', desc: '201-кабинетке маршрут құрып, жұлдызша жина.', reward: 25 },
+            { id: 'q11', title: 'Қазақ тілі кабинеті', desc: '208-кабинеттің орнын 3D тақтадан тексер.', reward: 25 },
+            { id: 'q12', title: 'Таза мектеп', desc: 'Үзілісте қоқысты арнайы жәшікке тастап, белгіле.', reward: 30 },
+            { id: 'q13', title: 'Мұғалімге сәлем', desc: 'Кезекші мұғаліммен сыпайы амандас.', reward: 20 },
+            { id: 'q14', title: 'Қоңырау кестесін жатта', desc: 'Басты беттегі қоңырау кестесімен танысып шық.', reward: 20 },
+            { id: 'q15', title: 'Мектеп мақтанышы', desc: 'Кемінде 2 түрлі кабинетке маршрут құрып көр.', reward: 35 }
+        ];
+
+        // Товары для школьного кешбэка
+        const SHOP_ITEMS = [
+            { id: 's1', title: '🥐 Буфетке 200₸ жеңілдік', desc: 'Асханада бәліш немесе шай алуға арналған QR-купон.', cost: 80 },
+            { id: 's2', title: '⚡ Кезексіз өту билеті', desc: 'Асханада немесе гардеробта 1 рет кезексіз өту құқығы.', cost: 120 },
+            { id: 's3', title: '🖊️ SchoolQuest фирменді қаламы', desc: 'Мектеп кеңсесінен сыйлық қалам мен стикерпак.', cost: 150 },
+            { id: 's4', title: '🌟 ТЖБ/БЖБ-ға +1 кеңес', desc: 'Мұғалімнен қосымша кеңес алу купоны.', cost: 250 }
+        ];
+
+        /* ================= АВТОРИЗАЦИЯ И ХРАНЕНИЕ ================= */
+        function getTodayStr() {
+            return new Date().toISOString().split('T')[0];
+        }
+
+        function getUsersDB() {
+            return JSON.parse(localStorage.getItem('sq_users_db') || '{}');
+        }
+
+        function saveUsersDB(db) {
+            localStorage.setItem('sq_users_db', JSON.stringify(db));
+        }
+
+        function switchAuthMode(mode) {
+            authMode = mode;
+            document.getElementById('tab-login').className = mode === 'login' ? 'btn' : 'btn btn-outline';
+            document.getElementById('tab-reg').className = mode === 'register' ? 'btn' : 'btn btn-outline';
+            document.getElementById('class-group').style.display = mode === 'register' ? 'block' : 'none';
+        }
+
+        function handleAuth() {
+            const username = document.getElementById('auth-username').value.trim();
+            const password = document.getElementById('auth-password').value.trim();
+            const grade = document.getElementById('auth-grade').value.trim() || '7 «А»';
+
+            if (!username || !password) {
+                showToast('⚠️ Логин мен құпия сөзді толтырыңыз!');
+                return;
+            }
+
+            const db = getUsersDB();
+
+            if (authMode === 'register') {
+                if (db[username]) {
+                    showToast('⚠️ Бұл логин бос емес, басқасын таңдаңыз!');
+                    return;
+                }
+                db[username] = {
+                    username,
+                    password,
+                    grade,
+                    stars: 10, // Приветственный бонус
+                    dailyDate: getTodayStr(),
+                    dailyEarned: 0,
+                    completedQuestsToday: [],
+                    coupons: []
+                };
+                saveUsersDB(db);
+                loginSuccess(db[username]);
+                showToast('🎉 Тіркелу сәтті өтті! +10 бастапқы жұлдызша!');
+            } else {
+                if (!db[username] || db[username].password !== password) {
+                    showToast('❌ Логин немесе құпия сөз қате!');
+                    return;
+                }
+                loginSuccess(db[username]);
+                showToast(`👋 Қайта оралуыңмен, ${username}!`);
+            }
+        }
+
+        function loginSuccess(user) {
+            currentUser = user;
+            checkDailyReset();
+            localStorage.setItem('sq_active_user', user.username);
+            document.getElementById('auth-screen').style.display = 'none';
+            document.getElementById('app-wrapper').style.display = 'block';
+            renderAll();
+        }
+
+        function logout() {
+            localStorage.removeItem('sq_active_user');
+            currentUser = null;
+            document.getElementById('app-wrapper').style.display = 'none';
+            document.getElementById('auth-screen').style.display = 'block';
+        }
+
+        function checkDailyReset() {
+            const today = getTodayStr();
+            if (currentUser.dailyDate !== today) {
+                currentUser.dailyDate = today;
+                currentUser.dailyEarned = 0;
+                currentUser.completedQuestsToday = [];
+                persistCurrentUser();
+            }
+        }
+
+        function persistCurrentUser() {
+            const db = getUsersDB();
+            db[currentUser.username] = currentUser;
+            saveUsersDB(db);
+        }
+
+        /* ================= НАЧИСЛЕНИЕ ЗВЕЗД С УЧЕТОМ ЛИМИТА 100/ДЕНЬ ================= */
+        function addStars(amount, reason) {
+            checkDailyReset();
+            const remaining = DAILY_LIMIT - currentUser.dailyEarned;
+
+            if (remaining <= 0) {
+                showToast(`🛑 Бүгінгі лимит (100 ⭐) толды! Ертең қайта жинай аласың, ал картамен жүру шексіз.`);
+                return 0;
+            }
+
+            const actualAdd = Math.min(amount, remaining);
+            currentUser.stars += actualAdd;
+            currentUser.dailyEarned += actualAdd;
+            persistCurrentUser();
+            updateUIStats();
+
+            if (actualAdd < amount) {
+                showToast(`⭐ +${actualAdd} жұлдызша (${reason}). Күндік лимит 100/100 толды!`);
+            } else {
+                showToast(`⭐ +${actualAdd} жұлдызша! (${reason})`);
+            }
+            return actualAdd;
+        }
+
+        /* ================= 3D КАРТА ШКОЛЫ И МАРШРУТЫ ================= */
+        function setFloor(floor, btn) {
+            currentFloor = floor;
+            document.querySelectorAll('.floor-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            document.getElementById('board-floor-label').textContent = `${floor}-ҚАБАТ`;
+            activeRoute = null;
+            document.getElementById('route-path').setAttribute('d', '');
+            document.getElementById('stars-container').innerHTML = '';
+            document.getElementById('sim-btn').disabled = true;
+            renderMapFloor();
+        }
+
+        function renderMapFloor() {
+            const container = document.getElementById('rooms-container');
+            const select = document.getElementById('room-select');
+            container.innerHTML = '';
+            select.innerHTML = '<option value="">-- Баратын кабинетті таңдаңыз --</option>';
+
+            SCHOOL_ROOMS[currentFloor].forEach(room => {
+                // Кнопка кабинета на 3D доске
+                const div = document.createElement('div');
+                div.className = 'room-3d';
+                div.id = `room-${room.id}`;
+                div.style.left = room.x + '%';
+                div.style.top = room.y + '%';
+                div.style.width = room.w + '%';
+                div.style.height = room.h + '%';
+                div.innerHTML = `<span class="icon">${room.icon}</span><span>${room.name}</span>`;
+                div.onclick = () => {
+                    select.value = room.id;
+                    buildRoute(room.id);
+                };
+                container.appendChild(div);
+
+                // Пункт в выпадающем списке
+                const opt = document.createElement('option');
+                opt.value = room.id;
+                opt.textContent = `${room.icon} ${room.name}`;
+                select.appendChild(opt);
+            });
+
+            // Сброс позиции ученика ко входу/лестнице
+            const marker = document.getElementById('player-marker');
+            marker.style.left = '50%';
+            marker.style.top = '88%';
+        }
+
+        function buildRoute(roomId) {
+            document.querySelectorAll('.room-3d').forEach(r => r.classList.remove('target-room'));
+            const starsContainer = document.getElementById('stars-container');
+            starsContainer.innerHTML = '';
+
+            if (!roomId) {
+                document.getElementById('route-path').setAttribute('d', '');
+                document.getElementById('sim-btn').disabled = true;
+                return;
+            }
+
+            const room = SCHOOL_ROOMS[currentFloor].find(r => r.id === roomId);
+            if (!room) return;
+
+            document.getElementById(`room-${room.id}`).classList.add('target-room');
+            showToast(`🧭 Бағыт: ${room.name} — ${room.desc}`);
+
+            // Точки маршрута (от входа 50%, 88% через коридор 50% до кабинета)
+            const targetX = room.x + room.w / 2;
+            const targetY = room.y + room.h / 2;
+
+            const waypoints = [
+                { x: 50, y: 88 },
+                { x: 50, y: 50 },
+                { x: targetX, y: 50 },
+                { x: targetX, y: targetY }
+            ];
+
+            // Рисуем SVG линию (координаты viewBox 680x410)
+            const svgPoints = waypoints.map(p => `${(p.x / 100) * 680},${(p.y / 100) * 410}`);
+            document.getElementById('route-path').setAttribute('d', 'M ' + svgPoints.join(' L '));
+
+            // Расставляем 3 звездочки вдоль дороги
+            const starSpots = [
+                { x: 50, y: 68, collected: false, reward: 5 },
+                { x: (50 + targetX) / 2, y: 50, collected: false, reward: 5 },
+                { x: targetX, y: (50 + targetY) / 2, collected: false, reward: 10 }
+            ];
+
+            activeRoute = { room, waypoints, stars: starSpots, step: 0 };
+            document.getElementById('sim-btn').disabled = false;
+
+            starSpots.forEach((st, idx) => {
+                const el = document.createElement('div');
+                el.className = 'route-star';
+                el.id = `r-star-${idx}`;
+                el.style.left = st.x + '%';
+                el.style.top = st.y + '%';
+                el.textContent = '⭐';
+                el.title = `+${st.reward} жұлдызша`;
+                starsContainer.appendChild(el);
+            });
+        }
+
+        function toggle3DAngle() {
+            document.getElementById('school-scene').classList.toggle('flat-view');
+        }
+
+        /* ================= ГЕОЛОКАЦИЯ И ПРОХОЖДЕНИЕ МАРШРУТА ================= */
+        function requestGPS() {
+            if (!navigator.geolocation) {
+                showToast('❌ Браузер геолокацияны қолдамайды.');
+                return;
+            }
+            document.getElementById('gps-status').textContent = '📡 Геолокация: Сұралуда...';
+            gpsWatchId = navigator.geolocation.watchPosition(
+                (pos) => {
+                    const { latitude, longitude } = pos.coords;
+                    document.getElementById('gps-status').textContent = '🟢 Геолокация: Белсенді (GPS қосулы)';
+                    document.getElementById('gps-coords').textContent = `Координат: ${latitude.toFixed(5)}, ${longitude.toFixed(5)} — қозғалыс бақылануда`;
+                    if (activeRoute) {
+                        advancePlayerOnRoute();
+                    }
+                },
+                (err) => {
+                    document.getElementById('gps-status').textContent = '🔴 Геолокация: Рұқсат берілмеді';
+                    document.getElementById('gps-coords').textContent = 'Браузер баптауынан геолокацияға рұқсат беріңіз немесе «Маршрутпен жүру» батырмасын қолданыңыз.';
+                    showToast('⚠️ Геолокацияға рұқсат берілмеді.');
+                },
+                { enableHighAccuracy: true, maximumAge: 3000 }
+            );
+        }
+
+        // Симуляция шагов по маршруту для проверки сбора звездочек
+        function simulateWalk() {
+            if (!activeRoute) return;
+            advancePlayerOnRoute();
+        }
+
+        function advancePlayerOnRoute() {
+            if (!activeRoute) return;
+            const marker = document.getElementById('player-marker');
+            activeRoute.step++;
+
+            if (activeRoute.step < activeRoute.waypoints.length) {
+                const pt = activeRoute.waypoints[activeRoute.step];
+                marker.style.left = pt.x + '%';
+                marker.style.top = pt.y + '%';
+
+                // Проверяем сбор соответствующей звездочки
+                const starIdx = activeRoute.step - 1;
+                if (activeRoute.stars[starIdx] && !activeRoute.stars[starIdx].collected) {
+                    activeRoute.stars[starIdx].collected = true;
+                    document.getElementById(`r-star-${starIdx}`).classList.add('collected');
+                    addStars(activeRoute.stars[starIdx].reward, 'Маршруттағы жұлдызша');
+                }
+
+                if (activeRoute.step === activeRoute.waypoints.length - 1) {
+                    showToast(`🏁 Сен «${activeRoute.room.name}» кабинетіне жеттің!`);
+                    document.getElementById('sim-btn').disabled = true;
+                }
+            }
+        }
+
+        /* ================= КВЕСТЫ (РОТАЦИЯ 14 ДНЕЙ БЕЗ ПОВТОРОВ) ================= */
+        function getTodaysQuests() {
+            // Вычисляем номер дня от эпохи, цикл 14 дней (каждый день 3 разных квеста)
+            const dayIndex = Math.floor(Date.now() / 86400000);
+            const cycleDay = dayIndex % 14;
+            const quests = [];
+            for (let i = 0; i < 3; i++) {
+                // Смещение гарантирует, что за 14 дней наборы не повторяются
+                const qIdx = (cycleDay * 3 + i) % ALL_QUESTS.length;
+                quests.push(ALL_QUESTS[qIdx]);
+            }
+            return quests;
+        }
+
+        function renderQuests() {
+            const list = document.getElementById('quests-list');
+            list.innerHTML = '';
+            const todays = getTodaysQuests();
+
+            todays.forEach(q => {
+                const isDone = currentUser.completedQuestsToday.includes(q.id);
+                const div = document.createElement('div');
+                div.className = 'quest-item';
+                div.innerHTML = `
+                    <div>
+                        <span class="reward-tag">+${q.reward} ⭐</span>
+                        <h3 style="margin-top: 8px;">${q.title}</h3>
+                        <p style="font-size: 0.88rem; color: var(--muted); margin-top: 4px;">${q.desc}</p>
+                    </div>
+                    <button class="btn ${isDone ? 'btn-outline' : ''}" ${isDone ? 'disabled' : ''} onclick="completeQuest('${q.id}', ${q.reward}, '${q.title}')">
+                        ${isDone ? '✅ Бүгін орындалды' : 'Орындадым!'}
+                    </button>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        function completeQuest(qId, reward, title) {
+            checkDailyReset();
+            if (currentUser.completedQuestsToday.includes(qId)) return;
+
+            currentUser.completedQuestsToday.push(qId);
+            addStars(reward, `Квест: ${title}`);
+            persistCurrentUser();
+            renderQuests();
+        }
+
+        /* ================= МАГАЗИН КЕШБЭКА ================= */
+        function renderShop() {
+            const list = document.getElementById('shop-list');
+            list.innerHTML = '';
+            SHOP_ITEMS.forEach(item => {
+                const canBuy = currentUser.stars >= item.cost;
+                const div = document.createElement('div');
+                div.className = 'shop-item';
+                div.innerHTML = `
+                    <div>
+                        <span class="reward-tag">${item.cost} ⭐</span>
+                        <h3 style="margin-top: 8px;">${item.title}</h3>
+                        <p style="font-size: 0.88rem; color: var(--muted); margin-top: 4px;">${item.desc}</p>
+                    </div>
+                    <button class="btn btn-gold" ${canBuy ? '' : 'disabled'} onclick="buyItem('${item.id}')">
+                        ${canBuy ? 'Айырбастау 🎁' : 'Жұлдызша жеткіліксіз'}
+                    </button>
+                `;
+                list.appendChild(div);
+            });
+
+            const couponsEl = document.getElementById('my-coupons');
+            if (currentUser.coupons && currentUser.coupons.length > 0) {
+                couponsEl.innerHTML = currentUser.coupons.map(c => 
+                    `<div style="background:#ecfdf5; border:1px dashed #10b981; padding:10px 14px; border-radius:10px; margin-bottom:8px; color:#065f46; font-weight:600;">
+                        🎟️ ${c.title} — Код: <span style="font-family:monospace; background:white; padding:2px 6px; border-radius:4px;">${c.code}</span>
+                    </div>`
+                ).join('');
+            }
+        }
+
+        function buyItem(itemId) {
+            const item = SHOP_ITEMS.find(i => i.id === itemId);
+            if (!item || currentUser.stars < item.cost) return;
+
+            currentUser.stars -= item.cost;
+            const code = 'SQ-' + Math.floor(1000 + Math.random() * 9000);
+            currentUser.coupons.push({ title: item.title, code });
+            persistCurrentUser();
+            renderAll();
+            showToast(`🎉 Сәтті сатып алынды! Купон коды: ${code}`);
+        }
+
+        /* ================= РЕЙТИНГ И ОБНОВЛЕНИЕ ИНТЕРФЕЙСА ================= */
+        function renderRating() {
+            const db = getUsersDB();
+            const players = Object.values(db);
+            // Добавим пару демо-учеников для живой таблицы, если пользователь пока один
+            if (players.length < 3) {
+                players.push({ username: 'Aruzhan_7B', grade: '7 «Б»', stars: 145 });
+                players.push({ username: 'Daniyar_5A', grade: '5 «А»', stars: 95 });
+            }
+            players.sort((a, b) => b.stars - a.stars);
+
+            const tbody = document.getElementById('rating-tbody');
+            tbody.innerHTML = players.map((p, i) => `
+                <tr style="${p.username === currentUser.username ? 'background:#ecfdf5; font-weight:bold;' : ''}">
+                    <td>${i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : i + 1}</td>
+                    <td>${p.username} ${p.username === currentUser.username ? '(Сен)' : ''}</td>
+                    <td>${p.grade || '-'}</td>
+                    <td>⭐ ${p.stars}</td>
+                </tr>
+            `).join('');
+        }
+
+        function updateUIStats() {
+            document.getElementById('display-user').textContent = currentUser.username;
+            document.getElementById('display-grade').textContent = currentUser.grade;
+            document.getElementById('welcome-name').textContent = currentUser.username;
+            document.getElementById('header-stars').textContent = currentUser.stars;
+            document.getElementById('main-stars').textContent = currentUser.stars;
+            document.getElementById('header-daily').textContent = currentUser.dailyEarned;
+            document.getElementById('daily-limit-text').textContent = `${currentUser.dailyEarned} / ${DAILY_LIMIT}`;
+            document.getElementById('quest-daily-status').textContent = `${currentUser.dailyEarned}/${DAILY_LIMIT}`;
+
+            const pct = Math.min(100, (currentUser.dailyEarned / DAILY_LIMIT) * 100);
+            document.getElementById('daily-progress-bar').style.width = pct + '%';
+        }
+
+        function renderAll() {
+            updateUIStats();
+            renderMapFloor();
+            renderQuests();
+            renderShop();
+            renderRating();
+        }
+
+        function showSection(secId, btn) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById('sec-' + secId).classList.add('active');
+            document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            if (secId === 'rating') renderRating();
+            if (secId === 'shop') renderShop();
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3600);
+        }
+
+        // Автоматический вход, если сессия уже сохранена
+        window.onload = () => {
+            const activeName = localStorage.getItem('sq_active_user');
+            const db = getUsersDB();
+            if (activeName && db[activeName]) {
+                loginSuccess(db[activeName]);
+            }
+        };
+    </script>
 </body>
-
 </html>
