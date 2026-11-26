@@ -125,44 +125,25 @@
     }
     .limit-bar-fill { background: var(--accent); height: 100%; width: 0%; transition: width 0.35s ease; }
 
-    /* ФОТО СЫЗБА ТАҚТАСЫ */
-    .blueprint-toolbar {
-      display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
-      margin: 12px 0; padding: 12px; background: #f8fafc;
-      border: 1px solid #e2e8f0; border-radius: 14px;
-    }
+    /* ИНТЕРАКТИВТІ КАРТА СТИЛЬДЕРІ */
     .blueprint-stage {
-      background: #0f172a; border-radius: 18px; padding: 14px;
+      background: #0f172a; border-radius: 18px; padding: 16px;
       border: 4px solid #334155; overflow: hidden; position: relative;
     }
     .blueprint-frame {
       position: relative; width: 100%; max-width: 860px; margin: 0 auto; border-radius: 12px;
       overflow: hidden; background: #1e293b; cursor: crosshair;
       transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-      user-select: none; min-height: 320px;
-      display: flex; align-items: center; justify-content: center;
+      user-select: none;
     }
     .blueprint-frame img {
       width: 100%; height: auto; display: block;
-    }
-    .empty-photo-placeholder {
-      padding: 40px 20px; text-align: center; color: #e2e8f0; width: 100%;
-      background: repeating-linear-gradient(
-        45deg,
-        rgba(255,255,255,0.03),
-        rgba(255,255,255,0.03) 12px,
-        rgba(255,255,255,0.06) 12px,
-        rgba(255,255,255,0.06) 24px
-      );
     }
     .locked-room-pin {
       position: absolute; transform: translate(-50%, -100%);
       background: #0f5c3e; color: #ffffff; font-weight: 800; font-size: 0.75rem;
       padding: 4px 9px; border-radius: 999px; box-shadow: 0 3px 10px rgba(0,0,0,0.45);
       border: 2px solid #fbbf24; z-index: 6; white-space: nowrap; cursor: pointer;
-    }
-    .locked-room-pin.selected-pin {
-      background: #064e3b; border-color: #ffffff; box-shadow: 0 0 0 3px #f59e0b;
     }
     .draft-room-pin {
       position: absolute; transform: translate(-50%, -100%);
@@ -180,13 +161,6 @@
     .room-chip {
       background: #ecfdf5; border: 1px solid #a7f3d0; color: #065f46;
       padding: 6px 11px; border-radius: 10px; font-size: 0.84rem; font-weight: 600;
-      cursor: pointer; transition: 0.15s;
-    }
-    .room-chip:hover { background: #d1fae5; }
-    .pin-detail-card {
-      margin-top: 12px; padding: 12px 14px; background: #ffffff;
-      border: 1px solid #cbd5e1; border-radius: 12px; font-size: 0.88rem;
-      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
     }
 
     .info-box {
@@ -299,6 +273,7 @@
   <div class="bg-decor" style="bottom: 18%; left: 5%; animation-delay: 3s;">📚</div>
   <div class="bg-decor" style="bottom: 25%; right: 6%; animation-delay: 4s;">🎓</div>
 
+  <!-- АВТОРИЗАЦИЯ -->
   <div id="auth-screen" class="card">
     <div class="auth-lang-bar">
       <button class="lang-btn active" data-lang="kk" onclick="setLanguage('kk')">ҚАЗ</button>
@@ -345,6 +320,7 @@
     <button id="btn-auth-submit" class="btn" style="width: 100%; margin-top: 4px;" onclick="handleAuth()">Жалғастыру 🚀</button>
   </div>
 
+  <!-- НЕГІЗГІ ИНТЕРФЕЙС -->
   <div id="app-wrapper" style="display: none;">
     <header>
       <div class="lang-bar">
@@ -381,6 +357,7 @@
     </nav>
 
     <main>
+      <!-- БАСТЫ БЕТ -->
       <section id="sec-home" class="section active">
         <div class="card">
           <h2><span id="txt-hello">Сәлем,</span> <span id="welcome-name"></span>! 🎒</h2>
@@ -409,6 +386,7 @@
         </div>
       </section>
 
+      <!-- ЖАҢАЛЫҚТАР -->
       <section id="sec-news" class="section">
         <div class="card">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
@@ -452,13 +430,14 @@
         </div>
       </section>
 
+      <!-- ИНТЕРАКТИВТІ МЕКТЕП КАРТАСЫ (1-4 ҚАБАТ + БІР РЕТТІК КАБИНЕТ ЕНГІЗУ) -->
       <section id="sec-map" class="section">
         <div class="card">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
             <div>
-              <h2 id="txt-map-title">🗺️ Фото арқылы интерактивті сызба тақтасы (1–4 қабат)</h2>
+              <h2 id="txt-map-title">🗺️ Мектеп картасы (1–4 қабат)</h2>
               <p id="txt-map-desc" style="color: var(--muted); font-size: 0.88rem; margin-top: 4px;">
-                Қабатты таңдап, сызба фотосын жүктеңіз немесе бар фотоның үстінен нүкте басып, кабинет нөмірін енгізіңіз.
+                Қабатты таңдап, сызбаның кез келген бөлігін басыңыз да, кабинет нөмірін енгізіп сақтаңыз. Бір кабинетті бір рет енгізген соң, қайта енгізуге болмайды.
               </p>
             </div>
             <div class="compass-badge">
@@ -476,40 +455,31 @@
             </span>
           </div>
 
-          <div class="blueprint-toolbar">
-            <label for="floor-photo-input" class="btn btn-gold" style="margin:0; cursor:pointer;">
-              📷 <span id="txt-upload-photo-btn">Қабат фотосын жүктеу</span>
-            </label>
-            <input type="file" id="floor-photo-input" accept="image/*" style="display:none;" onchange="handleFloorPhotoUpload(event)">
-            <button id="btn-clear-floor-photo" class="btn btn-outline" onclick="clearFloorPhoto()">🗑️ Фотоны өшіру</button>
-            <span id="photo-status-label" style="font-size:0.84rem; color:var(--muted);"></span>
-          </div>
-
           <div class="blueprint-stage">
             <div class="blueprint-frame" id="blueprint-frame" onclick="handleMapClick(event)">
-              <img id="blueprint-img" src="" alt="Қабат сызбасы" style="display:none;" onload="onFloorPhotoLoaded()">
-              <div id="empty-photo-box" class="empty-photo-placeholder">
-                <p style="font-size:1.1rem; font-weight:700; margin-bottom:6px;">🖼️ <span id="txt-no-photo-title">Сызба фотосы әлі таңдалмаған</span></p>
-                <p id="txt-no-photo-desc" style="font-size:0.88rem; color:#cbd5e1;">«Қабат фотосын жүктеу» батырмасын басып, қабат сызбасының фотосын таңдаңыз.</p>
-              </div>
+              <img id="blueprint-img" src="school-floors-map.jpg" alt="1-4 қабаттар мектеп сызбасы" onerror="handlePlanImageError()">
               <div id="draft-room-pin" class="draft-room-pin" style="display:none;">📍 Жаңа нүкте</div>
               <div id="locked-pins-layer"></div>
             </div>
+            <div id="plan-fallback-msg" style="display:none; color:#fbbf24; font-size:0.85rem; text-align:center; margin-top:8px;">
+              Сызба суреті табылмады: <code>school-floors-map.jpg</code> файлын репозиторийге жүктеңіз.
+            </div>
           </div>
 
+          <!-- КАБИНЕТ НӨМІРІН ЕНГІЗУ ФОРМАСЫ -->
           <div class="info-box" style="border-color:#a7f3d0; background:#f0fdf4;">
             <h3 id="txt-add-room-title">✏️ Кабинет нөмірін белгілеу және сақтау (+15 ⭐)</h3>
             <p id="txt-add-room-desc" style="font-size:0.85rem; color:var(--muted); margin:4px 0 10px;">
-              Алдымен фото үстінен қажетті нүктені басыңыз, сосын кабинет нөмірін немесе атауын жазып сақтаңыз.
+              Алдымен сызбадан қажетті жерді басыңыз, сосын кабинет нөмірін немесе атауын жазып сақтаңыз.
             </p>
             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap:10px;">
               <div>
                 <label style="font-size:0.78rem; font-weight:700; color:var(--muted);" id="lbl-coord-x">X координата (%)</label>
-                <input type="text" id="room-coord-x" readonly placeholder="Фотоны бас..." style="width:100%; padding:9px 11px; border:2px solid #cbd5e1; border-radius:10px; background:#f8fafc; font-weight:700;">
+                <input type="text" id="room-coord-x" readonly placeholder="Картаны бас..." style="width:100%; padding:9px 11px; border:2px solid #cbd5e1; border-radius:10px; background:#f8fafc; font-weight:700;">
               </div>
               <div>
                 <label style="font-size:0.78rem; font-weight:700; color:var(--muted);" id="lbl-coord-y">Y координата (%)</label>
-                <input type="text" id="room-coord-y" readonly placeholder="Фотоны бас..." style="width:100%; padding:9px 11px; border:2px solid #cbd5e1; border-radius:10px; background:#f8fafc; font-weight:700;">
+                <input type="text" id="room-coord-y" readonly placeholder="Картаны бас..." style="width:100%; padding:9px 11px; border:2px solid #cbd5e1; border-radius:10px; background:#f8fafc; font-weight:700;">
               </div>
               <div>
                 <label style="font-size:0.78rem; font-weight:700; color:var(--muted);" id="lbl-room-num">Кабинет нөмірі / атауы</label>
@@ -522,12 +492,13 @@
             </div>
           </div>
 
+          <!-- БЕКІТІЛГЕН КАБИНЕТТЕР ТІЗІМІ -->
           <div class="info-box">
             <h3 id="txt-saved-rooms-title">📌 Бекітілген кабинеттер (қайта енгізу жабық)</h3>
             <div id="saved-rooms-list" class="room-chip-list"></div>
-            <div id="selected-room-detail" class="pin-detail-card" style="display:none;"></div>
           </div>
 
+          <!-- ПОСТЕР-ОРИЕНТАТОРМЕН КАРТАНЫ БҰРУ -->
           <div class="info-box">
             <h3 id="txt-poster-title">🪧 Қабырғадағы постер-ориентатор коды</h3>
             <p id="txt-poster-desc" style="font-size:0.85rem; color:var(--muted); margin:4px 0 10px;">
@@ -541,6 +512,7 @@
         </div>
       </section>
 
+      <!-- ПӘНДІК КВЕСТТЕР -->
       <section id="sec-quests" class="section">
         <div class="card">
           <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
@@ -554,6 +526,7 @@
         </div>
       </section>
 
+      <!-- ДОСТАР -->
       <section id="sec-friends" class="section">
         <div class="card">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
@@ -590,6 +563,7 @@
         </div>
       </section>
 
+      <!-- КЕШБЭК ДҮКЕНІ -->
       <section id="sec-shop" class="section">
         <div class="card">
           <h2 id="txt-shop-title">🎁 Кешбэк дүкені</h2>
@@ -601,6 +575,7 @@
         </div>
       </section>
 
+      <!-- РЕЙТИНГ -->
       <section id="sec-rating" class="section">
         <div class="card">
           <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
@@ -620,6 +595,7 @@
       </section>
     </main>
 
+    <!-- АСТЫНДАҒЫ ҚЫЗЫҚТЫ ДЕКОРЛАР -->
     <div class="bottom-decor-strip">
       <div class="decor-ribbon">
         <span class="decor-sticker">✨ Білім — таусылмайтын қазына</span>
@@ -630,6 +606,7 @@
       </div>
     </div>
 
+    <!-- INSTAGRAM БЛОКТАРЫ -->
     <footer class="site-footer">
       <div class="footer-card">
         <h3 id="txt-socials-title">📱 Біздің ресми Instagram парақшаларымыз</h3>
@@ -644,12 +621,33 @@
   <div id="toast"></div>
 
   <script>
+    /* ================= INSTAGRAM ПАРАҚШАЛАРЫ ================= */
     const SCHOOL_SOCIAL_LINKS = {
-      author: { title: { kk: '💻 Жоба авторы', ru: '💻 Автор проекта', en: '💻 Project Author' }, handle: '@_zhannixs', url: 'https://www.instagram.com/_zhannixs' },
-      president: { title: { kk: '👑 Мектеп президенті', ru: '👑 Президент школы', en: '👑 School President' }, handle: '@n_nuraxqw', url: 'https://www.instagram.com/n_nuraxqw' },
-      school: { title: { kk: '🏫 Мектеп парақшасы', ru: '🏫 Страница школы', en: '🏫 School Page' }, handle: '@astana_keleshekmektebi_109', url: 'https://www.instagram.com/astana_keleshekmektebi_109' },
-      parliament: { title: { kk: '🏛️ Мектеп парламенті', ru: '🏛️ Школьный парламент', en: '🏛️ School Parliament' }, handle: '@109parliament_official', url: 'https://www.instagram.com/109parliament_official' },
-      podcast: { title: { kk: '🎙️ Мектеп подкасты', ru: '🎙️ Школьный подкаст', en: '🎙️ School Podcast' }, handle: '@109oy_podcast', url: 'https://www.instagram.com/109oy_podcast' }
+      author: {
+        title: { kk: '💻 Жоба авторы', ru: '💻 Автор проекта', en: '💻 Project Author' },
+        handle: '@_zhannixs',
+        url: 'https://www.instagram.com/_zhannixs?dmpr=MW5vNDVobHg1ang3dw%3D%3D&utm_source=qr'
+      },
+      president: {
+        title: { kk: '👑 Мектеп президенті', ru: '👑 Президент школы', en: '👑 School President' },
+        handle: '@n_nuraxqw',
+        url: 'https://www.instagram.com/n_nuraxqw?bqrl=OHBhY3c2cGkwdWI4'
+      },
+      school: {
+        title: { kk: '🏫 Мектеп парақшасы', ru: '🏫 Страница школы', en: '🏫 School Page' },
+        handle: '@astana_keleshekmektebi_109',
+        url: 'https://www.instagram.com/astana_keleshekmektebi_109?dmpr=MXhxYXZvbWtiYWJ4MA=='
+      },
+      parliament: {
+        title: { kk: '🏛️ Мектеп парламенті', ru: '🏛️ Школьный парламент', en: '🏛️ School Parliament' },
+        handle: '@109parliament_official',
+        url: 'https://www.instagram.com/109parliament_official?cnvx=ODFuZXB3ZTk4eGN0&wa_status_inline=true'
+      },
+      podcast: {
+        title: { kk: '🎙️ Мектеп подкасты', ru: '🎙️ Школьный подкаст', en: '🎙️ School Podcast' },
+        handle: '@109oy_podcast',
+        url: 'https://www.instagram.com/109oy_podcast?hvrq=MWg3Y3ZtcjBkNjl5OQ=='
+      }
     };
 
     function renderInstagramFooter() {
@@ -670,6 +668,7 @@
       }).join('');
     }
 
+    /* ================= ҚАЗАҚША -> РУС / ENG АВТОАУДАРМА ================= */
     const KK_TO_RU_PHRASES = [
       ['құрметті оқушылар', 'дорогие ученики'],
       ['мектеп жаңалықтары', 'школьные новости'],
@@ -754,6 +753,7 @@
       imgEl.src = `data:image/svg+xml;utf8,${svg}`;
     }
 
+    /* ================= ТІЛДЕР ================= */
     let currentLang = localStorage.getItem('sq_lang') || 'kk';
 
     const I18N = {
@@ -806,21 +806,15 @@
         publishNewsBtn: '📢 Жариялау',
         noNews: 'Әзірге жаңалықтар жарияланбаған.',
         deleteBtn: 'Өшіру',
-        mapTitle: '🗺️ Фото арқылы интерактивті сызба тақтасы (1–4 қабат)',
-        mapDesc: 'Қабатты таңдап, сызба фотосын жүктеңіз немесе бар фотоның үстінен нүкте басып, кабинет нөмірін енгізіңіз.',
-        uploadPhotoBtn: 'Қабат фотосын жүктеу',
-        clearPhotoBtn: '🗑️ Фотоны өшіру',
-        noPhotoTitle: 'Сызба фотосы әлі таңдалмаған',
-        noPhotoDesc: '«Қабат фотосын жүктеу» батырмасын басып, қабат сызбасының фотосын таңдаңыз.',
-        photoSavedMsg: '📷 Фото сақталды — үстінен нүкте басыңыз',
+        mapTitle: '🗺️ Мектеп картасы (1–4 қабат)',
+        mapDesc: 'Қабатты таңдап, сызбаның кез келген бөлігін басыңыз да, кабинет нөмірін енгізіп сақтаңыз. Бір кабинетті бір рет енгізген соң, қайта енгізуге болмайды.',
         orient: 'Бағдар:',
         activeFloorLbl: 'Таңдалған қабат:',
         floorUnit: '-қабат',
         addRoomTitle: '✏️ Кабинет нөмірін белгілеу және сақтау (+15 ⭐)',
-        addRoomDesc: 'Алдымен фото үстінен қажетті нүктені басыңыз, сосын кабинет нөмірін немесе атауын жазып сақтаңыз.',
+        addRoomDesc: 'Алдымен сызбадан қажетті жерді басыңыз, сосын кабинет нөмірін немесе атауын жазып сақтаңыз.',
         lblCoordX: 'X координата (%)',
         lblCoordY: 'Y координата (%)',
-        coordPlaceholder: 'Фотоны бас...',
         lblRoomNum: 'Кабинет нөмірі / атауы',
         roomNumPh: 'Мысалы: 105 немесе Асхана',
         saveRoomBtn: '💾 Кабинетті бекіту (+15 ⭐)',
@@ -870,11 +864,10 @@
         msgPresUnlocked: '👑 Мектеп президенті режимі қосылды!',
         msgNewsEmpty: '⚠️ Тақырыбы мен мәтінін толтырыңыз.',
         msgNewsPublished: '📢 Жаңалық жарияланды!',
-        msgPickPointFirst: '⚠️ Алдымен сызба фотосынан нүктені басып таңдаңыз.',
+        msgPickPointFirst: '⚠️ Алдымен сызбадан нүктені басып таңдаңыз.',
         msgRoomEmpty: '⚠️ Кабинет нөмірін немесе атауын жазыңыз.',
         msgRoomExists: '🔒 Бұл кабинет бұрын енгізіліп қойған! Қайта енгізуге болмайды.',
         msgRoomSaved: '✅ Кабинет сақталды және бекітілді!',
-        msgPhotoUploaded: '📷 Қабат фотосы сәтті жүктелді!',
         msgWrongAnswer: '❌ Жауап қате! Қайта ойланып көр.',
         msgEmptyAnswer: '⚠️ Алдымен жауабыңызды жазыңыз.',
         msgSelectFriend: '⚠️ Алдымен оқушыны таңдаңыз.',
@@ -932,26 +925,20 @@
         publishNewsBtn: '📢 Опубликовать',
         noNews: 'Новостей пока нет.',
         deleteBtn: 'Удалить',
-        mapTitle: '🗺️ Интерактивная схема-доска по фото (1–4 этажи)',
-        mapDesc: 'Выберите этаж, загрузите фото схемы и кликните по нужной точке, чтобы указать номер кабинета.',
-        uploadPhotoBtn: 'Загрузить фото этажа',
-        clearPhotoBtn: '🗑️ Удалить фото',
-        noPhotoTitle: 'Фото схемы ещё не выбрано',
-        noPhotoDesc: 'Нажмите «Загрузить фото этажа», чтобы выбрать фото схемы этажа.',
-        photoSavedMsg: '📷 Фото сохранено — нажмите на нужную точку',
+        mapTitle: '🗺️ Карта школы (1–4 этажи)',
+        mapDesc: 'Выберите этаж, нажмите на нужную точку схемы и введите номер кабинета. После сохранения повторный ввод этого кабинета закрыт.',
         orient: 'Ориентир:',
         activeFloorLbl: 'Выбранный этаж:',
         floorUnit: ' этаж',
         addRoomTitle: '✏️ Указать и сохранить номер кабинета (+15 ⭐)',
-        addRoomDesc: 'Сначала кликните по точке на фото, затем введите номер или название кабинета.',
+        addRoomDesc: 'Сначала кликните по точке на схеме, затем введите номер или название кабинета.',
         lblCoordX: 'Координата X (%)',
         lblCoordY: 'Координата Y (%)',
-        coordPlaceholder: 'Нажми на фото...',
         lblRoomNum: 'Номер / название кабинета',
         roomNumPh: 'Например: 105 или Столовая',
         saveRoomBtn: '💾 Закрепить кабинет (+15 ⭐)',
         savedRoomsTitle: '📌 Закреплённые кабинеты (повторный ввод закрыт)',
-        noSavedRooms: 'На этом этаже пока нет сохранённых кабинетов. Кликните по фото, чтобы добавить первый.',
+        noSavedRooms: 'На этом этаже пока нет сохранённых кабинетов. Кликните по схеме, чтобы добавить первый.',
         posterTitle: '🪧 Код настенного постера-ориентатора',
         posterDesc: 'Введите код постера (например: POST-NORTH, POST-EAST, POST-SOUTH, POST-WEST).',
         posterBtn: '🔄 Повернуть карту (+10 ⭐)',
@@ -996,11 +983,10 @@
         msgPresUnlocked: '👑 Режим президента школы включён!',
         msgNewsEmpty: '⚠️ Заполните заголовок и текст новости.',
         msgNewsPublished: '📢 Новость опубликована!',
-        msgPickPointFirst: '⚠️ Сначала выберите точку на фото кликом.',
+        msgPickPointFirst: '⚠️ Сначала выберите точку на карте кликом.',
         msgRoomEmpty: '⚠️ Введите номер или название кабинета.',
         msgRoomExists: '🔒 Этот кабинет уже закреплён! Повторно добавить нельзя.',
         msgRoomSaved: '✅ Кабинет сохранён и закреплён!',
-        msgPhotoUploaded: '📷 Фото этажа загружено!',
         msgWrongAnswer: '❌ Неверный ответ! Попробуйте ещё раз.',
         msgEmptyAnswer: '⚠️ Сначала введите ответ.',
         msgSelectFriend: '⚠️ Сначала выберите ученика.',
@@ -1058,26 +1044,20 @@
         publishNewsBtn: '📢 Publish',
         noNews: 'No news published yet.',
         deleteBtn: 'Delete',
-        mapTitle: '🗺️ Photo Interactive Blueprint Board (Floors 1–4)',
-        mapDesc: 'Select a floor, upload a blueprint photo, and click a point to enter the classroom number.',
-        uploadPhotoBtn: 'Upload Floor Photo',
-        clearPhotoBtn: '🗑️ Remove Photo',
-        noPhotoTitle: 'No blueprint photo selected yet',
-        noPhotoDesc: 'Click «Upload Floor Photo» to select a floor plan image.',
-        photoSavedMsg: '📷 Photo saved — click a point on it',
+        mapTitle: '🗺️ School Map (Floors 1–4)',
+        mapDesc: 'Select a floor, click any spot on the blueprint, and enter the classroom number. Once saved, re-entry is locked.',
         orient: 'Direction:',
         activeFloorLbl: 'Selected floor:',
         floorUnit: ' Floor',
         addRoomTitle: '✏️ Pin & Save Classroom Number (+15 ⭐)',
-        addRoomDesc: 'Click a spot on the photo first, then enter the classroom number or name.',
+        addRoomDesc: 'Click a spot on the blueprint first, then enter the classroom number or name.',
         lblCoordX: 'X Coordinate (%)',
         lblCoordY: 'Y Coordinate (%)',
-        coordPlaceholder: 'Click photo...',
         lblRoomNum: 'Classroom Number / Name',
         roomNumPh: 'e.g. 105 or Cafeteria',
         saveRoomBtn: '💾 Lock Classroom (+15 ⭐)',
         savedRoomsTitle: '📌 Locked Classrooms (re-entry disabled)',
-        noSavedRooms: 'No locked classrooms on this floor yet. Click the photo to add one.',
+        noSavedRooms: 'No locked classrooms on this floor yet. Click the blueprint to add one.',
         posterTitle: '🪧 Wall Poster Orientator Code',
         posterDesc: 'Enter a poster code (e.g. POST-NORTH, POST-EAST, POST-SOUTH, POST-WEST).',
         posterBtn: '🔄 Rotate Map (+10 ⭐)',
@@ -1122,11 +1102,10 @@
         msgPresUnlocked: '👑 School President mode activated!',
         msgNewsEmpty: '⚠️ Please enter both title and content.',
         msgNewsPublished: '📢 News published!',
-        msgPickPointFirst: '⚠️ Click a spot on the photo first.',
+        msgPickPointFirst: '⚠️ Click a spot on the map first.',
         msgRoomEmpty: '⚠️ Enter a classroom number or name.',
         msgRoomExists: '🔒 This classroom is already locked and cannot be re-entered.',
         msgRoomSaved: '✅ Classroom saved and locked!',
-        msgPhotoUploaded: '📷 Floor photo uploaded!',
         msgWrongAnswer: '❌ Incorrect answer! Try again.',
         msgEmptyAnswer: '⚠️ Please enter an answer first.',
         msgSelectFriend: '⚠️ Please select a student first.',
@@ -1202,18 +1181,12 @@
 
       document.getElementById('txt-map-title').textContent = t('mapTitle');
       document.getElementById('txt-map-desc').textContent = t('mapDesc');
-      document.getElementById('txt-upload-photo-btn').textContent = t('uploadPhotoBtn');
-      document.getElementById('btn-clear-floor-photo').textContent = t('clearPhotoBtn');
-      document.getElementById('txt-no-photo-title').textContent = t('noPhotoTitle');
-      document.getElementById('txt-no-photo-desc').textContent = t('noPhotoDesc');
       document.getElementById('txt-orient').textContent = t('orient');
       document.getElementById('txt-active-floor-lbl').textContent = t('activeFloorLbl');
       document.getElementById('txt-add-room-title').textContent = t('addRoomTitle');
       document.getElementById('txt-add-room-desc').textContent = t('addRoomDesc');
       document.getElementById('lbl-coord-x').textContent = t('lblCoordX');
       document.getElementById('lbl-coord-y').textContent = t('lblCoordY');
-      document.getElementById('room-coord-x').placeholder = t('coordPlaceholder');
-      document.getElementById('room-coord-y').placeholder = t('coordPlaceholder');
       document.getElementById('lbl-room-num').textContent = t('lblRoomNum');
       document.getElementById('room-number-input').placeholder = t('roomNumPh');
       document.getElementById('btn-save-room').textContent = t('saveRoomBtn');
@@ -1251,12 +1224,12 @@
       updateActiveFloorBadge();
     }
 
+    /* ================= БАЗА ЖӘНЕ БАПТАУЛАР ================= */
     const DAILY_LIMIT = 100;
     const PRESIDENT_SECRET_CODE = 'PRESIDENT2026';
     const PRESIDENT_SESSION_KEY = 'sq_president_unlocked';
     const NEWS_DB_KEY = 'sq_school_news_db';
     const LOCKED_ROOMS_KEY = 'sq_locked_rooms_db';
-    const FLOOR_PHOTOS_KEY = 'sq_floor_photos_db';
     const DEVICE_LOCK_KEY = 'sq_device_bound_user';
     const USERS_DB_KEY = 'sq_real_users_db';
     const ACTIVE_SESSION_KEY = 'sq_active_session';
@@ -1266,7 +1239,6 @@
       endpoint: 'https://hmpsxafccltbaxtroksz.supabase.co/rest/v1/students',
       apiKey: 'sb_publishable_fMP_Al4M9XbtDWyhOn96jA_3C97eNDs'
     };
-    const SUPABASE_BASE_URL = 'https://hmpsxafccltbaxtroksz.supabase.co/rest/v1';
 
     const BELL_SCHEDULE = [
       { num: 1, time: '08:00 – 08:45', brk: 5 },
@@ -1330,8 +1302,8 @@
     let currentMapAngle = 0;
     let selectedFloor = 1;
     let draftCoords = null;
-    let selectedPinId = null;
 
+    /* ================= КАРТА ФУНКЦИЯЛАРЫ ================= */
     function getLockedRoomsDB() {
       return JSON.parse(localStorage.getItem(LOCKED_ROOMS_KEY) || '[]');
     }
@@ -1340,86 +1312,28 @@
       localStorage.setItem(LOCKED_ROOMS_KEY, JSON.stringify(list));
     }
 
-    function getFloorPhotosDB() {
-      return JSON.parse(localStorage.getItem(FLOOR_PHOTOS_KEY) || '{}');
-    }
-
-    function saveFloorPhotosDB(obj) {
-      localStorage.setItem(FLOOR_PHOTOS_KEY, JSON.stringify(obj));
-    }
-
-    function handleFloorPhotoUpload(event) {
-      const file = event.target.files && event.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const dataUrl = e.target.result;
-        const photos = getFloorPhotosDB();
-        photos[selectedFloor] = dataUrl;
-        saveFloorPhotosDB(photos);
-        renderFloorPhoto();
-        document.getElementById('photo-status-label').textContent = t('photoSavedMsg');
-        showToast(t('msgPhotoUploaded'));
-      };
-      reader.readAsDataURL(file);
-      event.target.value = '';
-    }
-
-    function clearFloorPhoto() {
-      const photos = getFloorPhotosDB();
-      delete photos[selectedFloor];
-      saveFloorPhotosDB(photos);
-      renderFloorPhoto();
-      document.getElementById('photo-status-label').textContent = '';
-    }
-
-    function onFloorPhotoLoaded() {
-      const imgEl = document.getElementById('blueprint-img');
-      const emptyBox = document.getElementById('empty-photo-box');
-      if (imgEl && imgEl.getAttribute('src')) {
-        imgEl.style.display = 'block';
-        if (emptyBox) emptyBox.style.display = 'none';
-      }
-    }
-
-    function renderFloorPhoto() {
-      const imgEl = document.getElementById('blueprint-img');
-      const emptyBox = document.getElementById('empty-photo-box');
-      const photos = getFloorPhotosDB();
-      const savedPhoto = photos[selectedFloor];
-
-      if (savedPhoto) {
-        imgEl.src = savedPhoto;
-        imgEl.style.display = 'block';
-        emptyBox.style.display = 'none';
-      } else {
-        imgEl.removeAttribute('src');
-        imgEl.style.display = 'none';
-        emptyBox.style.display = 'block';
-      }
-    }
-
     function selectFloor(floorNum, btnEl) {
       selectedFloor = floorNum;
       draftCoords = null;
-      selectedPinId = null;
       document.getElementById('room-coord-x').value = '';
       document.getElementById('room-coord-y').value = '';
       document.getElementById('draft-room-pin').style.display = 'none';
       document.getElementById('room-status-msg').textContent = '';
-      document.getElementById('selected-room-detail').style.display = 'none';
 
       document.querySelectorAll('.floor-btn').forEach(b => {
         b.className = parseInt(b.dataset.floor, 10) === floorNum ? 'btn floor-btn' : 'btn btn-outline floor-btn';
       });
       updateActiveFloorBadge();
-      renderFloorPhoto();
       renderMapPinsAndList();
     }
 
     function updateActiveFloorBadge() {
       const el = document.getElementById('active-floor-text');
       if (el) el.textContent = `${selectedFloor}${t('floorUnit')}`;
+    }
+
+    function handlePlanImageError() {
+      document.getElementById('plan-fallback-msg').style.display = 'block';
     }
 
     function handleMapClick(event) {
@@ -1481,7 +1395,6 @@
 
       allRooms.push(entry);
       saveLockedRoomsDB(allRooms);
-      selectedPinId = entry.id;
 
       addStars(15, rawName);
 
@@ -1494,48 +1407,26 @@
       renderMapPinsAndList();
     }
 
-    function inspectPin(pinId, event) {
-      if (event) event.stopPropagation();
-      selectedPinId = pinId;
-      renderMapPinsAndList();
-    }
-
     function renderMapPinsAndList() {
-      renderFloorPhoto();
       const pinsLayer = document.getElementById('locked-pins-layer');
       const listEl = document.getElementById('saved-rooms-list');
-      const detailEl = document.getElementById('selected-room-detail');
-      if (!pinsLayer || !listEl || !detailEl) return;
+      if (!pinsLayer || !listEl) return;
 
       const allRooms = getLockedRoomsDB();
       const floorRooms = allRooms.filter(r => r.floor === selectedFloor);
 
-      pinsLayer.innerHTML = floorRooms.map(r => {
-        const activeClass = r.id === selectedPinId ? ' selected-pin' : '';
-        return `
-          <div class="locked-room-pin${activeClass}" style="left:${r.x}%; top:${r.y}%;" onclick="inspectPin('${r.id}', event)" title="${r.roomNumber} (${r.addedBy})">
-            🔒 ${r.roomNumber}
-          </div>
-        `;
-      }).join('');
+      pinsLayer.innerHTML = floorRooms.map(r => `
+        <div class="locked-room-pin" style="left:${r.x}%; top:${r.y}%;" title="${r.roomNumber} (${r.addedBy})">
+          🔒 ${r.roomNumber}
+        </div>
+      `).join('');
 
       if (!floorRooms.length) {
         listEl.innerHTML = `<p style="color:var(--muted); font-size:0.86rem;">${t('noSavedRooms')}</p>`;
-        detailEl.style.display = 'none';
       } else {
         listEl.innerHTML = floorRooms.map(r => `
-          <span class="room-chip" onclick="inspectPin('${r.id}', event)">🔒 ${r.roomNumber} • (${r.x}%, ${r.y}%) • @${r.addedBy}</span>
+          <span class="room-chip">🔒 ${r.roomNumber} • (${r.x}%, ${r.y}%) • @${r.addedBy}</span>
         `).join('');
-
-        const activeRoom = floorRooms.find(r => r.id === selectedPinId) || floorRooms[floorRooms.length - 1];
-        detailEl.style.display = 'flex';
-        detailEl.innerHTML = `
-          <div>
-            <strong>🔒 ${activeRoom.roomNumber}</strong> — ${activeRoom.floor}${t('floorUnit')}
-            <span style="color:var(--muted);">(${activeRoom.x}%, ${activeRoom.y}%)</span>
-          </div>
-          <span class="badge-pill" style="background:#ecfdf5; color:#065f46;">👤 @${activeRoom.addedBy}</span>
-        `;
       }
     }
 
@@ -1562,6 +1453,7 @@
       }
     }
 
+    /* ================= ЖАҢАЛЫҚТАР ================= */
     function isPresidentUnlocked() {
       return sessionStorage.getItem(PRESIDENT_SESSION_KEY) === '1';
     }
@@ -1597,31 +1489,6 @@
       statusBadge.style.color = unlocked ? '#92400e' : 'var(--muted)';
     }
 
-    // --- ЖАҢАЛЫҚТАР (SUPABASE ОРТАҚ БАЗАСЫ) ---
-    async function fetchCloudNews() {
-      try {
-        const res = await fetch(`${SUPABASE_BASE_URL}/news?select=*&order=created_at.desc`, {
-          method: 'GET',
-          headers: getSupabaseHeaders()
-        });
-        if (res.ok) {
-          const rows = await res.json();
-          if (Array.isArray(rows) && rows.length > 0) {
-            const mapped = rows.map(r => ({
-              id: r.id,
-              titleKk: r.title_kk,
-              bodyKk: r.body_kk,
-              author: r.author,
-              date: r.date_str
-            }));
-            saveNewsDB(mapped);
-            return mapped;
-          }
-        }
-      } catch (_) {}
-      return getNewsDB();
-    }
-
     function getNewsDB() {
       const raw = localStorage.getItem(NEWS_DB_KEY);
       if (raw) return JSON.parse(raw);
@@ -1640,7 +1507,7 @@
       localStorage.setItem(NEWS_DB_KEY, JSON.stringify(list));
     }
 
-    async function publishNews() {
+    function publishNews() {
       if (!isPresidentUnlocked()) return;
       const titleEl = document.getElementById('news-title-input');
       const bodyEl = document.getElementById('news-body-input');
@@ -1650,55 +1517,31 @@
         showToast(t('msgNewsEmpty'));
         return;
       }
-
-      const newItem = {
+      const list = getNewsDB();
+      list.unshift({
         id: 'n_' + Date.now(),
         titleKk,
         bodyKk,
         author: currentUser ? currentUser.username : 'president',
         date: new Date().toLocaleString()
-      };
-
-      const list = getNewsDB();
-      list.unshift(newItem);
+      });
       saveNewsDB(list);
-
-      try {
-        await fetch(`${SUPABASE_BASE_URL}/news`, {
-          method: 'POST',
-          headers: getSupabaseHeaders({ 'Prefer': 'return=minimal' }),
-          body: JSON.stringify({
-            id: newItem.id,
-            title_kk: newItem.titleKk,
-            body_kk: newItem.bodyKk,
-            author: newItem.author,
-            date_str: newItem.date
-          })
-        });
-      } catch (_) {}
-
       titleEl.value = '';
       bodyEl.value = '';
       showToast(t('msgNewsPublished'));
-      await renderNews();
+      renderNews();
     }
 
-    async function deleteNews(id) {
+    function deleteNews(id) {
       if (!isPresidentUnlocked()) return;
       saveNewsDB(getNewsDB().filter(n => n.id !== id));
-      try {
-        await fetch(`${SUPABASE_BASE_URL}/news?id=eq.${encodeURIComponent(id)}`, {
-          method: 'DELETE',
-          headers: getSupabaseHeaders()
-        });
-      } catch (_) {}
-      await renderNews();
+      renderNews();
     }
 
-    async function renderNews() {
+    function renderNews() {
       updatePresidentUI();
       const feed = document.getElementById('news-feed');
-      const list = await fetchCloudNews();
+      const list = getNewsDB();
       const unlocked = isPresidentUnlocked();
       if (!list.length) {
         feed.innerHTML = `<p style="color:var(--muted); font-size:0.9rem;">${t('noNews')}</p>`;
@@ -1721,6 +1564,7 @@
       }).join('');
     }
 
+    /* ================= АККАУНТ ЖӘНЕ БАЛЛ ================= */
     function getTodayStr() { return new Date().toISOString().split('T')[0]; }
     function getUsersDB() { return JSON.parse(localStorage.getItem(USERS_DB_KEY) || '{}'); }
     function saveUsersDB(db) { localStorage.setItem(USERS_DB_KEY, JSON.stringify(db)); }
@@ -1867,6 +1711,7 @@
       return added;
     }
 
+    /* ================= КВЕСТТЕР, ДОСТАР, ДҮКЕН, РЕЙТИНГ ================= */
     function getQuestsForStudent() {
       const tier = getGradeTier(currentUser.grade);
       return QUEST_BANK_BY_TIER[tier] || QUEST_BANK_BY_TIER[8];
@@ -1942,123 +1787,83 @@
       return Array.from(merged.values()).filter(u => u.username !== currentUser.username);
     }
 
-    // --- ДОСТАР ЖӘНЕ ҰСЫНЫСТАР (SUPABASE ОРТАҚ БАЗАСЫ) ---
-    async function syncFriendshipsFromCloud() {
-      if (!currentUser) return;
-      try {
-        const me = encodeURIComponent(currentUser.username);
-        const res = await fetch(
-          `${SUPABASE_BASE_URL}/friendships?or=(from_user.eq.${me},to_user.eq.${me})`,
-          { method: 'GET', headers: getSupabaseHeaders() }
-        );
-        if (!res.ok) return;
-        const rows = await res.json();
-        if (!Array.isArray(rows)) return;
-
-        const friends = [];
-        const incoming = [];
-        const outgoing = [];
-
-        rows.forEach(row => {
-          const other = row.from_user === currentUser.username ? row.to_user : row.from_user;
-          if (row.status === 'accepted') {
-            if (!friends.includes(other)) friends.push(other);
-          } else if (row.status === 'pending') {
-            if (row.to_user === currentUser.username && !incoming.includes(other)) {
-              incoming.push(other);
-            } else if (row.from_user === currentUser.username && !outgoing.includes(other)) {
-              outgoing.push(other);
-            }
-          }
-        });
-
-        currentUser.friends = friends;
-        currentUser.friendRequestsIn = incoming;
-        currentUser.friendRequestsOut = outgoing;
-        const db = getUsersDB();
-        db[currentUser.username] = currentUser;
-        saveUsersDB(db);
-      } catch (_) {}
-    }
-
-    async function sendFriendRequest(explicitTarget = null) {
+    function sendFriendRequest(explicitTarget = null) {
       const selectEl = document.getElementById('friend-select');
       const targetName = (explicitTarget || (selectEl ? selectEl.value : '')).trim();
       if (!targetName) { showToast(t('msgSelectFriend')); return; }
       if (targetName === currentUser.username) { showToast(t('msgFriendSelf')); return; }
-
-      await syncFriendshipsFromCloud();
-
+      const db = getUsersDB();
+      const targetUser = db[targetName];
+      ensureUserFields(currentUser);
       if (currentUser.friends.includes(targetName) || currentUser.friendRequestsOut.includes(targetName)) {
         showToast(t('msgFriendAlready'));
         return;
       }
       if (currentUser.friendRequestsIn.includes(targetName)) {
-        await acceptFriendRequest(targetName);
+        acceptFriendRequest(targetName);
         return;
       }
-
-      const pairId = [currentUser.username, targetName].sort().join('__');
-      try {
-        await fetch(`${SUPABASE_BASE_URL}/friendships?on_conflict=id`, {
-          method: 'POST',
-          headers: getSupabaseHeaders({ 'Prefer': 'resolution=merge-duplicates,return=minimal' }),
-          body: JSON.stringify({
-            id: pairId,
-            from_user: currentUser.username,
-            to_user: targetName,
-            status: 'pending'
-          })
-        });
-      } catch (_) {}
-
       currentUser.friendRequestsOut.push(targetName);
+      if (targetUser) {
+        ensureUserFields(targetUser);
+        if (!targetUser.friendRequestsIn.includes(currentUser.username)) targetUser.friendRequestsIn.push(currentUser.username);
+        db[targetName] = targetUser;
+      }
+      db[currentUser.username] = currentUser;
+      saveUsersDB(db);
+      syncUserToCloud(currentUser);
       showToast(t('msgFriendSent'));
-      await renderFriends();
+      renderFriends();
     }
 
-    async function acceptFriendRequest(fromUser) {
-      const pairId = [currentUser.username, fromUser].sort().join('__');
-      try {
-        await fetch(`${SUPABASE_BASE_URL}/friendships?id=eq.${encodeURIComponent(pairId)}`, {
-          method: 'PATCH',
-          headers: getSupabaseHeaders({ 'Prefer': 'return=minimal' }),
-          body: JSON.stringify({ status: 'accepted' })
-        });
-      } catch (_) {}
-
+    function acceptFriendRequest(fromUser) {
+      const db = getUsersDB();
+      const sender = db[fromUser];
+      currentUser.friendRequestsIn = currentUser.friendRequestsIn.filter(u => u !== fromUser);
+      if (!currentUser.friends.includes(fromUser)) currentUser.friends.push(fromUser);
+      if (sender) {
+        ensureUserFields(sender);
+        sender.friendRequestsOut = sender.friendRequestsOut.filter(u => u !== currentUser.username);
+        if (!sender.friends.includes(currentUser.username)) sender.friends.push(currentUser.username);
+        db[fromUser] = sender;
+      }
+      db[currentUser.username] = currentUser;
+      saveUsersDB(db);
+      syncUserToCloud(currentUser);
       showToast(t('msgFriendAccepted'));
-      await renderFriends();
+      renderFriends();
     }
 
-    async function declineFriendRequest(fromUser) {
-      const pairId = [currentUser.username, fromUser].sort().join('__');
-      try {
-        await fetch(`${SUPABASE_BASE_URL}/friendships?id=eq.${encodeURIComponent(pairId)}`, {
-          method: 'DELETE',
-          headers: getSupabaseHeaders()
-        });
-      } catch (_) {}
-
-      await renderFriends();
+    function declineFriendRequest(fromUser) {
+      const db = getUsersDB();
+      const sender = db[fromUser];
+      currentUser.friendRequestsIn = currentUser.friendRequestsIn.filter(u => u !== fromUser);
+      if (sender) {
+        ensureUserFields(sender);
+        sender.friendRequestsOut = sender.friendRequestsOut.filter(u => u !== currentUser.username);
+        db[fromUser] = sender;
+      }
+      db[currentUser.username] = currentUser;
+      saveUsersDB(db);
+      renderFriends();
     }
 
-    async function removeFriend(friendName) {
-      const pairId = [currentUser.username, friendName].sort().join('__');
-      try {
-        await fetch(`${SUPABASE_BASE_URL}/friendships?id=eq.${encodeURIComponent(pairId)}`, {
-          method: 'DELETE',
-          headers: getSupabaseHeaders()
-        });
-      } catch (_) {}
-
-      await renderFriends();
+    function removeFriend(friendName) {
+      const db = getUsersDB();
+      const friendObj = db[friendName];
+      currentUser.friends = currentUser.friends.filter(u => u !== friendName);
+      if (friendObj) {
+        ensureUserFields(friendObj);
+        friendObj.friends = friendObj.friends.filter(u => u !== currentUser.username);
+        db[friendName] = friendObj;
+      }
+      db[currentUser.username] = currentUser;
+      saveUsersDB(db);
+      renderFriends();
     }
 
     async function renderFriends() {
       ensureUserFields(currentUser);
-      await syncFriendshipsFromCloud();
-
       const db = getUsersDB();
       const students = await getAllRegisteredStudents();
       const selectEl = document.getElementById('friend-select');
@@ -2075,18 +1880,15 @@
       const inEl = document.getElementById('incoming-requests-list');
       inEl.innerHTML = !currentUser.friendRequestsIn.length
         ? `<p style="color:var(--muted); font-size:0.88rem;">${t('noIncoming')}</p>`
-        : currentUser.friendRequestsIn.map(u => {
-            const found = students.find(s => s.username === u) || db[u];
-            return `
-              <div class="friend-row">
-                <span>👤 <strong>${u}</strong> ${found ? '(' + found.grade + ')' : ''}</span>
-                <div style="display:flex; gap:6px;">
-                  <button class="btn" onclick="acceptFriendRequest('${u}')">${t('acceptBtn')}</button>
-                  <button class="btn btn-danger" onclick="declineFriendRequest('${u}')">${t('declineBtn')}</button>
-                </div>
+        : currentUser.friendRequestsIn.map(u => `
+            <div class="friend-row">
+              <span>👤 <strong>${u}</strong> ${db[u] ? '(' + db[u].grade + ')' : ''}</span>
+              <div style="display:flex; gap:6px;">
+                <button class="btn" onclick="acceptFriendRequest('${u}')">${t('acceptBtn')}</button>
+                <button class="btn btn-danger" onclick="declineFriendRequest('${u}')">${t('declineBtn')}</button>
               </div>
-            `;
-          }).join('');
+            </div>
+          `).join('');
 
       const listEl = document.getElementById('friends-list');
       listEl.innerHTML = !currentUser.friends.length
