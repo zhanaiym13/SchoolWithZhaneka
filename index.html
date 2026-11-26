@@ -51,6 +51,14 @@
     .auth-lang-bar .lang-btn.active {
       background: var(--primary); color: white; border-color: var(--primary);
     }
+    .site-logo-auth {
+      width: 84px; height: 84px; object-fit: cover; border-radius: 20px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.14); display: inline-block;
+    }
+    .site-logo-header {
+      width: 44px; height: 44px; object-fit: cover; border-radius: 12px;
+      border: 2px solid rgba(255,255,255,0.45);
+    }
     header {
       background: linear-gradient(135deg, var(--primary) 0%, #083825 100%);
       color: white; padding: 1rem 1rem 1.6rem; text-align: center;
@@ -75,7 +83,7 @@
       border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-size: 0.9rem;
     }
     nav button:hover, nav button.active { background: var(--primary); color: white; transform: translateY(-1px); }
-    main { max-width: 980px; margin: 22px auto; padding: 0 16px 60px; position: relative; z-index: 5; }
+    main { max-width: 980px; margin: 22px auto; padding: 0 16px 32px; position: relative; z-index: 5; }
     .section { display: none; animation: fadeIn 0.25s ease; }
     .section.active { display: block; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
@@ -96,6 +104,7 @@
       background: var(--primary); color: white; border: none; padding: 10px 16px;
       border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 0.9rem;
       transition: 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      text-decoration: none;
     }
     .btn:hover { background: var(--primary-light); }
     .btn-gold { background: var(--accent); color: #1e293b; }
@@ -179,6 +188,55 @@
       background: #fef3c7; color: #92400e; padding: 3px 10px;
       border-radius: 999px; font-size: 0.78rem; font-weight: 700;
     }
+    /* АСТЫНДАҒЫ ҚЫЗЫҚТЫ ДЕКОРЛАР ЖӘНЕ INSTAGRAM ФУТЕРІ */
+    .bottom-decor-strip {
+      max-width: 980px; margin: 10px auto 0; padding: 0 16px; position: relative; z-index: 5;
+    }
+    .decor-ribbon {
+      background: linear-gradient(90deg, rgba(15,92,62,0.12), rgba(245,158,11,0.18), rgba(15,92,62,0.12));
+      border: 1px dashed rgba(15,92,62,0.35);
+      border-radius: 18px; padding: 12px 18px;
+      display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 12px;
+    }
+    .decor-sticker {
+      font-size: 1.02rem; font-weight: 700; color: var(--primary);
+      display: inline-flex; align-items: center; gap: 6px;
+      animation: bobSticker 4.5s ease-in-out infinite;
+    }
+    .decor-sticker:nth-child(2) { animation-delay: 0.8s; color: #b45309; }
+    .decor-sticker:nth-child(3) { animation-delay: 1.6s; color: #be185d; }
+    .decor-sticker:nth-child(4) { animation-delay: 2.4s; color: #0369a1; }
+    .decor-sticker:nth-child(5) { animation-delay: 3.2s; color: #15803d; }
+    @keyframes bobSticker {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-5px) scale(1.03); }
+    }
+    footer.site-footer {
+      max-width: 980px; margin: 16px auto 48px; padding: 0 16px; position: relative; z-index: 6;
+    }
+    .footer-card {
+      background: #ffffff; border-radius: 22px; padding: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+      border: 1px solid rgba(15, 92, 62, 0.12);
+    }
+    .insta-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+      gap: 12px; margin-top: 14px;
+    }
+    .insta-box {
+      background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; padding: 14px;
+      display: flex; flex-direction: column; justify-content: space-between; gap: 10px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .insta-box:hover {
+      transform: translateY(-3px); box-shadow: 0 8px 18px rgba(15,92,62,0.08);
+    }
+    .insta-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: #be185d; font-weight: 700; font-size: 0.86rem; text-decoration: none;
+      word-break: break-word;
+    }
+    .insta-link:hover { text-decoration: underline; }
     #toast {
       position: fixed; bottom: 22px; right: 22px; background: #0f172a; color: white;
       padding: 13px 18px; border-radius: 14px; box-shadow: 0 10px 25px rgba(0,0,0,0.25);
@@ -207,8 +265,8 @@
     </div>
 
     <div style="text-align: center; margin-bottom: 18px;">
-      <div style="font-size: 2.8rem;">🏫🧭</div>
-      <h2 style="color: var(--primary); margin-top: 6px;">SchoolQuest</h2>
+      <img src="logo.png" alt="SchoolQuest Logo" class="site-logo-auth" onerror="handleLogoFallback(this)">
+      <h2 style="color: var(--primary); margin-top: 8px;">SchoolQuest</h2>
       <p id="txt-auth-sub" style="color: var(--muted); font-size: 0.88rem;">Жаңа оқушыға арналған мектеп бағдары</p>
     </div>
 
@@ -253,7 +311,10 @@
         <button class="lang-btn" data-lang="ru" onclick="setLanguage('ru')">РУС</button>
         <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">ENG</button>
       </div>
-      <h1>🏫 SchoolQuest</h1>
+      <h1>
+        <img src="logo.png" alt="SchoolQuest Logo" class="site-logo-header" onerror="handleLogoFallback(this)">
+        SchoolQuest
+      </h1>
       <p id="txt-header-sub">Мектеп сызбасы • Пәндік квесттер • Жаңалықтар • Достар • Кешбэк</p>
       <div class="user-bar">
         <span>
@@ -308,20 +369,19 @@
         </div>
       </section>
 
-      <!-- ЖАҢАЛЫҚТАР (МЕКТЕП ПРЕЗИДЕНТІ) -->
+      <!-- ЖАҢАЛЫҚТАР (МЕКТЕП ПРЕЗИДЕНТІ + 3 ТІЛГЕ АУДАРМА) -->
       <section id="sec-news" class="section">
         <div class="card">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
             <div>
               <h2 id="txt-news-title">📰 Мектеп жаңалықтары</h2>
               <p id="txt-news-sub" style="color: var(--muted); font-size: 0.88rem; margin-top: 4px;">
-                Мектеп президентінің ресми хабарландырулары мен жаңалықтары.
+                Мектеп президентінің жаңалықтары қазақша жазылса да, таңдалған тілге (ҚАЗ / РУС / ENG) аударылады.
               </p>
             </div>
             <span id="president-mode-status" class="badge-pill" style="background:#f1f5f9; color:var(--muted);">👤 Оқушы режимі</span>
           </div>
 
-          <!-- Президент құпия сөзін енгізу -->
           <div id="president-login-box" class="info-box">
             <h3 id="txt-pres-auth-title">👑 Мектеп президентіне арнайы кіру</h3>
             <p id="txt-pres-auth-desc" style="font-size:0.85rem; color:var(--muted); margin:4px 0 10px;">
@@ -333,24 +393,22 @@
             </div>
           </div>
 
-          <!-- Президент жаңалық жариялау формасы -->
           <div id="president-composer-box" class="info-box" style="display:none; border-color:#fcd34d; background:#fffbeb;">
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
-              <h3 id="txt-pres-post-title">✍️ Жаңа жаңалық жариялау</h3>
+              <h3 id="txt-pres-post-title">✍️ Жаңа жаңалық жариялау (қазақша жазсаңыз да 3 тілге аударылады)</h3>
               <button id="btn-president-lock" class="btn btn-outline" onclick="lockPresidentMode()">🔒 Режимнен шығу</button>
             </div>
             <div class="input-group">
-              <label id="lbl-news-title">Жаңалық тақырыбы</label>
-              <input type="text" id="news-title-input" placeholder="Мысалы: Күзгі бал / Олимпиада нәтижесі">
+              <label id="lbl-news-title">Жаңалық тақырыбы (қазақша)</label>
+              <input type="text" id="news-title-input" placeholder="Мысалы: Күзгі бал / Жаңа квест басталды">
             </div>
             <div class="input-group">
-              <label id="lbl-news-body">Мәтіні</label>
-              <textarea id="news-body-input" rows="3" placeholder="Жаңалық мәтінін жазыңыз..."></textarea>
+              <label id="lbl-news-body">Мәтіні (қазақша)</label>
+              <textarea id="news-body-input" rows="3" placeholder="Құрметті оқушылар, ертең мектепте олимпиада және байқау өтеді..."></textarea>
             </div>
             <button id="btn-publish-news" class="btn" onclick="publishNews()">📢 Жариялау</button>
           </div>
 
-          <!-- Жарияланған жаңалықтар тізімі -->
           <div id="news-feed" style="margin-top: 18px;"></div>
         </div>
       </section>
@@ -489,11 +547,187 @@
         </div>
       </section>
     </main>
+
+    <!-- АСТЫНДАҒЫ ҚЫЗЫҚТЫ ДЕКОРЛАР -->
+    <div class="bottom-decor-strip">
+      <div class="decor-ribbon">
+        <span class="decor-sticker">✨ Білім — таусылмайтын қазына</span>
+        <span class="decor-sticker">🌟 Әр квест — жаңа мүмкіндік</span>
+        <span class="decor-sticker">🎙️ 109 OY подкастын тыңда</span>
+        <span class="decor-sticker">🏛️ 109 Парламентпен бірге</span>
+        <span class="decor-sticker">🚀 Алға, SchoolQuest!</span>
+      </div>
+    </div>
+
+    <!-- INSTAGRAM БЛОКТАРЫ: АВТОР, ПРЕЗИДЕНТ, МЕКТЕП, ПАРЛАМЕНТ, ПОДКАСТ -->
+    <footer class="site-footer">
+      <div class="footer-card">
+        <h3 id="txt-socials-title">📱 Біздің ресми Instagram парақшаларымыз</h3>
+        <p id="txt-socials-sub" style="color: var(--muted); font-size: 0.86rem; margin-top: 4px;">
+          Жоба авторы, мектеп президенті, мектеп, парламент және подкаст парақшалары.
+        </p>
+        <div class="insta-grid" id="insta-cards-grid"></div>
+      </div>
+    </footer>
   </div>
 
   <div id="toast"></div>
 
   <script>
+    /* ================= INSTAGRAM ПАРАҚШАЛАРЫ ================= */
+    const SCHOOL_SOCIAL_LINKS = {
+      author: {
+        title: { kk: '💻 Жоба авторы', ru: '💻 Автор проекта', en: '💻 Project Author' },
+        handle: '@_zhannixs',
+        url: 'https://www.instagram.com/_zhannixs?dmpr=MW5vNDVobHg1ang3dw%3D%3D&utm_source=qr'
+      },
+      president: {
+        title: { kk: '👑 Мектеп президенті', ru: '👑 Президент школы', en: '👑 School President' },
+        handle: '@n_nuraxqw',
+        url: 'https://www.instagram.com/n_nuraxqw?bqrl=OHBhY3c2cGkwdWI4'
+      },
+      school: {
+        title: { kk: '🏫 Мектеп парақшасы', ru: '🏫 Страница школы', en: '🏫 School Page' },
+        handle: '@astana_keleshekmektebi_109',
+        url: 'https://www.instagram.com/astana_keleshekmektebi_109?dmpr=MXhxYXZvbWtiYWJ4MA=='
+      },
+      parliament: {
+        title: { kk: '🏛️ Мектеп парламенті', ru: '🏛️ Школьный парламент', en: '🏛️ School Parliament' },
+        handle: '@109parliament_official',
+        url: 'https://www.instagram.com/109parliament_official?cnvx=ODFuZXB3ZTk4eGN0&wa_status_inline=true'
+      },
+      podcast: {
+        title: { kk: '🎙️ Мектеп подкасты', ru: '🎙️ Школьный подкаст', en: '🎙️ School Podcast' },
+        handle: '@109oy_podcast',
+        url: 'https://www.instagram.com/109oy_podcast?hvrq=MWg3Y3ZtcjBkNjl5OQ=='
+      }
+    };
+
+    function renderInstagramFooter() {
+      const grid = document.getElementById('insta-cards-grid');
+      if (!grid) return;
+      const order = ['author', 'president', 'school', 'parliament', 'podcast'];
+      grid.innerHTML = order.map(key => {
+        const item = SCHOOL_SOCIAL_LINKS[key];
+        const label = item.title[currentLang] || item.title.kk;
+        return `
+          <div class="insta-box">
+            <strong>${label}</strong>
+            <a class="insta-link" href="${item.url}" target="_blank" rel="noopener noreferrer">
+              📸 ${item.handle} ↗
+            </a>
+          </div>
+        `;
+      }).join('');
+    }
+
+    /* ================= ҚАЗАҚША -> РУС / ENG АВТОАУДАРМА ЖҮЙЕСІ ================= */
+    const KK_TO_RU_PHRASES = [
+      ['құрметті оқушылар', 'дорогие ученики'],
+      ['мектеп жаңалықтары', 'школьные новости'],
+      ['жаңа квест', 'новый квест'],
+      ['күзгі бал', 'осенний бал'],
+      ['олимпиада', 'олимпиада'],
+      ['байқау', 'конкурс'],
+      ['жиын', 'собрание'],
+      ['ертең', 'завтра'],
+      ['бүгін', 'сегодня'],
+      ['мектепте', 'в школе'],
+      ['кабинетте', 'в кабинете'],
+      ['сағат', 'в'],
+      ['өтеді', 'пройдёт'],
+      ['басталды', 'начался'],
+      ['қош келдіңіздер', 'добро пожаловать'],
+      ['құттықтаймыз', 'поздравляем'],
+      ['жеңімпаздар', 'победители'],
+      ['қатысыңыздар', 'примите участие'],
+      ['баршаңызды', 'всех вас'],
+      ['шақырамыз', 'приглашаем']
+    ];
+
+    const KK_TO_EN_PHRASES = [
+      ['құрметті оқушылар', 'dear students'],
+      ['мектеп жаңалықтары', 'school news'],
+      ['жаңа квест', 'new quest'],
+      ['күзгі бал', 'autumn gala'],
+      ['олимпиада', 'olympiad'],
+      ['байқау', 'competition'],
+      ['жиын', 'meeting'],
+      ['ертең', 'tomorrow'],
+      ['бүгін', 'today'],
+      ['мектепте', 'at school'],
+      ['кабинетте', 'in room'],
+      ['сағат', 'at'],
+      ['өтеді', 'will take place'],
+      ['басталды', 'has started'],
+      ['қош келдіңіздер', 'welcome'],
+      ['құттықтаймыз', 'congratulations'],
+      ['жеңімпаздар', 'winners'],
+      ['қатысыңыздар', 'join us'],
+      ['баршаңызды', 'everyone'],
+      ['шақырамыз', 'we invite']
+    ];
+
+    const KK_TO_RU_WORDS = {
+      'мектеп': 'школа', 'оқушы': 'ученик', 'оқушылар': 'ученики', 'мұғалім': 'учитель',
+      'сабақ': 'урок', 'квест': 'квест', 'квесттер': 'квесты', 'жұлдызша': 'звезда',
+      'жұлдызшалар': 'звёзды', 'рейтинг': 'рейтинг', 'дүкен': 'магазин', 'кешбэк': 'кешбэк',
+      'президент': 'президент', 'парламент': 'парламент', 'подкаст': 'подкаст',
+      'жаңалық': 'новость', 'жаңалықтар': 'новости', 'іс-шара': 'мероприятие',
+      'кездесу': 'встреча', 'уақыт': 'время', 'күн': 'день', 'апта': 'неделя',
+      'жақсы': 'хорошо', 'жаңа': 'новый'
+    };
+
+    const KK_TO_EN_WORDS = {
+      'мектеп': 'school', 'оқушы': 'student', 'оқушылар': 'students', 'мұғалім': 'teacher',
+      'сабақ': 'lesson', 'квест': 'quest', 'квесттер': 'quests', 'жұлдызша': 'star',
+      'жұлдызшалар': 'stars', 'рейтинг': 'leaderboard', 'дүкен': 'shop', 'кешбэк': 'cashback',
+      'президент': 'president', 'парламент': 'parliament', 'подкаст': 'podcast',
+      'жаңалық': 'news', 'жаңалықтар': 'news', 'іс-шара': 'event',
+      'кездесу': 'meeting', 'уақыт': 'time', 'күн': 'day', 'апта': 'week',
+      'жақсы': 'good', 'жаңа': 'new'
+    };
+
+    function translateKkText(kkText, targetLang) {
+      if (!kkText || targetLang === 'kk') return kkText;
+      const phrases = targetLang === 'ru' ? KK_TO_RU_PHRASES : KK_TO_EN_PHRASES;
+      const words = targetLang === 'ru' ? KK_TO_RU_WORDS : KK_TO_EN_WORDS;
+
+      let out = kkText;
+      phrases.forEach(([src, dst]) => {
+        const re = new RegExp(src.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+        out = out.replace(re, match => {
+          const isCap = match[0] === match[0].toUpperCase();
+          return isCap ? dst.charAt(0).toUpperCase() + dst.slice(1) : dst;
+        });
+      });
+
+      out = out.replace(/[а-яәіңғүұқөһ-]+/gi, token => {
+        const lower = token.toLowerCase();
+        if (!words[lower]) return token;
+        const mapped = words[lower];
+        const isCap = token[0] === token[0].toUpperCase();
+        return isCap ? mapped.charAt(0).toUpperCase() + mapped.slice(1) : mapped;
+      });
+
+      return out;
+    }
+
+    /* ================= ЛОГОТИП FALLBACK ================= */
+    function handleLogoFallback(imgEl) {
+      if (!imgEl || imgEl.dataset.fallbackApplied) return;
+      imgEl.dataset.fallbackApplied = '1';
+      const svg = encodeURIComponent(
+        `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+          <rect width="120" height="120" rx="28" fill="#0f5c3e"/>
+          <polygon points="60,22 98,42 60,62 22,42" fill="#f59e0b"/>
+          <path d="M36 52 V76 C36 85 84 85 84 76 V52 L60 65 Z" fill="#ffffff"/>
+          <circle cx="94" cy="28" r="10" fill="#fde68a"/>
+        </svg>`
+      );
+      imgEl.src = `data:image/svg+xml;utf8,${svg}`;
+    }
+
     /* ================= ТІЛДЕР (ҚАЗ / РУС / ENG) ================= */
     let currentLang = localStorage.getItem('sq_lang') || 'kk';
 
@@ -531,19 +765,19 @@
         lessonWord: '-сабақ',
         minWord: 'мин',
         newsTitle: '📰 Мектеп жаңалықтары',
-        newsSub: 'Мектеп президентінің ресми хабарландырулары мен жаңалықтары.',
+        newsSub: 'Мектеп президентінің жаңалықтары қазақша жазылса да, таңдалған тілге (ҚАЗ / РУС / ENG) аударылады.',
         studentModeTag: '👤 Оқушы режимі',
         presModeTag: '👑 Президент режимі белсенді',
         presAuthTitle: '👑 Мектеп президентіне арнайы кіру',
         presAuthDesc: 'Жаңалық жариялау үшін мектеп президентінің арнайы құпия сөзін енгізіңіз.',
         presCodePh: 'Арнайы құпия сөз...',
         presUnlockBtn: '🔓 Растау',
-        presPostTitle: '✍️ Жаңа жаңалық жариялау',
+        presPostTitle: '✍️ Жаңа жаңалық жариялау (қазақша жазсаңыз да 3 тілге аударылады)',
         presLockBtn: '🔒 Режимнен шығу',
-        lblNewsTitle: 'Жаңалық тақырыбы',
-        newsTitlePh: 'Мысалы: Күзгі бал / Олимпиада нәтижесі',
-        lblNewsBody: 'Мәтіні',
-        newsBodyPh: 'Жаңалық мәтінін жазыңыз...',
+        lblNewsTitle: 'Жаңалық тақырыбы (қазақша)',
+        newsTitlePh: 'Мысалы: Күзгі бал / Жаңа квест басталды',
+        lblNewsBody: 'Мәтіні (қазақша)',
+        newsBodyPh: 'Құрметті оқушылар, ертең мектепте олимпиада және байқау өтеді...',
         publishNewsBtn: '📢 Жариялау',
         noNews: 'Әзірге жаңалықтар жарияланбаған.',
         deleteBtn: 'Өшіру',
@@ -591,6 +825,8 @@
         thClass: 'Сынып',
         thStars: 'Жұлдызша',
         youTag: '(Сен)',
+        socialsTitle: '📱 Біздің ресми Instagram парақшаларымыз',
+        socialsSub: 'Жоба авторы, мектеп президенті, мектеп, парламент және подкаст парақшалары.',
         msgWrongPresCode: '❌ Құпия сөз қате!',
         msgPresUnlocked: '👑 Мектеп президенті режимі қосылды!',
         msgNewsEmpty: '⚠️ Тақырыбы мен мәтінін толтырыңыз.',
@@ -636,19 +872,19 @@
         lessonWord: '-й урок',
         minWord: 'мин',
         newsTitle: '📰 Школьные новости',
-        newsSub: 'Официальные объявления и новости от президента школы.',
+        newsSub: 'Новости президента школы переводятся на выбранный язык (ҚАЗ / РУС / ENG).',
         studentModeTag: '👤 Режим ученика',
         presModeTag: '👑 Режим президента активен',
         presAuthTitle: '👑 Специальный вход для президента школы',
         presAuthDesc: 'Введите специальный пароль президента школы, чтобы публиковать новости.',
         presCodePh: 'Специальный пароль...',
         presUnlockBtn: '🔓 Подтвердить',
-        presPostTitle: '✍️ Опубликовать новость',
+        presPostTitle: '✍️ Опубликовать новость (переводится на 3 языка)',
         presLockBtn: '🔒 Выйти из режима',
-        lblNewsTitle: 'Заголовок новости',
-        newsTitlePh: 'Например: Осенний бал / Итоги олимпиады',
-        lblNewsBody: 'Текст новости',
-        newsBodyPh: 'Напишите текст новости...',
+        lblNewsTitle: 'Заголовок новости (на казахском)',
+        newsTitlePh: 'Например: Күзгі бал / Жаңа квест басталды',
+        lblNewsBody: 'Текст новости (на казахском)',
+        newsBodyPh: 'Құрметті оқушылар, ертең мектепте олимпиада және байқау өтеді...',
         publishNewsBtn: '📢 Опубликовать',
         noNews: 'Новостей пока нет.',
         deleteBtn: 'Удалить',
@@ -696,6 +932,8 @@
         thClass: 'Класс',
         thStars: 'Звёзды',
         youTag: '(Вы)',
+        socialsTitle: '📱 Наши официальные страницы в Instagram',
+        socialsSub: 'Автор проекта, президент школы, школа, парламент и подкаст.',
         msgWrongPresCode: '❌ Неверный пароль!',
         msgPresUnlocked: '👑 Режим президента школы включён!',
         msgNewsEmpty: '⚠️ Заполните заголовок и текст новости.',
@@ -741,19 +979,19 @@
         lessonWord: ' Lesson',
         minWord: 'min',
         newsTitle: '📰 School News',
-        newsSub: 'Official announcements and news from the School President.',
+        newsSub: 'President posts written in Kazakh are automatically translated into ҚАЗ / РУС / ENG.',
         studentModeTag: '👤 Student Mode',
         presModeTag: '👑 President Mode Active',
         presAuthTitle: '👑 School President Secret Access',
         presAuthDesc: 'Enter the special School President password to publish announcements.',
         presCodePh: 'Secret password...',
         presUnlockBtn: '🔓 Unlock',
-        presPostTitle: '✍️ Publish a News Post',
+        presPostTitle: '✍️ Publish a News Post (auto-translated to 3 languages)',
         presLockBtn: '🔒 Exit Mode',
-        lblNewsTitle: 'Headline',
-        newsTitlePh: 'e.g. Autumn Gala / Olympiad Results',
-        lblNewsBody: 'Content',
-        newsBodyPh: 'Write the announcement...',
+        lblNewsTitle: 'Headline (in Kazakh)',
+        newsTitlePh: 'e.g. Күзгі бал / Жаңа квест басталды',
+        lblNewsBody: 'Content (in Kazakh)',
+        newsBodyPh: 'Құрметті оқушылар, ертең мектепте олимпиада және байқау өтеді...',
         publishNewsBtn: '📢 Publish',
         noNews: 'No news published yet.',
         deleteBtn: 'Delete',
@@ -801,6 +1039,8 @@
         thClass: 'Grade',
         thStars: 'Stars',
         youTag: '(You)',
+        socialsTitle: '📱 Official Instagram Pages',
+        socialsSub: 'Project author, school president, school, parliament, and podcast.',
         msgWrongPresCode: '❌ Invalid password!',
         msgPresUnlocked: '👑 School President mode activated!',
         msgNewsEmpty: '⚠️ Please enter both title and content.',
@@ -826,6 +1066,7 @@
         b.classList.toggle('active', b.dataset.lang === lang);
       });
       applyTranslations();
+      renderInstagramFooter();
       if (currentUser) renderAll();
     }
 
@@ -907,6 +1148,9 @@
       document.getElementById('th-student').textContent = t('thStudent');
       document.getElementById('th-class').textContent = t('thClass');
       document.getElementById('th-stars').textContent = t('thStars');
+
+      document.getElementById('txt-socials-title').textContent = t('socialsTitle');
+      document.getElementById('txt-socials-sub').textContent = t('socialsSub');
 
       renderBellSchedule();
     }
@@ -1262,8 +1506,8 @@
       const initial = [
         {
           id: 'n_welcome',
-          title: 'SchoolQuest жаңалықтар тақтасы ашылды!',
-          body: 'Құрметті оқушылар, мектеп өміріндегі барлық маңызды хабарландырулар мен іс-шаралар осы бөлімде жарияланады.',
+          titleKk: 'SchoolQuest жаңалықтар тақтасы ашылды!',
+          bodyKk: 'Құрметті оқушылар, мектеп өміріндегі барлық маңызды хабарландырулар мен іс-шаралар осы бөлімде жарияланады.',
           author: currentUser ? currentUser.username : 'president',
           date: getTodayStr()
         }
@@ -1280,10 +1524,10 @@
       if (!isPresidentUnlocked()) return;
       const titleEl = document.getElementById('news-title-input');
       const bodyEl = document.getElementById('news-body-input');
-      const title = (titleEl.value || '').trim();
-      const body = (bodyEl.value || '').trim();
+      const titleKk = (titleEl.value || '').trim();
+      const bodyKk = (bodyEl.value || '').trim();
 
-      if (!title || !body) {
+      if (!titleKk || !bodyKk) {
         showToast(t('msgNewsEmpty'));
         return;
       }
@@ -1291,8 +1535,8 @@
       const list = getNewsDB();
       list.unshift({
         id: 'n_' + Date.now(),
-        title,
-        body,
+        titleKk,
+        bodyKk,
         author: currentUser ? currentUser.username : 'president',
         date: new Date().toLocaleString()
       });
@@ -1322,17 +1566,23 @@
         return;
       }
 
-      feed.innerHTML = list.map(item => `
-        <div class="news-card">
-          <div class="news-meta">
-            <span><span class="president-badge">${t('presBadge')}</span> • <strong>${item.author}</strong></span>
-            <span>${item.date}</span>
+      feed.innerHTML = list.map(item => {
+        const baseTitle = item.titleKk || item.title || '';
+        const baseBody = item.bodyKk || item.body || '';
+        const shownTitle = translateKkText(baseTitle, currentLang);
+        const shownBody = translateKkText(baseBody, currentLang);
+        return `
+          <div class="news-card">
+            <div class="news-meta">
+              <span><span class="president-badge">${t('presBadge')}</span> • <strong>${item.author}</strong></span>
+              <span>${item.date}</span>
+            </div>
+            <h3 style="margin-bottom:6px;">${shownTitle}</h3>
+            <p style="font-size:0.93rem; line-height:1.5; color:var(--text);">${shownBody}</p>
+            ${unlocked ? `<div style="margin-top:10px; text-align:right;"><button class="btn btn-danger" onclick="deleteNews('${item.id}')">${t('deleteBtn')}</button></div>` : ''}
           </div>
-          <h3 style="margin-bottom:6px;">${item.title}</h3>
-          <p style="font-size:0.93rem; line-height:1.5; color:var(--text);">${item.body}</p>
-          ${unlocked ? `<div style="margin-top:10px; text-align:right;"><button class="btn btn-danger" onclick="deleteNews('${item.id}')">${t('deleteBtn')}</button></div>` : ''}
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
 
     function getTodayStr() {
@@ -1986,6 +2236,7 @@
     function renderAll() {
       updateHeaderAndHome();
       renderNews();
+      renderInstagramFooter();
       changePlan(document.getElementById('plan-select').value || '0');
       renderQuests();
       renderFriends();
@@ -2013,6 +2264,7 @@
 
     window.onload = () => {
       setLanguage(currentLang);
+      renderInstagramFooter();
       refreshDeviceLockUI();
       const activeName = sessionStorage.getItem(ACTIVE_SESSION_KEY);
       const db = getUsersDB();
