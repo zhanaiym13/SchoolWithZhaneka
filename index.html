@@ -124,8 +124,6 @@
       max-width: 340px; margin: 12px auto 6px; overflow: hidden;
     }
     .limit-bar-fill { background: var(--accent); height: 100%; width: 0%; transition: width 0.35s ease; }
-
-    /* ФОТО СЫЗБА ТАҚТАСЫ */
     .blueprint-toolbar {
       display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
       margin: 12px 0; padding: 12px; background: #f8fafc;
@@ -142,9 +140,7 @@
       user-select: none; min-height: 320px;
       display: flex; align-items: center; justify-content: center;
     }
-    .blueprint-frame img {
-      width: 100%; height: auto; display: block;
-    }
+    .blueprint-frame img { width: 100%; height: auto; display: block; }
     .empty-photo-placeholder {
       padding: 40px 20px; text-align: center; color: #e2e8f0; width: 100%;
       background: repeating-linear-gradient(
@@ -174,9 +170,7 @@
       display: inline-flex; align-items: center; gap: 8px; background: #f1f5f9;
       padding: 8px 14px; border-radius: 12px; font-weight: 700; font-size: 0.9rem;
     }
-    .room-chip-list {
-      display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px;
-    }
+    .room-chip-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
     .room-chip {
       background: #ecfdf5; border: 1px solid #a7f3d0; color: #065f46;
       padding: 6px 11px; border-radius: 10px; font-size: 0.84rem; font-weight: 600;
@@ -188,7 +182,6 @@
       border: 1px solid #cbd5e1; border-radius: 12px; font-size: 0.88rem;
       display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
     }
-
     .info-box {
       background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; padding: 14px; margin-top: 14px;
     }
@@ -760,380 +753,183 @@
       kk: {
         authSub: 'Жаңа оқушыға арналған мектеп бағдары',
         deviceLock: 'Бұл құрылғыда тіркелген аккаунт бар:',
-        login: 'Кіру',
-        register: 'Тіркелу',
-        usernameLbl: 'Логин (оқушы аты)',
-        passwordLbl: 'Құпия сөз',
-        gradeLbl: 'Сыныбыңды таңда',
-        selectGradeOpt: '-- Сыныпты таңдаңыз --',
-        continueBtn: 'Жалғастыру 🚀',
+        login: 'Кіру', register: 'Тіркелу', usernameLbl: 'Логин (оқушы аты)', passwordLbl: 'Құпия сөз',
+        gradeLbl: 'Сыныбыңды таңда', selectGradeOpt: '-- Сыныпты таңдаңыз --', continueBtn: 'Жалғастыру 🚀',
         headerSub: 'Мектеп сызбасы • Пәндік квесттер • Жаңалықтар • Достар • Кешбэк',
-        today: 'Бүгін:',
-        logout: 'Шығу',
-        presBadge: '👑 Мектеп президенті',
-        navHome: '🏠 Басты бет',
-        navNews: '📰 Жаңалықтар',
-        navMap: '🗺️ Мектеп картасы',
-        navQuests: '🎯 Квесттер',
-        navFriends: '🤝 Достар',
-        navShop: '🎁 Кешбэк дүкені',
-        navRating: '🏆 Рейтинг',
+        today: 'Бүгін:', logout: 'Шығу', presBadge: '👑 Мектеп президенті',
+        navHome: '🏠 Басты бет', navNews: '📰 Жаңалықтар', navMap: '🗺️ Мектеп картасы',
+        navQuests: '🎯 Квесттер', navFriends: '🤝 Достар', navShop: '🎁 Кешбэк дүкені', navRating: '🏆 Рейтинг',
         hello: 'Сәлем,',
         homeDesc: 'Мектепке тез бейімделу үшін сызба арқылы кабинеттерді тап, пәндік квест сұрақтарына жауап беріп жұлдызша жина және достарыңды қос.',
-        starsWord: 'жұлдызша',
-        cashbackBal: 'Кешбэк балансы',
-        dailyLimit: 'Күндік лимит:',
-        bellTitle: '⏰ Қоңырау кестесі (әр сабақ 45 минут)',
-        thLesson: 'Сабақ',
-        thTime: 'Уақыты',
-        thBreak: 'Үзіліс',
-        lessonWord: '-сабақ',
-        minWord: 'мин',
+        starsWord: 'жұлдызша', cashbackBal: 'Кешбэк балансы', dailyLimit: 'Күндік лимит:',
+        bellTitle: '⏰ Қоңырау кестесі (әр сабақ 45 минут)', thLesson: 'Сабақ', thTime: 'Уақыты', thBreak: 'Үзіліс',
+        lessonWord: '-сабақ', minWord: 'мин',
         newsTitle: '📰 Мектеп жаңалықтары',
         newsSub: 'Мектеп президентінің жаңалықтары қазақша жазылса да, таңдалған тілге (ҚАЗ / РУС / ENG) аударылады.',
-        studentModeTag: '👤 Оқушы режимі',
-        presModeTag: '👑 Президент режимі белсенді',
+        studentModeTag: '👤 Оқушы режимі', presModeTag: '👑 Президент режимі белсенді',
         presAuthTitle: '👑 Мектеп президентіне арнайы кіру',
         presAuthDesc: 'Жаңалық жариялау үшін мектеп президентінің арнайы құпия сөзін енгізіңіз.',
-        presCodePh: 'Арнайы құпия сөз...',
-        presUnlockBtn: '🔓 Растау',
+        presCodePh: 'Арнайы құпия сөз...', presUnlockBtn: '🔓 Растау',
         presPostTitle: '✍️ Жаңа жаңалық жариялау (қазақша жазсаңыз да 3 тілге аударылады)',
-        presLockBtn: '🔒 Режимнен шығу',
-        lblNewsTitle: 'Жаңалық тақырыбы (қазақша)',
-        newsTitlePh: 'Мысалы: Күзгі бал / Жаңа квест басталды',
-        lblNewsBody: 'Мәтіні (қазақша)',
+        presLockBtn: '🔒 Режимнен шығу', lblNewsTitle: 'Жаңалық тақырыбы (қазақша)',
+        newsTitlePh: 'Мысалы: Күзгі бал / Жаңа квест басталды', lblNewsBody: 'Мәтіні (қазақша)',
         newsBodyPh: 'Құрметті оқушылар, ертең мектепте олимпиада және байқау өтеді...',
-        publishNewsBtn: '📢 Жариялау',
-        noNews: 'Әзірге жаңалықтар жарияланбаған.',
-        deleteBtn: 'Өшіру',
+        publishNewsBtn: '📢 Жариялау', noNews: 'Әзірге жаңалықтар жарияланбаған.', deleteBtn: 'Өшіру',
         mapTitle: '🗺️ Фото арқылы интерактивті сызба тақтасы (1–4 қабат)',
         mapDesc: 'Қабатты таңдап, сызба фотосын жүктеңіз немесе бар фотоның үстінен нүкте басып, кабинет нөмірін енгізіңіз.',
-        uploadPhotoBtn: 'Қабат фотосын жүктеу',
-        clearPhotoBtn: '🗑️ Фотоны өшіру',
+        uploadPhotoBtn: 'Қабат фотосын жүктеу', clearPhotoBtn: '🗑️ Фотоны өшіру',
         noPhotoTitle: 'Сызба фотосы әлі таңдалмаған',
         noPhotoDesc: '«Қабат фотосын жүктеу» батырмасын басып, қабат сызбасының фотосын таңдаңыз.',
-        photoSavedMsg: '📷 Фото сақталды — үстінен нүкте басыңыз',
-        orient: 'Бағдар:',
-        activeFloorLbl: 'Таңдалған қабат:',
-        floorUnit: '-қабат',
+        photoSavedMsg: '📷 Фото сақталды — үстінен нүкте басыңыз', orient: 'Бағдар:', activeFloorLbl: 'Таңдалған қабат:', floorUnit: '-қабат',
         addRoomTitle: '✏️ Кабинет нөмірін белгілеу және сақтау (+15 ⭐)',
         addRoomDesc: 'Алдымен фото үстінен қажетті нүктені басыңыз, сосын кабинет нөмірін немесе атауын жазып сақтаңыз.',
-        lblCoordX: 'X координата (%)',
-        lblCoordY: 'Y координата (%)',
-        coordPlaceholder: 'Фотоны бас...',
-        lblRoomNum: 'Кабинет нөмірі / атауы',
-        roomNumPh: 'Мысалы: 105 немесе Асхана',
-        saveRoomBtn: '💾 Кабинетті бекіту (+15 ⭐)',
+        lblCoordX: 'X координата (%)', lblCoordY: 'Y координата (%)', coordPlaceholder: 'Фотоны бас...',
+        lblRoomNum: 'Кабинет нөмірі / атауы', roomNumPh: 'Мысалы: 105 немесе Асхана', saveRoomBtn: '💾 Кабинетті бекіту (+15 ⭐)',
         savedRoomsTitle: '📌 Бекітілген кабинеттер (қайта енгізу жабық)',
         noSavedRooms: 'Бұл қабатта әлі бекітілген кабинет жоқ. Сызбадан нүкте таңдап, алғашқы кабинетті енгізіңіз.',
         posterTitle: '🪧 Қабырғадағы постер-ориентатор коды',
         posterDesc: 'Постер кодын жазыңыз (мысалы: POST-NORTH, POST-EAST, POST-SOUTH, POST-WEST).',
-        posterBtn: '🔄 Картаны бұру (+10 ⭐)',
-        gradeSuffix: '-сынып',
-        questsHeading: 'пәндік квесттер',
+        posterBtn: '🔄 Картаны бұру (+10 ⭐)', gradeSuffix: '-сынып', questsHeading: 'пәндік квесттер',
         questsSub: 'Сыныбыңа сай алгебра, тарих және басқа пәндерден сұрақтарға жауап жазып, жұлдызша ал.',
-        limitShort: 'Лимит:',
-        answerPlaceholder: 'Жауабыңды осында жаз...',
-        checkAnswerBtn: 'Тексеру және алу',
-        doneTodayBtn: '✅ Бүгін орындалды',
+        limitShort: 'Лимит:', answerPlaceholder: 'Жауабыңды осында жаз...', checkAnswerBtn: 'Тексеру және алу', doneTodayBtn: '✅ Бүгін орындалды',
         friendsTitle: '🤝 Достар және достық ұсыныстары',
         friendsSub: 'Тіркелген оқушылар тізімінен логинді таңдап, достық ұсынысын жіберіңіз.',
-        refreshFriendsBtn: '↻ Тізімді жаңарту',
-        selectFriendOpt: '-- Оқушы логинін таңдаңыз --',
-        sendFriendBtn: '➕ Достық ұсыну',
-        incomingReqTitle: '📩 Келген достық ұсыныстары',
-        myFriendsTitle: '👥 Менің достарым',
-        allUsersTitle: '📋 Тіркелген оқушылар (барлық логиндер)',
-        noOtherStudents: 'Басқа тіркелген оқушылар әзірге жоқ.',
-        statusFriend: '✅ Дос',
-        statusSent: '⏳ Ұсыныс жіберілді',
-        noIncoming: 'Жаңа достық ұсыныстары жоқ.',
-        noFriends: 'Әзірге достар тізімі бос.',
-        acceptBtn: 'Қабылдау',
-        declineBtn: 'Бас тарту',
-        removeFriendBtn: 'Өшіру',
-        shopTitle: '🎁 Кешбэк дүкені',
-        shopSub: 'Жинаған жұлдызшаларыңды оқу бонустары мен мектеп сыйлықтарына айырбаста.',
-        couponsTitle: '🎟️ Менің купондарым',
-        noCoupons: 'Әзірге купондар жоқ.',
-        buyBtn: 'Айырбастау',
-        notEnoughStars: 'Жұлдызша аз',
-        ratingTitle: '🏆 Оқушылар рейтингі',
-        refreshBtn: '↻ Жаңарту',
-        thStudent: 'Оқушы',
-        thClass: 'Сынып',
-        thStars: 'Жұлдызша',
-        youTag: '(Сен)',
+        refreshFriendsBtn: '↻ Тізімді жаңарту', selectFriendOpt: '-- Оқушы логинін таңдаңыз --', sendFriendBtn: '➕ Достық ұсыну',
+        incomingReqTitle: '📩 Келген достық ұсыныстары', myFriendsTitle: '👥 Менің достарым',
+        allUsersTitle: '📋 Тіркелген оқушылар (барлық логиндер)', noOtherStudents: 'Басқа тіркелген оқушылар әзірге жоқ.',
+        statusFriend: '✅ Дос', statusSent: '⏳ Ұсыныс жіберілді', noIncoming: 'Жаңа достық ұсыныстары жоқ.', noFriends: 'Әзірге достар тізімі бос.',
+        acceptBtn: 'Қабылдау', declineBtn: 'Бас тарту', removeFriendBtn: 'Өшіру',
+        shopTitle: '🎁 Кешбэк дүкені', shopSub: 'Жинаған жұлдызшаларыңды оқу бонустары мен мектеп сыйлықтарына айырбаста.',
+        couponsTitle: '🎟️ Менің купондарым', noCoupons: 'Әзірге купондар жоқ.', buyBtn: 'Айырбастау', notEnoughStars: 'Жұлдызша аз',
+        ratingTitle: '🏆 Оқушылар рейтингі', refreshBtn: '↻ Жаңарту', thStudent: 'Оқушы', thClass: 'Сынып', thStars: 'Жұлдызша', youTag: '(Сен)',
         socialsTitle: '📱 Біздің ресми Instagram парақшаларымыз',
         socialsSub: 'Жоба авторы, мектеп президенті, мектеп, парламент және подкаст парақшалары.',
-        msgWrongPresCode: '❌ Құпия сөз қате!',
-        msgPresUnlocked: '👑 Мектеп президенті режимі қосылды!',
-        msgNewsEmpty: '⚠️ Тақырыбы мен мәтінін толтырыңыз.',
-        msgNewsPublished: '📢 Жаңалық жарияланды!',
-        msgPickPointFirst: '⚠️ Алдымен сызба фотосынан нүктені басып таңдаңыз.',
-        msgRoomEmpty: '⚠️ Кабинет нөмірін немесе атауын жазыңыз.',
-        msgRoomExists: '🔒 Бұл кабинет бұрын енгізіліп қойған! Қайта енгізуге болмайды.',
-        msgRoomSaved: '✅ Кабинет сақталды және бекітілді!',
-        msgPhotoUploaded: '📷 Қабат фотосы сәтті жүктелді!',
-        msgWrongAnswer: '❌ Жауап қате! Қайта ойланып көр.',
-        msgEmptyAnswer: '⚠️ Алдымен жауабыңызды жазыңыз.',
-        msgSelectFriend: '⚠️ Алдымен оқушыны таңдаңыз.',
-        msgFriendSent: '📨 Достық ұсынысы жіберілді!',
-        msgFriendSelf: '⚠️ Өзіңізге достық ұсынысын жібере алмайсыз.',
-        msgFriendAlready: 'ℹ️ Бұл оқушымен доссыз немесе ұсыныс жіберілген.',
-        msgFriendAccepted: '🤝 Достық қабылданды!'
+        msgWrongPresCode: '❌ Құпия сөз қате!', msgPresUnlocked: '👑 Мектеп президенті режимі қосылды!',
+        msgNewsEmpty: '⚠️ Тақырыбы мен мәтінін толтырыңыз.', msgNewsPublished: '📢 Жаңалық жарияланды!',
+        msgPickPointFirst: '⚠️ Алдымен сызба фотосынан нүктені басып таңдаңыз.', msgRoomEmpty: '⚠️ Кабинет нөмірін немесе атауын жазыңыз.',
+        msgRoomExists: '🔒 Бұл кабинет бұрын енгізіліп қойған! Қайта енгізуге болмайды.', msgRoomSaved: '✅ Кабинет сақталды және бекітілді!',
+        msgPhotoUploaded: '📷 Қабат фотосы сәтті жүктелді!', msgWrongAnswer: '❌ Жауап қате! Қайта ойланып көр.',
+        msgEmptyAnswer: '⚠️ Алдымен жауабыңызды жазыңыз.', msgSelectFriend: '⚠️ Алдымен оқушыны таңдаңыз.',
+        msgFriendSent: '📨 Достық ұсынысы жіберілді!', msgFriendSelf: '⚠️ Өзіңізге достық ұсынысын жібере алмайсыз.',
+        msgFriendAlready: 'ℹ️ Бұл оқушымен доссыз немесе ұсыныс жіберілген.', msgFriendAccepted: '🤝 Достық қабылданды!'
       },
       ru: {
-        authSub: 'Школьный навигатор для нового ученика',
-        deviceLock: 'На этом устройстве уже зарегистрирован аккаунт:',
-        login: 'Вход',
-        register: 'Регистрация',
-        usernameLbl: 'Логин (имя ученика)',
-        passwordLbl: 'Пароль',
-        gradeLbl: 'Выбери свой класс',
-        selectGradeOpt: '-- Выберите класс --',
-        continueBtn: 'Продолжить 🚀',
+        authSub: 'Школьный навигатор для нового ученика', deviceLock: 'На этом устройстве уже зарегистрирован аккаунт:',
+        login: 'Вход', register: 'Регистрация', usernameLbl: 'Логин (имя ученика)', passwordLbl: 'Пароль',
+        gradeLbl: 'Выбери свой класс', selectGradeOpt: '-- Выберите класс --', continueBtn: 'Продолжить 🚀',
         headerSub: 'Схема школы • Предметные квесты • Новости • Друзья • Кешбэк',
-        today: 'Сегодня:',
-        logout: 'Выйти',
-        presBadge: '👑 Президент школы',
-        navHome: '🏠 Главная',
-        navNews: '📰 Новости',
-        navMap: '🗺️ Карта школы',
-        navQuests: '🎯 Квесты',
-        navFriends: '🤝 Друзья',
-        navShop: '🎁 Магазин кешбэка',
-        navRating: '🏆 Рейтинг',
+        today: 'Сегодня:', logout: 'Выйти', presBadge: '👑 Президент школы',
+        navHome: '🏠 Главная', navNews: '📰 Новости', navMap: '🗺️ Карта школы',
+        navQuests: '🎯 Квесты', navFriends: '🤝 Друзья', navShop: '🎁 Магазин кешбэка', navRating: '🏆 Рейтинг',
         hello: 'Привет,',
         homeDesc: 'Находи кабинеты по схеме, отвечай на вопросы предметных квестов, копи звёзды и добавляй друзей.',
-        starsWord: 'звёзд',
-        cashbackBal: 'Баланс кешбэка',
-        dailyLimit: 'Дневной лимит:',
-        bellTitle: '⏰ Расписание звонков (каждый урок 45 минут)',
-        thLesson: 'Урок',
-        thTime: 'Время',
-        thBreak: 'Перемена',
-        lessonWord: '-й урок',
-        minWord: 'мин',
-        newsTitle: '📰 Школьные новости',
-        newsSub: 'Новости президента школы переводятся на выбранный язык (ҚАЗ / РУС / ENG).',
-        studentModeTag: '👤 Режим ученика',
-        presModeTag: '👑 Режим президента активен',
+        starsWord: 'звёзд', cashbackBal: 'Баланс кешбэка', dailyLimit: 'Дневной лимит:',
+        bellTitle: '⏰ Расписание звонков (каждый урок 45 минут)', thLesson: 'Урок', thTime: 'Время', thBreak: 'Перемена',
+        lessonWord: '-й урок', minWord: 'мин',
+        newsTitle: '📰 Школьные новости', newsSub: 'Новости президента школы переводятся на выбранный язык (ҚАЗ / РУС / ENG).',
+        studentModeTag: '👤 Режим ученика', presModeTag: '👑 Режим президента активен',
         presAuthTitle: '👑 Специальный вход для президента школы',
         presAuthDesc: 'Введите специальный пароль президента школы, чтобы публиковать новости.',
-        presCodePh: 'Специальный пароль...',
-        presUnlockBtn: '🔓 Подтвердить',
-        presPostTitle: '✍️ Опубликовать новость (переводится на 3 языка)',
-        presLockBtn: '🔒 Выйти из режима',
-        lblNewsTitle: 'Заголовок новости (на казахском)',
-        newsTitlePh: 'Например: Күзгі бал / Жаңа квест басталды',
-        lblNewsBody: 'Текст новости (на казахском)',
-        newsBodyPh: 'Құрметті оқушылар, ертең мектепте олимпиада және байқау өтеді...',
-        publishNewsBtn: '📢 Опубликовать',
-        noNews: 'Новостей пока нет.',
-        deleteBtn: 'Удалить',
+        presCodePh: 'Специальный пароль...', presUnlockBtn: '🔓 Подтвердить',
+        presPostTitle: '✍️ Опубликовать новость (переводится на 3 языка)', presLockBtn: '🔒 Выйти из режима',
+        lblNewsTitle: 'Заголовок новости (на казахском)', newsTitlePh: 'Например: Күзгі бал / Жаңа квест басталды',
+        lblNewsBody: 'Текст новости (на казахском)', newsBodyPh: 'Құрметті оқушылар, ертең мектепте олимпиада және байқау өтеді...',
+        publishNewsBtn: '📢 Опубликовать', noNews: 'Новостей пока нет.', deleteBtn: 'Удалить',
         mapTitle: '🗺️ Интерактивная схема-доска по фото (1–4 этажи)',
         mapDesc: 'Выберите этаж, загрузите фото схемы и кликните по нужной точке, чтобы указать номер кабинета.',
-        uploadPhotoBtn: 'Загрузить фото этажа',
-        clearPhotoBtn: '🗑️ Удалить фото',
-        noPhotoTitle: 'Фото схемы ещё не выбрано',
-        noPhotoDesc: 'Нажмите «Загрузить фото этажа», чтобы выбрать фото схемы этажа.',
-        photoSavedMsg: '📷 Фото сохранено — нажмите на нужную точку',
-        orient: 'Ориентир:',
-        activeFloorLbl: 'Выбранный этаж:',
-        floorUnit: ' этаж',
+        uploadPhotoBtn: 'Загрузить фото этажа', clearPhotoBtn: '🗑️ Удалить фото',
+        noPhotoTitle: 'Фото схемы ещё не выбрано', noPhotoDesc: 'Нажмите «Загрузить фото этажа», чтобы выбрать фото схемы этажа.',
+        photoSavedMsg: '📷 Фото сохранено — нажмите на нужную точку', orient: 'Ориентир:', activeFloorLbl: 'Выбранный этаж:', floorUnit: ' этаж',
         addRoomTitle: '✏️ Указать и сохранить номер кабинета (+15 ⭐)',
         addRoomDesc: 'Сначала кликните по точке на фото, затем введите номер или название кабинета.',
-        lblCoordX: 'Координата X (%)',
-        lblCoordY: 'Координата Y (%)',
-        coordPlaceholder: 'Нажми на фото...',
-        lblRoomNum: 'Номер / название кабинета',
-        roomNumPh: 'Например: 105 или Столовая',
-        saveRoomBtn: '💾 Закрепить кабинет (+15 ⭐)',
+        lblCoordX: 'Координата X (%)', lblCoordY: 'Координата Y (%)', coordPlaceholder: 'Нажми на фото...',
+        lblRoomNum: 'Номер / название кабинета', roomNumPh: 'Например: 105 или Столовая', saveRoomBtn: '💾 Закрепить кабинет (+15 ⭐)',
         savedRoomsTitle: '📌 Закреплённые кабинеты (повторный ввод закрыт)',
         noSavedRooms: 'На этом этаже пока нет сохранённых кабинетов. Кликните по фото, чтобы добавить первый.',
         posterTitle: '🪧 Код настенного постера-ориентатора',
         posterDesc: 'Введите код постера (например: POST-NORTH, POST-EAST, POST-SOUTH, POST-WEST).',
-        posterBtn: '🔄 Повернуть карту (+10 ⭐)',
-        gradeSuffix: ' класс',
-        questsHeading: 'предметные квесты',
+        posterBtn: '🔄 Повернуть карту (+10 ⭐)', gradeSuffix: ' класс', questsHeading: 'предметные квесты',
         questsSub: 'Отвечай на вопросы по алгебре, истории и другим предметам своего класса и получай звёзды.',
-        limitShort: 'Лимит:',
-        answerPlaceholder: 'Впишите ваш ответ...',
-        checkAnswerBtn: 'Проверить и забрать',
-        doneTodayBtn: '✅ Выполнено сегодня',
+        limitShort: 'Лимит:', answerPlaceholder: 'Впишите ваш ответ...', checkAnswerBtn: 'Проверить и забрать', doneTodayBtn: '✅ Выполнено сегодня',
         friendsTitle: '🤝 Друзья и заявки в друзья',
         friendsSub: 'Выберите логин из списка зарегистрированных учеников и отправьте заявку в друзья.',
-        refreshFriendsBtn: '↻ Обновить список',
-        selectFriendOpt: '-- Выберите логин ученика --',
-        sendFriendBtn: '➕ Добавить в друзья',
-        incomingReqTitle: '📩 Входящие заявки в друзья',
-        myFriendsTitle: '👥 Мои друзья',
-        allUsersTitle: '📋 Зарегистрированные ученики (все логины)',
-        noOtherStudents: 'Других зарегистрированных учеников пока нет.',
-        statusFriend: '✅ Друг',
-        statusSent: '⏳ Заявка отправлена',
-        noIncoming: 'Новых заявок в друзья нет.',
-        noFriends: 'Список друзей пока пуст.',
-        acceptBtn: 'Принять',
-        declineBtn: 'Отклонить',
-        removeFriendBtn: 'Удалить',
-        shopTitle: '🎁 Магазин кешбэка',
-        shopSub: 'Обменивай накопленные звёзды на учебные бонусы и школьные призы.',
-        couponsTitle: '🎟️ Мои купоны',
-        noCoupons: 'Купонов пока нет.',
-        buyBtn: 'Обменять',
-        notEnoughStars: 'Мало звёзд',
-        ratingTitle: '🏆 Рейтинг учеников',
-        refreshBtn: '↻ Обновить',
-        thStudent: 'Ученик',
-        thClass: 'Класс',
-        thStars: 'Звёзды',
-        youTag: '(Вы)',
+        refreshFriendsBtn: '↻ Обновить список', selectFriendOpt: '-- Выберите логин ученика --', sendFriendBtn: '➕ Добавить в друзья',
+        incomingReqTitle: '📩 Входящие заявки в друзья', myFriendsTitle: '👥 Мои друзья',
+        allUsersTitle: '📋 Зарегистрированные ученики (все логины)', noOtherStudents: 'Других зарегистрированных учеников пока нет.',
+        statusFriend: '✅ Друг', statusSent: '⏳ Заявка отправлена', noIncoming: 'Новых заявок в друзья нет.', noFriends: 'Список друзей пока пуст.',
+        acceptBtn: 'Принять', declineBtn: 'Отклонить', removeFriendBtn: 'Удалить',
+        shopTitle: '🎁 Магазин кешбэка', shopSub: 'Обменивай накопленные звёзды на учебные бонусы и школьные призы.',
+        couponsTitle: '🎟️ Мои купоны', noCoupons: 'Купонов пока нет.', buyBtn: 'Обменять', notEnoughStars: 'Мало звёзд',
+        ratingTitle: '🏆 Рейтинг учеников', refreshBtn: '↻ Обновить', thStudent: 'Ученик', thClass: 'Класс', thStars: 'Звёзды', youTag: '(Вы)',
         socialsTitle: '📱 Наши официальные страницы в Instagram',
         socialsSub: 'Автор проекта, президент школы, школа, парламент и подкаст.',
-        msgWrongPresCode: '❌ Неверный пароль!',
-        msgPresUnlocked: '👑 Режим президента школы включён!',
-        msgNewsEmpty: '⚠️ Заполните заголовок и текст новости.',
-        msgNewsPublished: '📢 Новость опубликована!',
-        msgPickPointFirst: '⚠️ Сначала выберите точку на фото кликом.',
-        msgRoomEmpty: '⚠️ Введите номер или название кабинета.',
-        msgRoomExists: '🔒 Этот кабинет уже закреплён! Повторно добавить нельзя.',
-        msgRoomSaved: '✅ Кабинет сохранён и закреплён!',
-        msgPhotoUploaded: '📷 Фото этажа загружено!',
-        msgWrongAnswer: '❌ Неверный ответ! Попробуйте ещё раз.',
-        msgEmptyAnswer: '⚠️ Сначала введите ответ.',
-        msgSelectFriend: '⚠️ Сначала выберите ученика.',
-        msgFriendSent: '📨 Заявка в друзья отправлена!',
-        msgFriendSelf: '⚠️ Нельзя отправить заявку самому себе.',
-        msgFriendAlready: 'ℹ️ Вы уже друзья или заявка уже отправлена.',
-        msgFriendAccepted: '🤝 Заявка в друзья принята!'
+        msgWrongPresCode: '❌ Неверный пароль!', msgPresUnlocked: '👑 Режим президента школы включён!',
+        msgNewsEmpty: '⚠️ Заполните заголовок и текст новости.', msgNewsPublished: '📢 Новость опубликована!',
+        msgPickPointFirst: '⚠️ Сначала выберите точку на фото кликом.', msgRoomEmpty: '⚠️ Введите номер или название кабинета.',
+        msgRoomExists: '🔒 Этот кабинет уже закреплён! Повторно добавить нельзя.', msgRoomSaved: '✅ Кабинет сохранён и закреплён!',
+        msgPhotoUploaded: '📷 Фото этажа загружено!', msgWrongAnswer: '❌ Неверный ответ! Попробуйте ещё раз.',
+        msgEmptyAnswer: '⚠️ Сначала введите ответ.', msgSelectFriend: '⚠️ Сначала выберите ученика.',
+        msgFriendSent: '📨 Заявка в друзья отправлена!', msgFriendSelf: '⚠️ Нельзя отправить заявку самому себе.',
+        msgFriendAlready: 'ℹ️ Вы уже друзья или заявка уже отправлена.', msgFriendAccepted: '🤝 Заявка в друзья принята!'
       },
       en: {
-        authSub: 'School navigator for new students',
-        deviceLock: 'An account is already registered on this device:',
-        login: 'Login',
-        register: 'Register',
-        usernameLbl: 'Username (student login)',
-        passwordLbl: 'Password',
-        gradeLbl: 'Select your grade',
-        selectGradeOpt: '-- Choose grade --',
-        continueBtn: 'Continue 🚀',
+        authSub: 'School navigator for new students', deviceLock: 'An account is already registered on this device:',
+        login: 'Login', register: 'Register', usernameLbl: 'Username (student login)', passwordLbl: 'Password',
+        gradeLbl: 'Select your grade', selectGradeOpt: '-- Choose grade --', continueBtn: 'Continue 🚀',
         headerSub: 'School Blueprint • Subject Quests • News • Friends • Cashback',
-        today: 'Today:',
-        logout: 'Logout',
-        presBadge: '👑 School President',
-        navHome: '🏠 Home',
-        navNews: '📰 News',
-        navMap: '🗺️ School Map',
-        navQuests: '🎯 Quests',
-        navFriends: '🤝 Friends',
-        navShop: '🎁 Cashback Shop',
-        navRating: '🏆 Leaderboard',
+        today: 'Today:', logout: 'Logout', presBadge: '👑 School President',
+        navHome: '🏠 Home', navNews: '📰 News', navMap: '🗺️ School Map',
+        navQuests: '🎯 Quests', navFriends: '🤝 Friends', navShop: '🎁 Cashback Shop', navRating: '🏆 Leaderboard',
         hello: 'Hello,',
         homeDesc: 'Find classrooms on the blueprint, answer subject quest questions to earn stars, and connect with friends.',
-        starsWord: 'stars',
-        cashbackBal: 'Cashback balance',
-        dailyLimit: 'Daily limit:',
-        bellTitle: '⏰ Bell Schedule (45 min per lesson)',
-        thLesson: 'Lesson',
-        thTime: 'Time',
-        thBreak: 'Break',
-        lessonWord: ' Lesson',
-        minWord: 'min',
-        newsTitle: '📰 School News',
-        newsSub: 'President posts written in Kazakh are automatically translated into ҚАЗ / РУС / ENG.',
-        studentModeTag: '👤 Student Mode',
-        presModeTag: '👑 President Mode Active',
+        starsWord: 'stars', cashbackBal: 'Cashback balance', dailyLimit: 'Daily limit:',
+        bellTitle: '⏰ Bell Schedule (45 min per lesson)', thLesson: 'Lesson', thTime: 'Time', thBreak: 'Break',
+        lessonWord: ' Lesson', minWord: 'min',
+        newsTitle: '📰 School News', newsSub: 'President posts written in Kazakh are automatically translated into ҚАЗ / РУС / ENG.',
+        studentModeTag: '👤 Student Mode', presModeTag: '👑 President Mode Active',
         presAuthTitle: '👑 School President Secret Access',
         presAuthDesc: 'Enter the special School President password to publish announcements.',
-        presCodePh: 'Secret password...',
-        presUnlockBtn: '🔓 Unlock',
-        presPostTitle: '✍️ Publish a News Post (auto-translated to 3 languages)',
-        presLockBtn: '🔒 Exit Mode',
-        lblNewsTitle: 'Headline (in Kazakh)',
-        newsTitlePh: 'e.g. Күзгі бал / Жаңа квест басталды',
-        lblNewsBody: 'Content (in Kazakh)',
-        newsBodyPh: 'Құрметті оқушылар, ертең мектепте олимпиада және байқау өтеді...',
-        publishNewsBtn: '📢 Publish',
-        noNews: 'No news published yet.',
-        deleteBtn: 'Delete',
+        presCodePh: 'Secret password...', presUnlockBtn: '🔓 Unlock',
+        presPostTitle: '✍️ Publish a News Post (auto-translated to 3 languages)', presLockBtn: '🔒 Exit Mode',
+        lblNewsTitle: 'Headline (in Kazakh)', newsTitlePh: 'e.g. Күзгі бал / Жаңа квест басталды',
+        lblNewsBody: 'Content (in Kazakh)', newsBodyPh: 'Құрметті оқушылар, ертең мектепте олимпиада және байқау өтеді...',
+        publishNewsBtn: '📢 Publish', noNews: 'No news published yet.', deleteBtn: 'Delete',
         mapTitle: '🗺️ Photo Interactive Blueprint Board (Floors 1–4)',
         mapDesc: 'Select a floor, upload a blueprint photo, and click a point to enter the classroom number.',
-        uploadPhotoBtn: 'Upload Floor Photo',
-        clearPhotoBtn: '🗑️ Remove Photo',
-        noPhotoTitle: 'No blueprint photo selected yet',
-        noPhotoDesc: 'Click «Upload Floor Photo» to select a floor plan image.',
-        photoSavedMsg: '📷 Photo saved — click a point on it',
-        orient: 'Direction:',
-        activeFloorLbl: 'Selected floor:',
-        floorUnit: ' Floor',
+        uploadPhotoBtn: 'Upload Floor Photo', clearPhotoBtn: '🗑️ Remove Photo',
+        noPhotoTitle: 'No blueprint photo selected yet', noPhotoDesc: 'Click «Upload Floor Photo» to select a floor plan image.',
+        photoSavedMsg: '📷 Photo saved — click a point on it', orient: 'Direction:', activeFloorLbl: 'Selected floor:', floorUnit: ' Floor',
         addRoomTitle: '✏️ Pin & Save Classroom Number (+15 ⭐)',
         addRoomDesc: 'Click a spot on the photo first, then enter the classroom number or name.',
-        lblCoordX: 'X Coordinate (%)',
-        lblCoordY: 'Y Coordinate (%)',
-        coordPlaceholder: 'Click photo...',
-        lblRoomNum: 'Classroom Number / Name',
-        roomNumPh: 'e.g. 105 or Cafeteria',
-        saveRoomBtn: '💾 Lock Classroom (+15 ⭐)',
+        lblCoordX: 'X Coordinate (%)', lblCoordY: 'Y Coordinate (%)', coordPlaceholder: 'Click photo...',
+        lblRoomNum: 'Classroom Number / Name', roomNumPh: 'e.g. 105 or Cafeteria', saveRoomBtn: '💾 Lock Classroom (+15 ⭐)',
         savedRoomsTitle: '📌 Locked Classrooms (re-entry disabled)',
         noSavedRooms: 'No locked classrooms on this floor yet. Click the photo to add one.',
         posterTitle: '🪧 Wall Poster Orientator Code',
         posterDesc: 'Enter a poster code (e.g. POST-NORTH, POST-EAST, POST-SOUTH, POST-WEST).',
-        posterBtn: '🔄 Rotate Map (+10 ⭐)',
-        gradeSuffix: 'th Grade',
-        questsHeading: 'Subject Quests',
+        posterBtn: '🔄 Rotate Map (+10 ⭐)', gradeSuffix: 'th Grade', questsHeading: 'Subject Quests',
         questsSub: 'Answer algebra, history, and other grade-level questions to earn stars.',
-        limitShort: 'Limit:',
-        answerPlaceholder: 'Type your answer here...',
-        checkAnswerBtn: 'Submit Answer',
-        doneTodayBtn: '✅ Completed Today',
+        limitShort: 'Limit:', answerPlaceholder: 'Type your answer here...', checkAnswerBtn: 'Submit Answer', doneTodayBtn: '✅ Completed Today',
         friendsTitle: '🤝 Friends & Friend Requests',
         friendsSub: 'Pick a login from registered students and send a friend request.',
-        refreshFriendsBtn: '↻ Refresh List',
-        selectFriendOpt: '-- Select a student login --',
-        sendFriendBtn: '➕ Send Request',
-        incomingReqTitle: '📩 Incoming Friend Requests',
-        myFriendsTitle: '👥 My Friends',
-        allUsersTitle: '📋 Registered Students (all logins)',
-        noOtherStudents: 'No other registered students yet.',
-        statusFriend: '✅ Friend',
-        statusSent: '⏳ Request Sent',
-        noIncoming: 'No incoming friend requests.',
-        noFriends: 'Your friends list is empty.',
-        acceptBtn: 'Accept',
-        declineBtn: 'Decline',
-        removeFriendBtn: 'Remove',
-        shopTitle: '🎁 Cashback Shop',
-        shopSub: 'Redeem your earned stars for academic perks and school rewards.',
-        couponsTitle: '🎟️ My Coupons',
-        noCoupons: 'No coupons yet.',
-        buyBtn: 'Redeem',
-        notEnoughStars: 'Not enough stars',
-        ratingTitle: '🏆 Student Leaderboard',
-        refreshBtn: '↻ Refresh',
-        thStudent: 'Student',
-        thClass: 'Grade',
-        thStars: 'Stars',
-        youTag: '(You)',
+        refreshFriendsBtn: '↻ Refresh List', selectFriendOpt: '-- Select a student login --', sendFriendBtn: '➕ Send Request',
+        incomingReqTitle: '📩 Incoming Friend Requests', myFriendsTitle: '👥 My Friends',
+        allUsersTitle: '📋 Registered Students (all logins)', noOtherStudents: 'No other registered students yet.',
+        statusFriend: '✅ Friend', statusSent: '⏳ Request Sent', noIncoming: 'No incoming friend requests.', noFriends: 'Your friends list is empty.',
+        acceptBtn: 'Accept', declineBtn: 'Decline', removeFriendBtn: 'Remove',
+        shopTitle: '🎁 Cashback Shop', shopSub: 'Redeem your earned stars for academic perks and school rewards.',
+        couponsTitle: '🎟️ My Coupons', noCoupons: 'No coupons yet.', buyBtn: 'Redeem', notEnoughStars: 'Not enough stars',
+        ratingTitle: '🏆 Student Leaderboard', refreshBtn: '↻ Refresh', thStudent: 'Student', thClass: 'Grade', thStars: 'Stars', youTag: '(You)',
         socialsTitle: '📱 Official Instagram Pages',
         socialsSub: 'Project author, school president, school, parliament, and podcast.',
-        msgWrongPresCode: '❌ Invalid password!',
-        msgPresUnlocked: '👑 School President mode activated!',
-        msgNewsEmpty: '⚠️ Please enter both title and content.',
-        msgNewsPublished: '📢 News published!',
-        msgPickPointFirst: '⚠️ Click a spot on the photo first.',
-        msgRoomEmpty: '⚠️ Enter a classroom number or name.',
-        msgRoomExists: '🔒 This classroom is already locked and cannot be re-entered.',
-        msgRoomSaved: '✅ Classroom saved and locked!',
-        msgPhotoUploaded: '📷 Floor photo uploaded!',
-        msgWrongAnswer: '❌ Incorrect answer! Try again.',
-        msgEmptyAnswer: '⚠️ Please enter an answer first.',
-        msgSelectFriend: '⚠️ Please select a student first.',
-        msgFriendSent: '📨 Friend request sent!',
-        msgFriendSelf: '⚠️ You cannot send a friend request to yourself.',
-        msgFriendAlready: 'ℹ️ Already friends or request already sent.',
-        msgFriendAccepted: '🤝 Friend request accepted!'
+        msgWrongPresCode: '❌ Invalid password!', msgPresUnlocked: '👑 School President mode activated!',
+        msgNewsEmpty: '⚠️ Please enter both title and content.', msgNewsPublished: '📢 News published!',
+        msgPickPointFirst: '⚠️ Click a spot on the photo first.', msgRoomEmpty: '⚠️ Enter a classroom number or name.',
+        msgRoomExists: '🔒 This classroom is already locked and cannot be re-entered.', msgRoomSaved: '✅ Classroom saved and locked!',
+        msgPhotoUploaded: '📷 Floor photo uploaded!', msgWrongAnswer: '❌ Incorrect answer! Try again.',
+        msgEmptyAnswer: '⚠️ Please enter an answer first.', msgSelectFriend: '⚠️ Please select a student first.',
+        msgFriendSent: '📨 Friend request sent!', msgFriendSelf: '⚠️ You cannot send a friend request to yourself.',
+        msgFriendAlready: 'ℹ️ Already friends or request already sent.', msgFriendAccepted: '🤝 Friend request accepted!'
       }
     };
 
@@ -1332,30 +1128,18 @@
     let draftCoords = null;
     let selectedPinId = null;
 
-    function getLockedRoomsDB() {
-      return JSON.parse(localStorage.getItem(LOCKED_ROOMS_KEY) || '[]');
-    }
-
-    function saveLockedRoomsDB(list) {
-      localStorage.setItem(LOCKED_ROOMS_KEY, JSON.stringify(list));
-    }
-
-    function getFloorPhotosDB() {
-      return JSON.parse(localStorage.getItem(FLOOR_PHOTOS_KEY) || '{}');
-    }
-
-    function saveFloorPhotosDB(obj) {
-      localStorage.setItem(FLOOR_PHOTOS_KEY, JSON.stringify(obj));
-    }
+    function getLockedRoomsDB() { return JSON.parse(localStorage.getItem(LOCKED_ROOMS_KEY) || '[]'); }
+    function saveLockedRoomsDB(list) { localStorage.setItem(LOCKED_ROOMS_KEY, JSON.stringify(list)); }
+    function getFloorPhotosDB() { return JSON.parse(localStorage.getItem(FLOOR_PHOTOS_KEY) || '{}'); }
+    function saveFloorPhotosDB(obj) { localStorage.setItem(FLOOR_PHOTOS_KEY, JSON.stringify(obj)); }
 
     function handleFloorPhotoUpload(event) {
       const file = event.target.files && event.target.files[0];
       if (!file) return;
       const reader = new FileReader();
       reader.onload = function(e) {
-        const dataUrl = e.target.result;
         const photos = getFloorPhotosDB();
-        photos[selectedFloor] = dataUrl;
+        photos[selectedFloor] = e.target.result;
         saveFloorPhotosDB(photos);
         renderFloorPhoto();
         document.getElementById('photo-status-label').textContent = t('photoSavedMsg');
@@ -1385,9 +1169,7 @@
     function renderFloorPhoto() {
       const imgEl = document.getElementById('blueprint-img');
       const emptyBox = document.getElementById('empty-photo-box');
-      const photos = getFloorPhotosDB();
-      const savedPhoto = photos[selectedFloor];
-
+      const savedPhoto = getFloorPhotosDB()[selectedFloor];
       if (savedPhoto) {
         imgEl.src = savedPhoto;
         imgEl.style.display = 'block';
@@ -1399,7 +1181,7 @@
       }
     }
 
-    function selectFloor(floorNum, btnEl) {
+    function selectFloor(floorNum) {
       selectedFloor = floorNum;
       draftCoords = null;
       selectedPinId = null;
@@ -1408,7 +1190,6 @@
       document.getElementById('draft-room-pin').style.display = 'none';
       document.getElementById('room-status-msg').textContent = '';
       document.getElementById('selected-room-detail').style.display = 'none';
-
       document.querySelectorAll('.floor-btn').forEach(b => {
         b.className = parseInt(b.dataset.floor, 10) === floorNum ? 'btn floor-btn' : 'btn btn-outline floor-btn';
       });
@@ -1427,14 +1208,11 @@
       const frame = document.getElementById('blueprint-frame');
       const rect = frame.getBoundingClientRect();
       if (!rect.width || !rect.height) return;
-
       const xPct = (((event.clientX - rect.left) / rect.width) * 100).toFixed(1);
       const yPct = (((event.clientY - rect.top) / rect.height) * 100).toFixed(1);
-
       draftCoords = { x: parseFloat(xPct), y: parseFloat(yPct) };
       document.getElementById('room-coord-x').value = `${xPct}%`;
       document.getElementById('room-coord-y').value = `${yPct}%`;
-
       const pin = document.getElementById('draft-room-pin');
       pin.style.display = 'block';
       pin.style.left = `${xPct}%`;
@@ -1443,48 +1221,28 @@
       document.getElementById('room-status-msg').textContent = '';
     }
 
-    function normalizeRoomKey(name) {
-      return name.trim().toLowerCase().replace(/\s+/g, ' ');
-    }
+    function normalizeRoomKey(name) { return name.trim().toLowerCase().replace(/\s+/g, ' '); }
 
     function saveMappedRoom() {
       if (!currentUser) return;
-      if (!draftCoords) {
-        showToast(t('msgPickPointFirst'));
-        return;
-      }
+      if (!draftCoords) { showToast(t('msgPickPointFirst')); return; }
       const rawName = (document.getElementById('room-number-input').value || '').trim();
-      if (!rawName) {
-        showToast(t('msgRoomEmpty'));
-        return;
-      }
-
+      if (!rawName) { showToast(t('msgRoomEmpty')); return; }
       const normKey = normalizeRoomKey(rawName);
       const allRooms = getLockedRoomsDB();
-      const alreadyExists = allRooms.some(r => r.normKey === normKey);
-
-      if (alreadyExists) {
+      if (allRooms.some(r => r.normKey === normKey)) {
         document.getElementById('room-status-msg').textContent = t('msgRoomExists');
         showToast(t('msgRoomExists'));
         return;
       }
-
       const entry = {
-        id: 'rm_' + Date.now(),
-        floor: selectedFloor,
-        roomNumber: rawName,
-        normKey,
-        x: draftCoords.x,
-        y: draftCoords.y,
-        addedBy: currentUser.username
+        id: 'rm_' + Date.now(), floor: selectedFloor, roomNumber: rawName, normKey,
+        x: draftCoords.x, y: draftCoords.y, addedBy: currentUser.username
       };
-
       allRooms.push(entry);
       saveLockedRoomsDB(allRooms);
       selectedPinId = entry.id;
-
       addStars(15, rawName);
-
       draftCoords = null;
       document.getElementById('room-number-input').value = '';
       document.getElementById('room-coord-x').value = '';
@@ -1506,19 +1264,12 @@
       const listEl = document.getElementById('saved-rooms-list');
       const detailEl = document.getElementById('selected-room-detail');
       if (!pinsLayer || !listEl || !detailEl) return;
-
-      const allRooms = getLockedRoomsDB();
-      const floorRooms = allRooms.filter(r => r.floor === selectedFloor);
-
-      pinsLayer.innerHTML = floorRooms.map(r => {
-        const activeClass = r.id === selectedPinId ? ' selected-pin' : '';
-        return `
-          <div class="locked-room-pin${activeClass}" style="left:${r.x}%; top:${r.y}%;" onclick="inspectPin('${r.id}', event)" title="${r.roomNumber} (${r.addedBy})">
-            🔒 ${r.roomNumber}
-          </div>
-        `;
-      }).join('');
-
+      const floorRooms = getLockedRoomsDB().filter(r => r.floor === selectedFloor);
+      pinsLayer.innerHTML = floorRooms.map(r => `
+        <div class="locked-room-pin${r.id === selectedPinId ? ' selected-pin' : ''}" style="left:${r.x}%; top:${r.y}%;" onclick="inspectPin('${r.id}', event)">
+          🔒 ${r.roomNumber}
+        </div>
+      `).join('');
       if (!floorRooms.length) {
         listEl.innerHTML = `<p style="color:var(--muted); font-size:0.86rem;">${t('noSavedRooms')}</p>`;
         detailEl.style.display = 'none';
@@ -1526,14 +1277,10 @@
         listEl.innerHTML = floorRooms.map(r => `
           <span class="room-chip" onclick="inspectPin('${r.id}', event)">🔒 ${r.roomNumber} • (${r.x}%, ${r.y}%) • @${r.addedBy}</span>
         `).join('');
-
         const activeRoom = floorRooms.find(r => r.id === selectedPinId) || floorRooms[floorRooms.length - 1];
         detailEl.style.display = 'flex';
         detailEl.innerHTML = `
-          <div>
-            <strong>🔒 ${activeRoom.roomNumber}</strong> — ${activeRoom.floor}${t('floorUnit')}
-            <span style="color:var(--muted);">(${activeRoom.x}%, ${activeRoom.y}%)</span>
-          </div>
+          <div><strong>🔒 ${activeRoom.roomNumber}</strong> — ${activeRoom.floor}${t('floorUnit')} <span style="color:var(--muted);">(${activeRoom.x}%, ${activeRoom.y}%)</span></div>
           <span class="badge-pill" style="background:#ecfdf5; color:#065f46;">👤 @${activeRoom.addedBy}</span>
         `;
       }
@@ -1562,14 +1309,11 @@
       }
     }
 
-    function isPresidentUnlocked() {
-      return sessionStorage.getItem(PRESIDENT_SESSION_KEY) === '1';
-    }
+    function isPresidentUnlocked() { return sessionStorage.getItem(PRESIDENT_SESSION_KEY) === '1'; }
 
     function unlockPresidentMode() {
       const codeInput = document.getElementById('president-code-input');
-      const code = (codeInput ? codeInput.value : '').trim();
-      if (code !== PRESIDENT_SECRET_CODE) {
+      if ((codeInput ? codeInput.value : '').trim() !== PRESIDENT_SECRET_CODE) {
         showToast(t('msgWrongPresCode'));
         return;
       }
@@ -1597,22 +1341,16 @@
       statusBadge.style.color = unlocked ? '#92400e' : 'var(--muted)';
     }
 
-    // --- ЖАҢАЛЫҚТАР (SUPABASE ОРТАҚ БАЗАСЫ) ---
     async function fetchCloudNews() {
       try {
         const res = await fetch(`${SUPABASE_BASE_URL}/news?select=*&order=created_at.desc`, {
-          method: 'GET',
-          headers: getSupabaseHeaders()
+          method: 'GET', headers: getSupabaseHeaders()
         });
         if (res.ok) {
           const rows = await res.json();
           if (Array.isArray(rows) && rows.length > 0) {
             const mapped = rows.map(r => ({
-              id: r.id,
-              titleKk: r.title_kk,
-              bodyKk: r.body_kk,
-              author: r.author,
-              date: r.date_str
+              id: r.id, titleKk: r.title_kk, bodyKk: r.body_kk, author: r.author, date: r.date_str
             }));
             saveNewsDB(mapped);
             return mapped;
@@ -1636,9 +1374,7 @@
       return initial;
     }
 
-    function saveNewsDB(list) {
-      localStorage.setItem(NEWS_DB_KEY, JSON.stringify(list));
-    }
+    function saveNewsDB(list) { localStorage.setItem(NEWS_DB_KEY, JSON.stringify(list)); }
 
     async function publishNews() {
       if (!isPresidentUnlocked()) return;
@@ -1646,19 +1382,13 @@
       const bodyEl = document.getElementById('news-body-input');
       const titleKk = (titleEl.value || '').trim();
       const bodyKk = (bodyEl.value || '').trim();
-      if (!titleKk || !bodyKk) {
-        showToast(t('msgNewsEmpty'));
-        return;
-      }
+      if (!titleKk || !bodyKk) { showToast(t('msgNewsEmpty')); return; }
 
       const newItem = {
-        id: 'n_' + Date.now(),
-        titleKk,
-        bodyKk,
+        id: 'n_' + Date.now(), titleKk, bodyKk,
         author: currentUser ? currentUser.username : 'president',
         date: new Date().toLocaleString()
       };
-
       const list = getNewsDB();
       list.unshift(newItem);
       saveNewsDB(list);
@@ -1668,11 +1398,8 @@
           method: 'POST',
           headers: getSupabaseHeaders({ 'Prefer': 'return=minimal' }),
           body: JSON.stringify({
-            id: newItem.id,
-            title_kk: newItem.titleKk,
-            body_kk: newItem.bodyKk,
-            author: newItem.author,
-            date_str: newItem.date
+            id: newItem.id, title_kk: newItem.titleKk, body_kk: newItem.bodyKk,
+            author: newItem.author, date_str: newItem.date
           })
         });
       } catch (_) {}
@@ -1688,8 +1415,7 @@
       saveNewsDB(getNewsDB().filter(n => n.id !== id));
       try {
         await fetch(`${SUPABASE_BASE_URL}/news?id=eq.${encodeURIComponent(id)}`, {
-          method: 'DELETE',
-          headers: getSupabaseHeaders()
+          method: 'DELETE', headers: getSupabaseHeaders()
         });
       } catch (_) {}
       await renderNews();
@@ -1768,10 +1494,7 @@
       const username = document.getElementById('auth-username').value.trim();
       const password = document.getElementById('auth-password').value.trim();
       const grade = document.getElementById('auth-grade').value;
-      if (!username || !password) {
-        showToast('⚠️ Логин / пароль!');
-        return;
-      }
+      if (!username || !password) { showToast('⚠️ Логин / пароль!'); return; }
       const db = getUsersDB();
       const boundUser = localStorage.getItem(DEVICE_LOCK_KEY);
 
@@ -1841,11 +1564,8 @@
         method: 'POST',
         headers: getSupabaseHeaders({ 'Prefer': 'resolution=merge-duplicates,return=minimal' }),
         body: JSON.stringify({
-          username: userObj.username,
-          grade: userObj.grade,
-          stars: userObj.stars,
-          daily_date: userObj.dailyDate,
-          daily_earned: userObj.dailyEarned,
+          username: userObj.username, grade: userObj.grade, stars: userObj.stars,
+          daily_date: userObj.dailyDate, daily_earned: userObj.dailyEarned,
           updated_at: new Date().toISOString()
         })
       }).catch(() => {});
@@ -1854,10 +1574,7 @@
     function addStars(amount, label) {
       checkDailyReset();
       const left = DAILY_LIMIT - currentUser.dailyEarned;
-      if (left <= 0) {
-        showToast('🛑 100 ⭐ limit');
-        return 0;
-      }
+      if (left <= 0) { showToast('🛑 100 ⭐ limit'); return 0; }
       const added = Math.min(amount, left);
       currentUser.stars += added;
       currentUser.dailyEarned += added;
@@ -1915,9 +1632,7 @@
     async function getAllRegisteredStudents() {
       const merged = new Map();
       Object.values(getUsersDB()).forEach(u => {
-        if (u && u.username) {
-          merged.set(u.username, { username: u.username, grade: u.grade || '—', stars: u.stars || 0 });
-        }
+        if (u && u.username) merged.set(u.username, { username: u.username, grade: u.grade || '—', stars: u.stars || 0 });
       });
       if (CLOUD_SYNC_CONFIG.enabled && CLOUD_SYNC_CONFIG.endpoint && CLOUD_SYNC_CONFIG.apiKey) {
         try {
@@ -1942,7 +1657,6 @@
       return Array.from(merged.values()).filter(u => u.username !== currentUser.username);
     }
 
-    // --- ДОСТАР ЖӘНЕ ҰСЫНЫСТАР (SUPABASE ОРТАҚ БАЗАСЫ) ---
     async function syncFriendshipsFromCloud() {
       if (!currentUser) return;
       try {
@@ -2004,10 +1718,7 @@
           method: 'POST',
           headers: getSupabaseHeaders({ 'Prefer': 'resolution=merge-duplicates,return=minimal' }),
           body: JSON.stringify({
-            id: pairId,
-            from_user: currentUser.username,
-            to_user: targetName,
-            status: 'pending'
+            id: pairId, from_user: currentUser.username, to_user: targetName, status: 'pending'
           })
         });
       } catch (_) {}
@@ -2026,7 +1737,6 @@
           body: JSON.stringify({ status: 'accepted' })
         });
       } catch (_) {}
-
       showToast(t('msgFriendAccepted'));
       await renderFriends();
     }
@@ -2035,11 +1745,9 @@
       const pairId = [currentUser.username, fromUser].sort().join('__');
       try {
         await fetch(`${SUPABASE_BASE_URL}/friendships?id=eq.${encodeURIComponent(pairId)}`, {
-          method: 'DELETE',
-          headers: getSupabaseHeaders()
+          method: 'DELETE', headers: getSupabaseHeaders()
         });
       } catch (_) {}
-
       await renderFriends();
     }
 
@@ -2047,11 +1755,9 @@
       const pairId = [currentUser.username, friendName].sort().join('__');
       try {
         await fetch(`${SUPABASE_BASE_URL}/friendships?id=eq.${encodeURIComponent(pairId)}`, {
-          method: 'DELETE',
-          headers: getSupabaseHeaders()
+          method: 'DELETE', headers: getSupabaseHeaders()
         });
       } catch (_) {}
-
       await renderFriends();
     }
 
