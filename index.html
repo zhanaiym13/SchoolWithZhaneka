@@ -1266,6 +1266,7 @@
       endpoint: 'https://hmpsxafccltbaxtroksz.supabase.co/rest/v1/students',
       apiKey: 'sb_publishable_fMP_Al4M9XbtDWyhOn96jA_3C97eNDs'
     };
+    const SUPABASE_BASE_URL = 'https://hmpsxafccltbaxtroksz.supabase.co/rest/v1';
 
     const BELL_SCHEDULE = [
       { num: 1, time: '08:00 – 08:45', brk: 5 },
@@ -1596,6 +1597,31 @@
       statusBadge.style.color = unlocked ? '#92400e' : 'var(--muted)';
     }
 
+    // --- ЖАҢАЛЫҚТАР (SUPABASE ОРТАҚ БАЗАСЫ) ---
+    async function fetchCloudNews() {
+      try {
+        const res = await fetch(`${SUPABASE_BASE_URL}/news?select=*&order=created_at.desc`, {
+          method: 'GET',
+          headers: getSupabaseHeaders()
+        });
+        if (res.ok) {
+          const rows = await res.json();
+          if (Array.isArray(rows) && rows.length > 0) {
+            const mapped = rows.map(r => ({
+              id: r.id,
+              titleKk: r.title_kk,
+              bodyKk: r.body_kk,
+              author: r.author,
+              date: r.date_str
+            }));
+            saveNewsDB(mapped);
+            return mapped;
+          }
+        }
+      } catch (_) {}
+      return getNewsDB();
+    }
+
     function getNewsDB() {
       const raw = localStorage.getItem(NEWS_DB_KEY);
       if (raw) return JSON.parse(raw);
@@ -1614,7 +1640,7 @@
       localStorage.setItem(NEWS_DB_KEY, JSON.stringify(list));
     }
 
-    function publishNews() {
+    async function publishNews() {
       if (!isPresidentUnlocked()) return;
       const titleEl = document.getElementById('news-title-input');
       const bodyEl = document.getElementById('news-body-input');
@@ -1624,31 +1650,55 @@
         showToast(t('msgNewsEmpty'));
         return;
       }
-      const list = getNewsDB();
-      list.unshift({
+
+      const newItem = {
         id: 'n_' + Date.now(),
         titleKk,
         bodyKk,
         author: currentUser ? currentUser.username : 'president',
         date: new Date().toLocaleString()
-      });
+      };
+
+      const list = getNewsDB();
+      list.unshift(newItem);
       saveNewsDB(list);
+
+      try {
+        await fetch(`${SUPABASE_BASE_URL}/news`, {
+          method: 'POST',
+          headers: getSupabaseHeaders({ 'Prefer': 'return=minimal' }),
+          body: JSON.stringify({
+            id: newItem.id,
+            title_kk: newItem.titleKk,
+            body_kk: newItem.bodyKk,
+            author: newItem.author,
+            date_str: newItem.date
+          })
+        });
+      } catch (_) {}
+
       titleEl.value = '';
       bodyEl.value = '';
       showToast(t('msgNewsPublished'));
-      renderNews();
+      await renderNews();
     }
 
-    function deleteNews(id) {
+    async function deleteNews(id) {
       if (!isPresidentUnlocked()) return;
       saveNewsDB(getNewsDB().filter(n => n.id !== id));
-      renderNews();
+      try {
+        await fetch(`${SUPABASE_BASE_URL}/news?id=eq.${encodeURIComponent(id)}`, {
+          method: 'DELETE',
+          headers: getSupabaseHeaders()
+        });
+      } catch (_) {}
+      await renderNews();
     }
 
-    function renderNews() {
+    async function renderNews() {
       updatePresidentUI();
       const feed = document.getElementById('news-feed');
-      const list = getNewsDB();
+      const list = await fetchCloudNews();
       const unlocked = isPresidentUnlocked();
       if (!list.length) {
         feed.innerHTML = `<p style="color:var(--muted); font-size:0.9rem;">${t('noNews')}</p>`;
@@ -1892,83 +1942,123 @@
       return Array.from(merged.values()).filter(u => u.username !== currentUser.username);
     }
 
-    function sendFriendRequest(explicitTarget = null) {
+    // --- ДОСТАР ЖӘНЕ ҰСЫНЫСТАР (SUPABASE ОРТАҚ БАЗАСЫ) ---
+    async function syncFriendshipsFromCloud() {
+      if (!currentUser) return;
+      try {
+        const me = encodeURIComponent(currentUser.username);
+        const res = await fetch(
+          `${SUPABASE_BASE_URL}/friendships?or=(from_user.eq.${me},to_user.eq.${me})`,
+          { method: 'GET', headers: getSupabaseHeaders() }
+        );
+        if (!res.ok) return;
+        const rows = await res.json();
+        if (!Array.isArray(rows)) return;
+
+        const friends = [];
+        const incoming = [];
+        const outgoing = [];
+
+        rows.forEach(row => {
+          const other = row.from_user === currentUser.username ? row.to_user : row.from_user;
+          if (row.status === 'accepted') {
+            if (!friends.includes(other)) friends.push(other);
+          } else if (row.status === 'pending') {
+            if (row.to_user === currentUser.username && !incoming.includes(other)) {
+              incoming.push(other);
+            } else if (row.from_user === currentUser.username && !outgoing.includes(other)) {
+              outgoing.push(other);
+            }
+          }
+        });
+
+        currentUser.friends = friends;
+        currentUser.friendRequestsIn = incoming;
+        currentUser.friendRequestsOut = outgoing;
+        const db = getUsersDB();
+        db[currentUser.username] = currentUser;
+        saveUsersDB(db);
+      } catch (_) {}
+    }
+
+    async function sendFriendRequest(explicitTarget = null) {
       const selectEl = document.getElementById('friend-select');
       const targetName = (explicitTarget || (selectEl ? selectEl.value : '')).trim();
       if (!targetName) { showToast(t('msgSelectFriend')); return; }
       if (targetName === currentUser.username) { showToast(t('msgFriendSelf')); return; }
-      const db = getUsersDB();
-      const targetUser = db[targetName];
-      ensureUserFields(currentUser);
+
+      await syncFriendshipsFromCloud();
+
       if (currentUser.friends.includes(targetName) || currentUser.friendRequestsOut.includes(targetName)) {
         showToast(t('msgFriendAlready'));
         return;
       }
       if (currentUser.friendRequestsIn.includes(targetName)) {
-        acceptFriendRequest(targetName);
+        await acceptFriendRequest(targetName);
         return;
       }
+
+      const pairId = [currentUser.username, targetName].sort().join('__');
+      try {
+        await fetch(`${SUPABASE_BASE_URL}/friendships?on_conflict=id`, {
+          method: 'POST',
+          headers: getSupabaseHeaders({ 'Prefer': 'resolution=merge-duplicates,return=minimal' }),
+          body: JSON.stringify({
+            id: pairId,
+            from_user: currentUser.username,
+            to_user: targetName,
+            status: 'pending'
+          })
+        });
+      } catch (_) {}
+
       currentUser.friendRequestsOut.push(targetName);
-      if (targetUser) {
-        ensureUserFields(targetUser);
-        if (!targetUser.friendRequestsIn.includes(currentUser.username)) targetUser.friendRequestsIn.push(currentUser.username);
-        db[targetName] = targetUser;
-      }
-      db[currentUser.username] = currentUser;
-      saveUsersDB(db);
-      syncUserToCloud(currentUser);
       showToast(t('msgFriendSent'));
-      renderFriends();
+      await renderFriends();
     }
 
-    function acceptFriendRequest(fromUser) {
-      const db = getUsersDB();
-      const sender = db[fromUser];
-      currentUser.friendRequestsIn = currentUser.friendRequestsIn.filter(u => u !== fromUser);
-      if (!currentUser.friends.includes(fromUser)) currentUser.friends.push(fromUser);
-      if (sender) {
-        ensureUserFields(sender);
-        sender.friendRequestsOut = sender.friendRequestsOut.filter(u => u !== currentUser.username);
-        if (!sender.friends.includes(currentUser.username)) sender.friends.push(currentUser.username);
-        db[fromUser] = sender;
-      }
-      db[currentUser.username] = currentUser;
-      saveUsersDB(db);
-      syncUserToCloud(currentUser);
+    async function acceptFriendRequest(fromUser) {
+      const pairId = [currentUser.username, fromUser].sort().join('__');
+      try {
+        await fetch(`${SUPABASE_BASE_URL}/friendships?id=eq.${encodeURIComponent(pairId)}`, {
+          method: 'PATCH',
+          headers: getSupabaseHeaders({ 'Prefer': 'return=minimal' }),
+          body: JSON.stringify({ status: 'accepted' })
+        });
+      } catch (_) {}
+
       showToast(t('msgFriendAccepted'));
-      renderFriends();
+      await renderFriends();
     }
 
-    function declineFriendRequest(fromUser) {
-      const db = getUsersDB();
-      const sender = db[fromUser];
-      currentUser.friendRequestsIn = currentUser.friendRequestsIn.filter(u => u !== fromUser);
-      if (sender) {
-        ensureUserFields(sender);
-        sender.friendRequestsOut = sender.friendRequestsOut.filter(u => u !== currentUser.username);
-        db[fromUser] = sender;
-      }
-      db[currentUser.username] = currentUser;
-      saveUsersDB(db);
-      renderFriends();
+    async function declineFriendRequest(fromUser) {
+      const pairId = [currentUser.username, fromUser].sort().join('__');
+      try {
+        await fetch(`${SUPABASE_BASE_URL}/friendships?id=eq.${encodeURIComponent(pairId)}`, {
+          method: 'DELETE',
+          headers: getSupabaseHeaders()
+        });
+      } catch (_) {}
+
+      await renderFriends();
     }
 
-    function removeFriend(friendName) {
-      const db = getUsersDB();
-      const friendObj = db[friendName];
-      currentUser.friends = currentUser.friends.filter(u => u !== friendName);
-      if (friendObj) {
-        ensureUserFields(friendObj);
-        friendObj.friends = friendObj.friends.filter(u => u !== currentUser.username);
-        db[friendName] = friendObj;
-      }
-      db[currentUser.username] = currentUser;
-      saveUsersDB(db);
-      renderFriends();
+    async function removeFriend(friendName) {
+      const pairId = [currentUser.username, friendName].sort().join('__');
+      try {
+        await fetch(`${SUPABASE_BASE_URL}/friendships?id=eq.${encodeURIComponent(pairId)}`, {
+          method: 'DELETE',
+          headers: getSupabaseHeaders()
+        });
+      } catch (_) {}
+
+      await renderFriends();
     }
 
     async function renderFriends() {
       ensureUserFields(currentUser);
+      await syncFriendshipsFromCloud();
+
       const db = getUsersDB();
       const students = await getAllRegisteredStudents();
       const selectEl = document.getElementById('friend-select');
@@ -1985,15 +2075,18 @@
       const inEl = document.getElementById('incoming-requests-list');
       inEl.innerHTML = !currentUser.friendRequestsIn.length
         ? `<p style="color:var(--muted); font-size:0.88rem;">${t('noIncoming')}</p>`
-        : currentUser.friendRequestsIn.map(u => `
-            <div class="friend-row">
-              <span>👤 <strong>${u}</strong> ${db[u] ? '(' + db[u].grade + ')' : ''}</span>
-              <div style="display:flex; gap:6px;">
-                <button class="btn" onclick="acceptFriendRequest('${u}')">${t('acceptBtn')}</button>
-                <button class="btn btn-danger" onclick="declineFriendRequest('${u}')">${t('declineBtn')}</button>
+        : currentUser.friendRequestsIn.map(u => {
+            const found = students.find(s => s.username === u) || db[u];
+            return `
+              <div class="friend-row">
+                <span>👤 <strong>${u}</strong> ${found ? '(' + found.grade + ')' : ''}</span>
+                <div style="display:flex; gap:6px;">
+                  <button class="btn" onclick="acceptFriendRequest('${u}')">${t('acceptBtn')}</button>
+                  <button class="btn btn-danger" onclick="declineFriendRequest('${u}')">${t('declineBtn')}</button>
+                </div>
               </div>
-            </div>
-          `).join('');
+            `;
+          }).join('');
 
       const listEl = document.getElementById('friends-list');
       listEl.innerHTML = !currentUser.friends.length
