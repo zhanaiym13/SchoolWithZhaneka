@@ -51,14 +51,6 @@
     .auth-lang-bar .lang-btn.active {
       background: var(--primary); color: white; border-color: var(--primary);
     }
-    .site-logo-auth {
-      width: 84px; height: 84px; object-fit: cover; border-radius: 20px;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.14); display: inline-block;
-    }
-    .site-logo-header {
-      width: 44px; height: 44px; object-fit: cover; border-radius: 12px;
-      border: 2px solid rgba(255,255,255,0.45);
-    }
     header {
       background: linear-gradient(135deg, var(--primary) 0%, #083825 100%);
       color: white; padding: 1rem 1rem 1.6rem; text-align: center;
@@ -215,8 +207,8 @@
     </div>
 
     <div style="text-align: center; margin-bottom: 18px;">
-      <img src="logo.png" alt="SchoolQuest Logo" class="site-logo-auth" onerror="handleLogoFallback(this)">
-      <h2 style="color: var(--primary); margin-top: 8px;">SchoolQuest</h2>
+      <div style="font-size: 2.8rem;">🏫🧭</div>
+      <h2 style="color: var(--primary); margin-top: 6px;">SchoolQuest</h2>
       <p id="txt-auth-sub" style="color: var(--muted); font-size: 0.88rem;">Жаңа оқушыға арналған мектеп бағдары</p>
     </div>
 
@@ -261,10 +253,7 @@
         <button class="lang-btn" data-lang="ru" onclick="setLanguage('ru')">РУС</button>
         <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">ENG</button>
       </div>
-      <h1>
-        <img src="logo.png" alt="SchoolQuest Logo" class="site-logo-header" onerror="handleLogoFallback(this)">
-        SchoolQuest
-      </h1>
+      <h1>🏫 SchoolQuest</h1>
       <p id="txt-header-sub">Мектеп сызбасы • Пәндік квесттер • Жаңалықтар • Достар • Кешбэк</p>
       <div class="user-bar">
         <span>
@@ -332,6 +321,7 @@
             <span id="president-mode-status" class="badge-pill" style="background:#f1f5f9; color:var(--muted);">👤 Оқушы режимі</span>
           </div>
 
+          <!-- Президент құпия сөзін енгізу -->
           <div id="president-login-box" class="info-box">
             <h3 id="txt-pres-auth-title">👑 Мектеп президентіне арнайы кіру</h3>
             <p id="txt-pres-auth-desc" style="font-size:0.85rem; color:var(--muted); margin:4px 0 10px;">
@@ -343,6 +333,7 @@
             </div>
           </div>
 
+          <!-- Президент жаңалық жариялау формасы -->
           <div id="president-composer-box" class="info-box" style="display:none; border-color:#fcd34d; background:#fffbeb;">
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
               <h3 id="txt-pres-post-title">✍️ Жаңа жаңалық жариялау</h3>
@@ -359,6 +350,7 @@
             <button id="btn-publish-news" class="btn" onclick="publishNews()">📢 Жариялау</button>
           </div>
 
+          <!-- Жарияланған жаңалықтар тізімі -->
           <div id="news-feed" style="margin-top: 18px;"></div>
         </div>
       </section>
@@ -502,21 +494,6 @@
   <div id="toast"></div>
 
   <script>
-    /* ================= ЛОГОТИП FALLBACK ================= */
-    function handleLogoFallback(imgEl) {
-      if (!imgEl || imgEl.dataset.fallbackApplied) return;
-      imgEl.dataset.fallbackApplied = '1';
-      const svg = encodeURIComponent(
-        `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
-          <rect width="120" height="120" rx="28" fill="#0f5c3e"/>
-          <polygon points="60,22 98,42 60,62 22,42" fill="#f59e0b"/>
-          <path d="M36 52 V76 C36 85 84 85 84 76 V52 L60 65 Z" fill="#ffffff"/>
-          <circle cx="94" cy="28" r="10" fill="#fde68a"/>
-        </svg>`
-      );
-      imgEl.src = `data:image/svg+xml;utf8,${svg}`;
-    }
-
     /* ================= ТІЛДЕР (ҚАЗ / РУС / ENG) ================= */
     let currentLang = localStorage.getItem('sq_lang') || 'kk';
 
