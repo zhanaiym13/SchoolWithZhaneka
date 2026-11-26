@@ -224,4 +224,1423 @@
         <option value="8А">8А</option><option value="8Ә">8Ә</option><option value="8Б">8Б</option>
         <option value="8В">8В</option><option value="8Г">8Г</option><option value="8К">8К</option><option value="8Л">8Л</option>
         <option value="9А">9А</option><option value="9Ә">9Ә</option><option value="9Б">9Б</option>
-        <option value="9В">9В</option><option value="
+        <option value="9В">9В</option><option value="9Г">9Г</option><option value="9К">9К</option><option value="9Л">9Л</option>
+        <option value="10А">10А</option><option value="10Ә">10Ә</option><option value="10Б">10Б</option><option value="10К">10К</option>
+        <option value="11А">11А</option><option value="11Ә">11Ә</option><option value="11Б">11Б</option><option value="11К">11К</option>
+      </select>
+    </div>
+
+    <button id="btn-auth-submit" class="btn" style="width: 100%; margin-top: 4px;" onclick="handleAuth()">Жалғастыру 🚀</button>
+  </div>
+
+  <!-- ОСНОВНОЙ ИНТЕРФЕЙС -->
+  <div id="app-wrapper" style="display: none;">
+    <header>
+      <div class="lang-bar">
+        <button class="lang-btn active" data-lang="kk" onclick="setLanguage('kk')">ҚАЗ</button>
+        <button class="lang-btn" data-lang="ru" onclick="setLanguage('ru')">РУС</button>
+        <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">ENG</button>
+      </div>
+      <h1>🏫 SchoolQuest</h1>
+      <p id="txt-header-sub">Мектеп сызбасы • Пәндік квесттер • Достар • Кешбэк</p>
+      <div class="user-bar">
+        <span>👋 <strong id="display-user"></strong> (<span id="display-grade"></span>)</span>
+        <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+          <span class="badge-pill">⭐ <span id="header-stars">0</span></span>
+          <span class="badge-pill"><span id="txt-today">Бүгін:</span> <span id="header-daily">0</span>/100 ⭐</span>
+          <button id="btn-logout" onclick="logout()" style="background: rgba(255,255,255,0.22); border:none; color:white; padding:4px 10px; border-radius:8px; cursor:pointer;">Шығу</button>
+        </div>
+      </div>
+    </header>
+
+    <nav>
+      <button id="nav-home" class="active" onclick="showSection('home', this)">🏠 Басты бет</button>
+      <button id="nav-map" onclick="showSection('map', this)">🗺️ Мектеп картасы</button>
+      <button id="nav-quests" onclick="showSection('quests', this)">🎯 Квесттер</button>
+      <button id="nav-friends" onclick="showSection('friends', this)">🤝 Достар</button>
+      <button id="nav-shop" onclick="showSection('shop', this)">🎁 Кешбэк дүкені</button>
+      <button id="nav-rating" onclick="showSection('rating', this)">🏆 Рейтинг</button>
+    </nav>
+
+    <main>
+      <!-- БАСТЫ БЕТ -->
+      <section id="sec-home" class="section active">
+        <div class="card">
+          <h2><span id="txt-hello">Сәлем,</span> <span id="welcome-name"></span>! 🎒</h2>
+          <p id="txt-home-desc" style="color: var(--muted); margin-top: 6px;">
+            Мектепке тез бейімделу үшін сызба арқылы кабинеттерді тап, пәндік квест сұрақтарына жауап беріп жұлдызша жина және достарыңды қос.
+          </p>
+
+          <div class="hero-balance">
+            <div class="stars-count">⭐ <span id="main-stars">0</span> <span id="txt-stars-word">жұлдызша</span></div>
+            <p id="txt-cashback-bal" style="opacity: 0.9; margin-top: 4px;">Кешбэк балансы</p>
+            <div class="limit-bar-wrap">
+              <div class="limit-bar-fill" id="daily-progress-bar"></div>
+            </div>
+            <small><span id="txt-daily-limit">Күндік лимит:</span> <strong id="daily-limit-text">0 / 100</strong> ⭐</small>
+          </div>
+
+          <div class="info-box">
+            <h3 id="txt-bell-title">⏰ Қоңырау кестесі (әр сабақ 45 минут)</h3>
+            <table class="bell-table">
+              <thead>
+                <tr><th id="th-lesson">Сабақ</th><th id="th-time">Уақыты</th><th id="th-break">Үзіліс</th></tr>
+              </thead>
+              <tbody id="bell-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- МЕКТЕП КАРТАСЫ -->
+      <section id="sec-map" class="section">
+        <div class="card">
+          <h2 id="txt-map-title">🗺️ Мектеп картасы және постер-ориентаторлар</h2>
+          <p id="txt-map-desc" style="color: var(--muted); font-size: 0.88rem; margin-bottom: 14px;">
+            Кабинетті таңдап, орналасуын көріңіз және қабырғадағы постер кодын енгізіп, картаны қажетті бағытқа бұрыңыз.
+          </p>
+
+          <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 14px;">
+            <select id="plan-select" onchange="changePlan(this.value)" style="padding: 9px 12px; border-radius: 10px; border: 2px solid var(--primary); font-weight: 600;">
+              <option value="0" id="opt-floor-1">📐 Чертёж 1 (1-қабат)</option>
+              <option value="1" id="opt-floor-2">📐 Чертёж 2 (2-қабат)</option>
+            </select>
+
+            <select id="room-select" onchange="selectRoom(this.value)" style="padding: 9px 12px; border-radius: 10px; border: 2px solid var(--primary); font-weight: 600; flex: 1; min-width: 210px;">
+              <option value="">-- Кабинетті таңдаңыз --</option>
+            </select>
+
+            <div class="compass-badge">
+              🧭 <span id="txt-orient">Бағдар:</span> <span id="compass-angle">0°</span>
+            </div>
+          </div>
+
+          <div class="blueprint-stage">
+            <div class="blueprint-frame" id="blueprint-frame">
+              <img id="blueprint-img" src="чертеж1.png" alt="Мектеп сызбасы" onerror="handlePlanImageError(this)">
+              <div id="room-pin" class="room-pin" style="display: none;">📍 Кабинет</div>
+            </div>
+            <div id="plan-fallback-msg" style="display:none; color:#fbbf24; font-size:0.85rem; text-align:center; margin-top:8px;">
+              Файл табылмады: <code>чертеж1.png</code> / <code>чертеж2.png</code>.
+            </div>
+          </div>
+
+          <div id="room-details" class="info-box" style="display: none;">
+            <h3 id="rd-title"></h3>
+            <p id="rd-meta" style="font-size: 0.9rem; margin-top: 4px;"></p>
+            <p id="rd-pos" style="font-size: 0.88rem; color: var(--muted); margin-top: 4px;"></p>
+          </div>
+
+          <div class="info-box">
+            <h3 id="txt-poster-title">🪧 Қабырғадағы постер-ориентатор коды</h3>
+            <p id="txt-poster-desc" style="font-size: 0.85rem; color: var(--muted); margin: 4px 0 10px;">
+              Постер кодын жазыңыз (мысалы: <code>POST-NORTH</code>, <code>POST-EAST</code>, <code>POST-SOUTH</code>, <code>POST-WEST</code> немесе <code>R101</code>).
+            </p>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <input type="text" id="poster-code-input" placeholder="POST-EAST" style="flex: 1; min-width: 200px; padding: 10px 12px; border: 2px solid #cbd5e1; border-radius: 10px;">
+              <button id="btn-poster-apply" class="btn btn-gold" onclick="applyPosterOrientation()">🔄 Картаны бұру (+10 ⭐)</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ПӘНДІК КВЕСТТЕР -->
+      <section id="sec-quests" class="section">
+        <div class="card">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+            <div>
+              <h2>🎯 <span id="quest-grade-label"></span> — <span id="txt-quests-heading">пәндік квесттер</span></h2>
+              <p id="txt-quests-sub" style="color: var(--muted); font-size: 0.88rem;">Сыныбыңа сай алгебра, тарих және басқа пәндерден сұрақтарға жауап жазып, жұлдызша ал.</p>
+            </div>
+            <span class="badge-pill" style="background: #fef3c7; color: #b45309;"><span id="txt-limit-short">Лимит:</span> <span id="quest-daily-status">0/100</span> ⭐</span>
+          </div>
+          <div class="grid-cards" id="quests-list"></div>
+        </div>
+      </section>
+
+      <!-- ДОСТАР -->
+      <section id="sec-friends" class="section">
+        <div class="card">
+          <h2 id="txt-friends-title">🤝 Достар және достық ұсыныстары</h2>
+          <p id="txt-friends-sub" style="color: var(--muted); font-size: 0.88rem; margin-top: 4px;">
+            Басқа оқушының логинін жазып, достық ұсынысын жіберіңіз.
+          </p>
+
+          <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px;">
+            <input type="text" id="friend-username-input" placeholder="Оқушы логині (мыс: aruzhan_9a)" style="flex: 1; min-width: 210px; padding: 10px 14px; border: 2px solid #cbd5e1; border-radius: 12px;">
+            <button id="btn-send-friend" class="btn" onclick="sendFriendRequest()">➕ Достық ұсыну</button>
+          </div>
+
+          <div class="info-box" style="margin-top: 18px;">
+            <h3 id="txt-incoming-req">📩 Келген достық ұсыныстары</h3>
+            <div id="incoming-requests-list" style="margin-top: 10px;"></div>
+          </div>
+
+          <div class="info-box" style="margin-top: 14px;">
+            <h3 id="txt-my-friends">👥 Менің достарым</h3>
+            <div id="friends-list" style="margin-top: 10px;"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- КЕШБЭК ДҮКЕНІ -->
+      <section id="sec-shop" class="section">
+        <div class="card">
+          <h2 id="txt-shop-title">🎁 Кешбэк дүкені</h2>
+          <p id="txt-shop-sub" style="color: var(--muted); font-size: 0.88rem;">Жинаған жұлдызшаларыңды оқу бонустары мен мектеп сыйлықтарына айырбаста.</p>
+          <div class="grid-cards" id="shop-list"></div>
+
+          <h3 id="txt-coupons-title" style="margin-top: 22px;">🎟️ Менің купондарым</h3>
+          <div id="my-coupons" style="margin-top: 10px; color: var(--muted); font-size: 0.9rem;"></div>
+        </div>
+      </section>
+
+      <!-- РЕЙТИНГ -->
+      <section id="sec-rating" class="section">
+        <div class="card">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+            <div>
+              <h2 id="txt-rating-title">🏆 Оқушылар рейтингі</h2>
+              <p id="rating-source-note" style="color: var(--muted); font-size: 0.88rem;"></p>
+            </div>
+            <button id="btn-refresh-rating" class="btn btn-outline" onclick="renderRating()">↻ Жаңарту</button>
+          </div>
+          <table>
+            <thead>
+              <tr><th>#</th><th id="th-student">Оқушы</th><th id="th-class">Сынып</th><th id="th-stars">Жұлдызша</th></tr>
+            </thead>
+            <tbody id="rating-tbody"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast"></div>
+
+  <script>
+    /* ================= ТІЛДЕР (ҚАЗ / РУС / ENG) ================= */
+    let currentLang = localStorage.getItem('sq_lang') || 'kk';
+
+    const I18N = {
+      kk: {
+        authSub: 'Жаңа оқушыға арналған мектеп бағдары',
+        deviceLock: 'Бұл құрылғыда тіркелген аккаунт бар:',
+        login: 'Кіру',
+        register: 'Тіркелу',
+        usernameLbl: 'Логин (оқушы аты)',
+        passwordLbl: 'Құпия сөз',
+        gradeLbl: 'Сыныбыңды таңда',
+        selectGradeOpt: '-- Сыныпты таңдаңыз --',
+        continueBtn: 'Жалғастыру 🚀',
+        headerSub: 'Мектеп сызбасы • Пәндік квесттер • Достар • Кешбэк',
+        today: 'Бүгін:',
+        logout: 'Шығу',
+        navHome: '🏠 Басты бет',
+        navMap: '🗺️ Мектеп картасы',
+        navQuests: '🎯 Квесттер',
+        navFriends: '🤝 Достар',
+        navShop: '🎁 Кешбэк дүкені',
+        navRating: '🏆 Рейтинг',
+        hello: 'Сәлем,',
+        homeDesc: 'Мектепке тез бейімделу үшін сызба арқылы кабинеттерді тап, пәндік квест сұрақтарына жауап беріп жұлдызша жина және достарыңды қос.',
+        starsWord: 'жұлдызша',
+        cashbackBal: 'Кешбэк балансы',
+        dailyLimit: 'Күндік лимит:',
+        bellTitle: '⏰ Қоңырау кестесі (әр сабақ 45 минут)',
+        thLesson: 'Сабақ',
+        thTime: 'Уақыты',
+        thBreak: 'Үзіліс',
+        lessonWord: '-сабақ',
+        minWord: 'мин',
+        mapTitle: '🗺️ Мектеп картасы және постер-ориентаторлар',
+        mapDesc: 'Кабинетті таңдап, орналасуын көріңіз және қабырғадағы постер кодын енгізіп, картаны қажетті бағытқа бұрыңыз.',
+        floor1: '📐 Чертёж 1 (1-қабат)',
+        floor2: '📐 Чертёж 2 (2-қабат)',
+        selectRoomOpt: '-- Кабинетті таңдаңыз --',
+        orient: 'Бағдар:',
+        posterTitle: '🪧 Қабырғадағы постер-ориентатор коды',
+        posterDesc: 'Постер кодын жазыңыз (мысалы: POST-NORTH, POST-EAST, POST-SOUTH, POST-WEST немесе R101).',
+        posterBtn: '🔄 Картаны бұру (+10 ⭐)',
+        gradeSuffix: '-сынып',
+        questsHeading: 'пәндік квесттер',
+        questsSub: 'Сыныбыңа сай алгебра, тарих және басқа пәндерден сұрақтарға жауап жазып, жұлдызша ал.',
+        limitShort: 'Лимит:',
+        answerPlaceholder: 'Жауабыңды осында жаз...',
+        checkAnswerBtn: 'Тексеру және алу',
+        doneTodayBtn: '✅ Бүгін орындалды',
+        friendsTitle: '🤝 Достар және достық ұсыныстары',
+        friendsSub: 'Басқа оқушының логинін жазып, достық ұсынысын жіберіңіз.',
+        friendInputPh: 'Оқушы логині (мыс: aruzhan_9a)',
+        sendFriendBtn: '➕ Достық ұсыну',
+        incomingReqTitle: '📩 Келген достық ұсыныстары',
+        myFriendsTitle: '👥 Менің достарым',
+        noIncoming: 'Жаңа достық ұсыныстары жоқ.',
+        noFriends: 'Әзірге достар тізімі бос.',
+        acceptBtn: 'Қабылдау',
+        declineBtn: 'Бас тарту',
+        removeFriendBtn: 'Өшіру',
+        shopTitle: '🎁 Кешбэк дүкені',
+        shopSub: 'Жинаған жұлдызшаларыңды оқу бонустары мен мектеп сыйлықтарына айырбаста.',
+        couponsTitle: '🎟️ Менің купондарым',
+        noCoupons: 'Әзірге купондар жоқ.',
+        buyBtn: 'Айырбастау',
+        notEnoughStars: 'Жұлдызша аз',
+        ratingTitle: '🏆 Оқушылар рейтингі',
+        refreshBtn: '↻ Жаңарту',
+        thStudent: 'Оқушы',
+        thClass: 'Сынып',
+        thStars: 'Жұлдызша',
+        youTag: '(Сен)',
+        msgWrongAnswer: '❌ Жауап қате! Қайта ойланып көр.',
+        msgEmptyAnswer: '⚠️ Алдымен жауабыңызды жазыңыз.',
+        msgFriendSent: '📨 Достық ұсынысы жіберілді!',
+        msgFriendSelf: '⚠️ Өзіңізге достық ұсынысын жібере алмайсыз.',
+        msgFriendNotFound: '❌ Мұндай логинмен оқушы табылмады.',
+        msgFriendAlready: 'ℹ️ Бұл оқушымен доссыз немесе ұсыныс жіберілген.',
+        msgFriendAccepted: '🤝 Достық қабылданды!'
+      },
+      ru: {
+        authSub: 'Школьный навигатор для нового ученика',
+        deviceLock: 'На этом устройстве уже зарегистрирован аккаунт:',
+        login: 'Вход',
+        register: 'Регистрация',
+        usernameLbl: 'Логин (имя ученика)',
+        passwordLbl: 'Пароль',
+        gradeLbl: 'Выбери свой класс',
+        selectGradeOpt: '-- Выберите класс --',
+        continueBtn: 'Продолжить 🚀',
+        headerSub: 'Схема школы • Предметные квесты • Друзья • Кешбэк',
+        today: 'Сегодня:',
+        logout: 'Выйти',
+        navHome: '🏠 Главная',
+        navMap: '🗺️ Карта школы',
+        navQuests: '🎯 Квесты',
+        navFriends: '🤝 Друзья',
+        navShop: '🎁 Магазин кешбэка',
+        navRating: '🏆 Рейтинг',
+        hello: 'Привет,',
+        homeDesc: 'Находи кабинеты по схеме, отвечай на вопросы предметных квестов, копи звёзды и добавляй друзей.',
+        starsWord: 'звёзд',
+        cashbackBal: 'Баланс кешбэка',
+        dailyLimit: 'Дневной лимит:',
+        bellTitle: '⏰ Расписание звонков (каждый урок 45 минут)',
+        thLesson: 'Урок',
+        thTime: 'Время',
+        thBreak: 'Перемена',
+        lessonWord: '-й урок',
+        minWord: 'мин',
+        mapTitle: '🗺️ Карта школы и постеры-ориентаторы',
+        mapDesc: 'Выберите кабинет, чтобы увидеть его расположение, или введите код постера со стены для поворота карты.',
+        floor1: '📐 Чертёж 1 (1-й этаж)',
+        floor2: '📐 Чертёж 2 (2-й этаж)',
+        selectRoomOpt: '-- Выберите кабинет --',
+        orient: 'Ориентир:',
+        posterTitle: '🪧 Код настенного постера-ориентатора',
+        posterDesc: 'Введите код постера (например: POST-NORTH, POST-EAST, POST-SOUTH, POST-WEST или R101).',
+        posterBtn: '🔄 Повернуть карту (+10 ⭐)',
+        gradeSuffix: ' класс',
+        questsHeading: 'предметные квесты',
+        questsSub: 'Отвечай на вопросы по алгебре, истории и другим предметам своего класса и получай звёзды.',
+        limitShort: 'Лимит:',
+        answerPlaceholder: 'Впишите ваш ответ...',
+        checkAnswerBtn: 'Проверить и забрать',
+        doneTodayBtn: '✅ Выполнено сегодня',
+        friendsTitle: '🤝 Друзья и заявки в друзья',
+        friendsSub: 'Введите логин другого ученика, чтобы отправить запрос в друзья.',
+        friendInputPh: 'Логин ученика (напр: aruzhan_9a)',
+        sendFriendBtn: '➕ Добавить в друзья',
+        incomingReqTitle: '📩 Входящие заявки в друзья',
+        myFriendsTitle: '👥 Мои друзья',
+        noIncoming: 'Новых заявок в друзья нет.',
+        noFriends: 'Список друзей пока пуст.',
+        acceptBtn: 'Принять',
+        declineBtn: 'Отклонить',
+        removeFriendBtn: 'Удалить',
+        shopTitle: '🎁 Магазин кешбэка',
+        shopSub: 'Обменивай накопленные звёзды на учебные бонусы и школьные призы.',
+        couponsTitle: '🎟️ Мои купоны',
+        noCoupons: 'Купонов пока нет.',
+        buyBtn: 'Обменять',
+        notEnoughStars: 'Мало звёзд',
+        ratingTitle: '🏆 Рейтинг учеников',
+        refreshBtn: '↻ Обновить',
+        thStudent: 'Ученик',
+        thClass: 'Класс',
+        thStars: 'Звёзды',
+        youTag: '(Вы)',
+        msgWrongAnswer: '❌ Неверный ответ! Попробуйте ещё раз.',
+        msgEmptyAnswer: '⚠️ Сначала введите ответ.',
+        msgFriendSent: '📨 Заявка в друзья отправлена!',
+        msgFriendSelf: '⚠️ Нельзя отправить заявку самому себе.',
+        msgFriendNotFound: '❌ Ученик с таким логином не найден.',
+        msgFriendAlready: 'ℹ️ Вы уже друзья или заявка уже отправлена.',
+        msgFriendAccepted: '🤝 Заявка в друзья принята!'
+      },
+      en: {
+        authSub: 'School navigator for new students',
+        deviceLock: 'An account is already registered on this device:',
+        login: 'Login',
+        register: 'Register',
+        usernameLbl: 'Username (student login)',
+        passwordLbl: 'Password',
+        gradeLbl: 'Select your grade',
+        selectGradeOpt: '-- Choose grade --',
+        continueBtn: 'Continue 🚀',
+        headerSub: 'School Blueprint • Subject Quests • Friends • Cashback',
+        today: 'Today:',
+        logout: 'Logout',
+        navHome: '🏠 Home',
+        navMap: '🗺️ School Map',
+        navQuests: '🎯 Quests',
+        navFriends: '🤝 Friends',
+        navShop: '🎁 Cashback Shop',
+        navRating: '🏆 Leaderboard',
+        hello: 'Hello,',
+        homeDesc: 'Find classrooms on the blueprint, answer subject quest questions to earn stars, and connect with friends.',
+        starsWord: 'stars',
+        cashbackBal: 'Cashback balance',
+        dailyLimit: 'Daily limit:',
+        bellTitle: '⏰ Bell Schedule (45 min per lesson)',
+        thLesson: 'Lesson',
+        thTime: 'Time',
+        thBreak: 'Break',
+        lessonWord: ' Lesson',
+        minWord: 'min',
+        mapTitle: '🗺️ School Map & Poster Orientators',
+        mapDesc: 'Select a classroom to see its location or enter a wall poster code to rotate the map.',
+        floor1: '📐 Blueprint 1 (1st Floor)',
+        floor2: '📐 Blueprint 2 (2nd Floor)',
+        selectRoomOpt: '-- Select a classroom --',
+        orient: 'Direction:',
+        posterTitle: '🪧 Wall Poster Orientator Code',
+        posterDesc: 'Enter a poster code (e.g. POST-NORTH, POST-EAST, POST-SOUTH, POST-WEST, or R101).',
+        posterBtn: '🔄 Rotate Map (+10 ⭐)',
+        gradeSuffix: 'th Grade',
+        questsHeading: 'Subject Quests',
+        questsSub: 'Answer algebra, history, and other grade-level questions to earn stars.',
+        limitShort: 'Limit:',
+        answerPlaceholder: 'Type your answer here...',
+        checkAnswerBtn: 'Submit Answer',
+        doneTodayBtn: '✅ Completed Today',
+        friendsTitle: '🤝 Friends & Friend Requests',
+        friendsSub: 'Enter another student’s username to send a friend request.',
+        friendInputPh: 'Student username (e.g. aruzhan_9a)',
+        sendFriendBtn: '➕ Send Request',
+        incomingReqTitle: '📩 Incoming Friend Requests',
+        myFriendsTitle: '👥 My Friends',
+        noIncoming: 'No incoming friend requests.',
+        noFriends: 'Your friends list is empty.',
+        acceptBtn: 'Accept',
+        declineBtn: 'Decline',
+        removeFriendBtn: 'Remove',
+        shopTitle: '🎁 Cashback Shop',
+        shopSub: 'Redeem your earned stars for academic perks and school rewards.',
+        couponsTitle: '🎟️ My Coupons',
+        noCoupons: 'No coupons yet.',
+        buyBtn: 'Redeem',
+        notEnoughStars: 'Not enough stars',
+        ratingTitle: '🏆 Student Leaderboard',
+        refreshBtn: '↻ Refresh',
+        thStudent: 'Student',
+        thClass: 'Grade',
+        thStars: 'Stars',
+        youTag: '(You)',
+        msgWrongAnswer: '❌ Incorrect answer! Try again.',
+        msgEmptyAnswer: '⚠️ Please enter an answer first.',
+        msgFriendSent: '📨 Friend request sent!',
+        msgFriendSelf: '⚠️ You cannot send a friend request to yourself.',
+        msgFriendNotFound: '❌ Student with this username was not found.',
+        msgFriendAlready: 'ℹ️ Already friends or request already sent.',
+        msgFriendAccepted: '🤝 Friend request accepted!'
+      }
+    };
+
+    function t(key) {
+      return (I18N[currentLang] && I18N[currentLang][key]) || I18N.kk[key] || key;
+    }
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem('sq_lang', lang);
+      document.querySelectorAll('.lang-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.lang === lang);
+      });
+      applyTranslations();
+      if (currentUser) renderAll();
+    }
+
+    function applyTranslations() {
+      document.getElementById('txt-auth-sub').textContent = t('authSub');
+      document.getElementById('txt-device-lock').textContent = t('deviceLock');
+      document.getElementById('tab-login').textContent = t('login');
+      document.getElementById('tab-reg').textContent = t('register');
+      document.getElementById('lbl-username').textContent = t('usernameLbl');
+      document.getElementById('lbl-password').textContent = t('passwordLbl');
+      document.getElementById('lbl-grade').textContent = t('gradeLbl');
+      document.getElementById('opt-select-grade').textContent = t('selectGradeOpt');
+      document.getElementById('btn-auth-submit').textContent = t('continueBtn');
+
+      document.getElementById('txt-header-sub').textContent = t('headerSub');
+      document.getElementById('txt-today').textContent = t('today');
+      document.getElementById('btn-logout').textContent = t('logout');
+
+      document.getElementById('nav-home').textContent = t('navHome');
+      document.getElementById('nav-map').textContent = t('navMap');
+      document.getElementById('nav-quests').textContent = t('navQuests');
+      document.getElementById('nav-friends').textContent = t('navFriends');
+      document.getElementById('nav-shop').textContent = t('navShop');
+      document.getElementById('nav-rating').textContent = t('navRating');
+
+      document.getElementById('txt-hello').textContent = t('hello');
+      document.getElementById('txt-home-desc').textContent = t('homeDesc');
+      document.getElementById('txt-stars-word').textContent = t('starsWord');
+      document.getElementById('txt-cashback-bal').textContent = t('cashbackBal');
+      document.getElementById('txt-daily-limit').textContent = t('dailyLimit');
+      document.getElementById('txt-bell-title').textContent = t('bellTitle');
+      document.getElementById('th-lesson').textContent = t('thLesson');
+      document.getElementById('th-time').textContent = t('thTime');
+      document.getElementById('th-break').textContent = t('thBreak');
+
+      document.getElementById('txt-map-title').textContent = t('mapTitle');
+      document.getElementById('txt-map-desc').textContent = t('mapDesc');
+      document.getElementById('opt-floor-1').textContent = t('floor1');
+      document.getElementById('opt-floor-2').textContent = t('floor2');
+      document.getElementById('txt-orient').textContent = t('orient');
+      document.getElementById('txt-poster-title').textContent = t('posterTitle');
+      document.getElementById('txt-poster-desc').textContent = t('posterDesc');
+      document.getElementById('btn-poster-apply').textContent = t('posterBtn');
+
+      document.getElementById('txt-quests-heading').textContent = t('questsHeading');
+      document.getElementById('txt-quests-sub').textContent = t('questsSub');
+      document.getElementById('txt-limit-short').textContent = t('limitShort');
+
+      document.getElementById('txt-friends-title').textContent = t('friendsTitle');
+      document.getElementById('txt-friends-sub').textContent = t('friendsSub');
+      document.getElementById('friend-username-input').placeholder = t('friendInputPh');
+      document.getElementById('btn-send-friend').textContent = t('sendFriendBtn');
+      document.getElementById('txt-incoming-req').textContent = t('incomingReqTitle');
+      document.getElementById('txt-my-friends').textContent = t('myFriendsTitle');
+
+      document.getElementById('txt-shop-title').textContent = t('shopTitle');
+      document.getElementById('txt-shop-sub').textContent = t('shopSub');
+      document.getElementById('txt-coupons-title').textContent = t('couponsTitle');
+
+      document.getElementById('txt-rating-title').textContent = t('ratingTitle');
+      document.getElementById('btn-refresh-rating').textContent = t('refreshBtn');
+      document.getElementById('th-student').textContent = t('thStudent');
+      document.getElementById('th-class').textContent = t('thClass');
+      document.getElementById('th-stars').textContent = t('thStars');
+
+      renderBellSchedule();
+    }
+
+    /* ================= НАСТРОЙКИ И БАЗА ================= */
+    const DAILY_LIMIT = 100;
+    const DEVICE_LOCK_KEY = 'sq_device_bound_user';
+    const USERS_DB_KEY = 'sq_real_users_db';
+    const ACTIVE_SESSION_KEY = 'sq_active_session';
+
+    const CLOUD_SYNC_CONFIG = {
+      enabled: true,
+      endpoint: 'https://hmpsxafccltbaxtroksz.supabase.co/rest/v1/students',
+      apiKey: 'sb_publishable_fMP_Al4M9XbtDWyhOn96jA_3C97eNDs'
+    };
+
+    const BELL_SCHEDULE = [
+      { num: 1, time: '08:00 – 08:45', brk: 5 },
+      { num: 2, time: '08:50 – 09:35', brk: 15 },
+      { num: 3, time: '09:50 – 10:35', brk: 5 },
+      { num: 4, time: '10:40 – 11:25', brk: 15 },
+      { num: 5, time: '11:40 – 12:25', brk: 5 },
+      { num: 6, time: '12:30 – 13:15', brk: 5 },
+      { num: 7, time: '13:20 – 14:05', brk: null }
+    ];
+
+    function renderBellSchedule() {
+      const tbody = document.getElementById('bell-tbody');
+      tbody.innerHTML = BELL_SCHEDULE.map(row => `
+        <tr>
+          <td>${row.num}${t('lessonWord')}</td>
+          <td>${row.time}</td>
+          <td>${row.brk ? row.brk + ' ' + t('minWord') : '—'}</td>
+        </tr>
+      `).join('');
+    }
+
+    const FLOOR_PLANS = [
+      { id: 0, file: 'чертеж1.png' },
+      { id: 1, file: 'чертеж2.png' }
+    ];
+
+    const ROOMS_DATA = [
+      { id: 'r101', name: { kk: '101 кабинет (Физика)', ru: '101 кабинет (Физика)', en: 'Room 101 (Physics)' }, floorIndex: 0, block: 'A', x: 72, y: 34, posterAngle: 90 },
+      { id: 'r102', name: { kk: '102 кабинет (Химия)', ru: '102 кабинет (Химия)', en: 'Room 102 (Chemistry)' }, floorIndex: 0, block: 'A', x: 72, y: 62, posterAngle: 90 },
+      { id: 'gym1', name: { kk: 'Спортзал', ru: 'Спортзал', en: 'Gymnasium' }, floorIndex: 0, block: 'B', x: 24, y: 50, posterAngle: 270 },
+      { id: 'lib2', name: { kk: 'Кітапхана', ru: 'Библиотека', en: 'Library' }, floorIndex: 1, block: 'Center', x: 30, y: 35, posterAngle: 0 },
+      { id: 'it204', name: { kk: '204 кабинет (Информатика)', ru: '204 кабинет (Информатика)', en: 'Room 204 (IT)' }, floorIndex: 1, block: 'C', x: 76, y: 40, posterAngle: 180 },
+      { id: 'adm205', name: { kk: '205 кабинет (Тәрбие / Завуч)', ru: '205 кабинет (Завуч)', en: 'Room 205 (Vice Principal)' }, floorIndex: 1, block: 'Center', x: 52, y: 30, posterAngle: 0 }
+    ];
+
+    const POSTER_ORIENTATORS = {
+      'POST-NORTH': { angle: 0 },
+      'POST-EAST':  { angle: 90 },
+      'POST-SOUTH': { angle: 180 },
+      'POST-WEST':  { angle: 270 },
+      'POST-101':   { angle: 90 },
+      'POST-LIB':   { angle: 0 },
+      'POST-IT':    { angle: 180 }
+    };
+
+    /* ================= СЫНЫПҚА САЙ ПӘНДІК КВЕСТТЕР (ЖАУАП ЖАЗУ АРҚЫЛЫ) ================= */
+    const QUEST_BANK_BY_TIER = {
+      8: [
+        {
+          id: '8q_alg',
+          subject: { kk: 'Алгебра', ru: 'Алгебра', en: 'Algebra' },
+          q: {
+            kk: 'Квадрат теңдеуді шеш: x² - 9 = 0. Оң түбірін жаз.',
+            ru: 'Решите квадратное уравнение: x² - 9 = 0. Напишите положительный корень.',
+            en: 'Solve the quadratic equation: x² - 9 = 0. Enter the positive root.'
+          },
+          answers: ['3'],
+          reward: 30
+        },
+        {
+          id: '8q_hist',
+          subject: { kk: 'Қазақстан тарихы', ru: 'История Казахстана', en: 'History of Kazakhstan' },
+          q: {
+            kk: 'Қазақ хандығы қай жылы құрылды? (тек санмен жаз)',
+            ru: 'В каком году было образовано Казахское ханство? (напишите только год)',
+            en: 'In what year was the Kazakh Khanate founded? (numbers only)'
+          },
+          answers: ['1465'],
+          reward: 30
+        },
+        {
+          id: '8q_phys',
+          subject: { kk: 'Физика', ru: 'Физика', en: 'Physics' },
+          q: {
+            kk: 'Электр тогының күшін өлшейтін құрал қалай аталады?',
+            ru: 'Как называется прибор для измерения силы электрического тока?',
+            en: 'What instrument measures electric current?'
+          },
+          answers: ['амперметр', 'ammeter'],
+          reward: 25
+        },
+        {
+          id: '8q_chem',
+          subject: { kk: 'Химия', ru: 'Химия', en: 'Chemistry' },
+          q: {
+            kk: 'Судың химиялық формуласын жаз (мысалы: CO2).',
+            ru: 'Напишите химическую формулу воды (например: CO2).',
+            en: 'Write the chemical formula of water (e.g. CO2).'
+          },
+          answers: ['h2o', 'н2о'],
+          reward: 25
+        }
+      ],
+      9: [
+        {
+          id: '9q_alg',
+          subject: { kk: 'Алгебра', ru: 'Алгебра', en: 'Algebra' },
+          q: {
+            kk: 'Арифметикалық прогрессияда a₁ = 2, d = 3. 5-ші мүшесін (a₅) тап.',
+            ru: 'В арифметической прогрессии a₁ = 2, d = 3. Найдите 5-й член (a₅).',
+            en: 'In an arithmetic progression a₁ = 2, d = 3. Find the 5th term (a₅).'
+          },
+          answers: ['14'],
+          reward: 35
+        },
+        {
+          id: '9q_hist',
+          subject: { kk: 'Қазақстан тарихы', ru: 'История Казахстана', en: 'History of Kazakhstan' },
+          q: {
+            kk: 'Қазақстан Республикасы Тәуелсіздігін қай жылы жариялады?',
+            ru: 'В каком году Республика Казахстан провозгласила Независимость?',
+            en: 'In what year did the Republic of Kazakhstan declare Independence?'
+          },
+          answers: ['1991'],
+          reward: 30
+        },
+        {
+          id: '9q_it',
+          subject: { kk: 'Информатика', ru: 'Информатика', en: 'Computer Science' },
+          q: {
+            kk: 'Екілік санау жүйесіндегі 101 саны ондық жүйеде нешеге тең?',
+            ru: 'Чему равно двоичное число 101 в десятичной системе счисления?',
+            en: 'What is binary 101 in decimal?'
+          },
+          answers: ['5'],
+          reward: 30
+        },
+        {
+          id: '9q_phys',
+          subject: { kk: 'Физика', ru: 'Физика', en: 'Physics' },
+          q: {
+            kk: 'Күштің ХБЖ (СИ) жүйесіндегі өлшем бірлігі қалай аталады?',
+            ru: 'Как называется единица измерения силы в системе СИ?',
+            en: 'What is the SI unit of force?'
+          },
+          answers: ['ньютон', 'newton', 'н', 'n'],
+          reward: 25
+        }
+      ],
+      10: [
+        {
+          id: '10q_alg',
+          subject: { kk: 'Алгебра', ru: 'Алгебра', en: 'Algebra' },
+          q: {
+            kk: 'sin(30°) мәнін ондық бөлшек түрінде жаз (мысалы: 0.2).',
+            ru: 'Запишите значение sin(30°) в виде десятичной дроби (например: 0.2).',
+            en: 'Write the value of sin(30°) as a decimal (e.g. 0.2).'
+          },
+          answers: ['0.5', '0,5'],
+          reward: 35
+        },
+        {
+          id: '10q_hist',
+          subject: { kk: 'Қазақстан тарихы', ru: 'История Казахстана', en: 'History of Kazakhstan' },
+          q: {
+            kk: '«Алтын адам» қай қорғаннан табылды?',
+            ru: 'В каком кургане был найден «Золотой человек»?',
+            en: 'In which burial mound was the "Golden Man" discovered?'
+          },
+          answers: ['есік', 'есик', 'иссык', 'issyk', 'esik'],
+          reward: 30
+        },
+        {
+          id: '10q_chem',
+          subject: { kk: 'Химия', ru: 'Химия', en: 'Chemistry' },
+          q: {
+            kk: 'Метанның химиялық формуласын жаз.',
+            ru: 'Напишите химическую формулу метана.',
+            en: 'Write the chemical formula of methane.'
+          },
+          answers: ['ch4', 'сн4'],
+          reward: 30
+        },
+        {
+          id: '10q_it',
+          subject: { kk: 'Информатика', ru: 'Информатика', en: 'Computer Science' },
+          q: {
+            kk: '1 байтта неше бит бар?',
+            ru: 'Сколько бит в 1 байте?',
+            en: 'How many bits are in 1 byte?'
+          },
+          answers: ['8'],
+          reward: 25
+        }
+      ],
+      11: [
+        {
+          id: '11q_alg',
+          subject: { kk: 'Алгебра', ru: 'Алгебра', en: 'Algebra' },
+          q: {
+            kk: 'log₂(16) мәні нешеге тең?',
+            ru: 'Чему равно значение log₂(16)?',
+            en: 'What is the value of log₂(16)?'
+          },
+          answers: ['4'],
+          reward: 35
+        },
+        {
+          id: '11q_hist',
+          subject: { kk: 'Қазақстан тарихы', ru: 'История Казахстана', en: 'History of Kazakhstan' },
+          q: {
+            kk: 'Қазақстан Республикасының Конституциясы қай жылы қабылданды?',
+            ru: 'В каком году была принята действующая Конституция Республики Казахстан?',
+            en: 'In what year was the current Constitution of Kazakhstan adopted?'
+          },
+          answers: ['1995'],
+          reward: 35
+        },
+        {
+          id: '11q_phys',
+          subject: { kk: 'Физика', ru: 'Физика', en: 'Physics' },
+          q: {
+            kk: 'Вакуумдағы жарық жылдамдығы шамамен неше км/с? (санмен: 300000)',
+            ru: 'Чему равна скорость света в вакууме в км/с? (числом: 300000)',
+            en: 'What is the speed of light in vacuum in km/s? (number: 300000)'
+          },
+          answers: ['300000', '300 000'],
+          reward: 30
+        },
+        {
+          id: '11q_alg2',
+          subject: { kk: 'Алгебра', ru: 'Алгебра', en: 'Algebra' },
+          q: {
+            kk: 'f(x) = 3x² функциясының x = 2 нүктесіндегі туындысын (f\'(2)) тап.',
+            ru: 'Найдите производную функции f(x) = 3x² в точке x = 2 (f\'(2)).',
+            en: 'Find the derivative of f(x) = 3x² at x = 2 (f\'(2)).'
+          },
+          answers: ['12'],
+          reward: 35
+        }
+      ]
+    };
+
+    /* ================= ЖАҢАРТЫЛҒАН КЕШБЭК ДҮКЕНІ (КЕЗЕКСІЗ ӨТУ АЛЫНДЫ) ================= */
+    const SHOP_ITEMS = [
+      {
+        id: 'sp_hw',
+        title: {
+          kk: '📝 Үй тапсырмасынан 1 рет босату',
+          ru: '📝 Освобождение от 1 домашнего задания',
+          en: '📝 1 Homework Pass'
+        },
+        desc: {
+          kk: 'Кез келген бір пән бойынша үй тапсырмасын орындамауға мүмкіндік беретін ресми купон.',
+          ru: 'Официальный купон на пропуск одного домашнего задания по выбору.',
+          en: 'Official pass to skip one homework assignment of your choice.'
+        },
+        cost: 120
+      },
+      {
+        id: 'sp_bonus',
+        title: {
+          kk: '📈 БЖБ / ТЖБ-ға +1 балл бонусы',
+          ru: '📈 Бонус +1 балл к СОР / СОЧ',
+          en: '📈 +1 Point Bonus on Assessment'
+        },
+        desc: {
+          kk: 'Бөлім бойынша жиынтық бағалау нәтижесіне қосымша +1 балл қосу сертификаты.',
+          ru: 'Сертификат на добавление +1 дополнительного балла к результату СОР.',
+          en: 'Certificate adding +1 extra point to your unit assessment score.'
+        },
+        cost: 180
+      },
+      {
+        id: 'sp_book',
+        title: {
+          kk: '📚 Кітапхана VIP-оқырманы',
+          ru: '📚 VIP-читатель библиотеки',
+          en: '📚 Library VIP Reader Pass'
+        },
+        desc: {
+          kk: 'Мектеп кітапханасына келген жаңа бестселлер кітаптарды ең бірінші болып алу құқығы.',
+          ru: 'Право первым брать новые книги-бестселлеры в школьной библиотеке.',
+          en: 'Priority access to borrow newly arrived bestseller books from the school library.'
+        },
+        cost: 90
+      },
+      {
+        id: 'sp_kit',
+        title: {
+          kk: '📓 SchoolQuest блокноты мен қаламы',
+          ru: '📓 Фирменный блокнот и ручка SchoolQuest',
+          en: '📓 SchoolQuest Notebook & Pen Set'
+        },
+        desc: {
+          kk: 'Мектеп логотипі бар сапалы блокнот және қалам жиынтығы.',
+          ru: 'Качественный блокнот и ручка с символикой школы.',
+          en: 'High-quality notebook and pen set with the school emblem.'
+        },
+        cost: 150
+      }
+    ];
+
+    let authMode = 'login';
+    let currentUser = null;
+    let currentMapAngle = 0;
+
+    function getTodayStr() {
+      return new Date().toISOString().split('T')[0];
+    }
+
+    function getUsersDB() {
+      return JSON.parse(localStorage.getItem(USERS_DB_KEY) || '{}');
+    }
+
+    function saveUsersDB(db) {
+      localStorage.setItem(USERS_DB_KEY, JSON.stringify(db));
+    }
+
+    function getGradeTier(gradeStr) {
+      const match = String(gradeStr || '').match(/^(8|9|10|11)/);
+      return match ? parseInt(match[1], 10) : 8;
+    }
+
+    function getSupabaseHeaders(extra = {}) {
+      return {
+        'Content-Type': 'application/json',
+        'apikey': CLOUD_SYNC_CONFIG.apiKey,
+        'Authorization': `Bearer ${CLOUD_SYNC_CONFIG.apiKey}`,
+        ...extra
+      };
+    }
+
+    /* ================= АВТОРИЗАЦИЯ ================= */
+    function switchAuthMode(mode) {
+      authMode = mode;
+      document.getElementById('tab-login').className = mode === 'login' ? 'btn' : 'btn btn-outline';
+      document.getElementById('tab-reg').className = mode === 'register' ? 'btn' : 'btn btn-outline';
+      document.getElementById('class-group').style.display = mode === 'register' ? 'block' : 'none';
+      refreshDeviceLockUI();
+    }
+
+    function refreshDeviceLockUI() {
+      const boundUser = localStorage.getItem(DEVICE_LOCK_KEY);
+      const notice = document.getElementById('device-lock-notice');
+      if (boundUser) {
+        notice.style.display = 'block';
+        document.getElementById('bound-account-name').textContent = boundUser;
+      } else {
+        notice.style.display = 'none';
+      }
+    }
+
+    function handleAuth() {
+      const username = document.getElementById('auth-username').value.trim();
+      const password = document.getElementById('auth-password').value.trim();
+      const grade = document.getElementById('auth-grade').value;
+
+      if (!username || !password) {
+        showToast('⚠️ Логин / пароль!');
+        return;
+      }
+
+      const db = getUsersDB();
+      const boundUser = localStorage.getItem(DEVICE_LOCK_KEY);
+
+      if (authMode === 'register') {
+        if (!grade) {
+          showToast('⚠️ ' + t('gradeLbl'));
+          return;
+        }
+        if (boundUser && boundUser !== username) {
+          showToast(`🔒 ${t('deviceLock')} ${boundUser}`);
+          return;
+        }
+        if (db[username]) {
+          showToast('⚠️ Login busy');
+          return;
+        }
+        db[username] = {
+          username,
+          password,
+          grade,
+          stars: 0,
+          dailyDate: getTodayStr(),
+          dailyEarned: 0,
+          completedQuestsToday: [],
+          usedPostersToday: [],
+          coupons: [],
+          friends: [],
+          friendRequestsIn: [],
+          friendRequestsOut: []
+        };
+        saveUsersDB(db);
+        localStorage.setItem(DEVICE_LOCK_KEY, username);
+        syncUserToCloud(db[username]);
+        loginSuccess(db[username]);
+      } else {
+        if (boundUser && boundUser !== username) {
+          showToast(`🔒 ${t('deviceLock')} ${boundUser}`);
+          return;
+        }
+        if (!db[username] || db[username].password !== password) {
+          showToast('❌ Error');
+          return;
+        }
+        ensureUserFields(db[username]);
+        localStorage.setItem(DEVICE_LOCK_KEY, username);
+        syncUserToCloud(db[username]);
+        loginSuccess(db[username]);
+      }
+    }
+
+    function ensureUserFields(u) {
+      if (!Array.isArray(u.friends)) u.friends = [];
+      if (!Array.isArray(u.friendRequestsIn)) u.friendRequestsIn = [];
+      if (!Array.isArray(u.friendRequestsOut)) u.friendRequestsOut = [];
+      if (!Array.isArray(u.coupons)) u.coupons = [];
+      if (!Array.isArray(u.completedQuestsToday)) u.completedQuestsToday = [];
+      if (!Array.isArray(u.usedPostersToday)) u.usedPostersToday = [];
+    }
+
+    function loginSuccess(user) {
+      ensureUserFields(user);
+      currentUser = user;
+      checkDailyReset();
+      sessionStorage.setItem(ACTIVE_SESSION_KEY, user.username);
+      document.getElementById('auth-screen').style.display = 'none';
+      document.getElementById('app-wrapper').style.display = 'block';
+      renderAll();
+    }
+
+    function logout() {
+      sessionStorage.removeItem(ACTIVE_SESSION_KEY);
+      currentUser = null;
+      document.getElementById('app-wrapper').style.display = 'none';
+      document.getElementById('auth-screen').style.display = 'block';
+      refreshDeviceLockUI();
+    }
+
+    function checkDailyReset() {
+      const today = getTodayStr();
+      if (currentUser.dailyDate !== today) {
+        currentUser.dailyDate = today;
+        currentUser.dailyEarned = 0;
+        currentUser.completedQuestsToday = [];
+        currentUser.usedPostersToday = [];
+        persistUser();
+      }
+    }
+
+    function persistUser() {
+      const db = getUsersDB();
+      db[currentUser.username] = currentUser;
+      saveUsersDB(db);
+      syncUserToCloud(currentUser);
+    }
+
+    function syncUserToCloud(userObj) {
+      if (!CLOUD_SYNC_CONFIG.enabled || !CLOUD_SYNC_CONFIG.endpoint || !CLOUD_SYNC_CONFIG.apiKey) return;
+      const payload = {
+        username: userObj.username,
+        grade: userObj.grade,
+        stars: userObj.stars,
+        daily_date: userObj.dailyDate,
+        daily_earned: userObj.dailyEarned,
+        updated_at: new Date().toISOString()
+      };
+      fetch(`${CLOUD_SYNC_CONFIG.endpoint}?on_conflict=username`, {
+        method: 'POST',
+        headers: getSupabaseHeaders({ 'Prefer': 'resolution=merge-duplicates,return=minimal' }),
+        body: JSON.stringify(payload)
+      }).catch(() => {});
+    }
+
+    function addStars(amount, label) {
+      checkDailyReset();
+      const left = DAILY_LIMIT - currentUser.dailyEarned;
+      if (left <= 0) {
+        showToast('🛑 100 ⭐ limit');
+        return 0;
+      }
+      const added = Math.min(amount, left);
+      currentUser.stars += added;
+      currentUser.dailyEarned += added;
+      persistUser();
+      updateHeaderAndHome();
+      showToast(`⭐ +${added} (${label})`);
+      return added;
+    }
+
+    /* ================= КАРТА ================= */
+    function changePlan(indexStr) {
+      const idx = parseInt(indexStr, 10) || 0;
+      const plan = FLOOR_PLANS[idx] || FLOOR_PLANS[0];
+      const img = document.getElementById('blueprint-img');
+      document.getElementById('plan-fallback-msg').style.display = 'none';
+      img.src = plan.file;
+      populateRoomsForPlan(idx);
+    }
+
+    function handlePlanImageError() {
+      document.getElementById('plan-fallback-msg').style.display = 'block';
+    }
+
+    function populateRoomsForPlan(floorIndex) {
+      const select = document.getElementById('room-select');
+      select.innerHTML = `<option value="">${t('selectRoomOpt')}</option>`;
+      ROOMS_DATA.filter(r => r.floorIndex === floorIndex).forEach(r => {
+        const opt = document.createElement('option');
+        opt.value = r.id;
+        opt.textContent = `${r.name[currentLang] || r.name.kk} (${r.block})`;
+        select.appendChild(opt);
+      });
+      document.getElementById('room-pin').style.display = 'none';
+      document.getElementById('room-details').style.display = 'none';
+    }
+
+    function selectRoom(roomId) {
+      const pin = document.getElementById('room-pin');
+      const details = document.getElementById('room-details');
+      if (!roomId) {
+        pin.style.display = 'none';
+        details.style.display = 'none';
+        return;
+      }
+      const room = ROOMS_DATA.find(r => r.id === roomId);
+      if (!room) return;
+      const rName = room.name[currentLang] || room.name.kk;
+      pin.style.display = 'block';
+      pin.style.left = room.x + '%';
+      pin.style.top = room.y + '%';
+      pin.textContent = `📍 ${rName}`;
+      details.style.display = 'block';
+      document.getElementById('rd-title').textContent = rName;
+      document.getElementById('rd-meta').textContent = `Block: ${room.block}`;
+    }
+
+    function setMapAngle(deg) {
+      currentMapAngle = ((deg % 360) + 360) % 360;
+      document.getElementById('blueprint-frame').style.transform = `rotate(${currentMapAngle}deg)`;
+      document.getElementById('compass-angle').textContent = `${currentMapAngle}°`;
+    }
+
+    function applyPosterOrientation() {
+      const rawCode = document.getElementById('poster-code-input').value.trim().toUpperCase();
+      if (!rawCode) return;
+      let targetAngle = null;
+      if (POSTER_ORIENTATORS[rawCode]) {
+        targetAngle = POSTER_ORIENTATORS[rawCode].angle;
+      } else {
+        const matchedRoom = ROOMS_DATA.find(r => r.id.toUpperCase() === rawCode);
+        if (matchedRoom) targetAngle = matchedRoom.posterAngle;
+      }
+      if (targetAngle === null) {
+        showToast('❌ POST-NORTH / POST-EAST / R101');
+        return;
+      }
+      setMapAngle(targetAngle);
+      checkDailyReset();
+      if (!currentUser.usedPostersToday.includes(rawCode)) {
+        currentUser.usedPostersToday.push(rawCode);
+        addStars(10, rawCode);
+        persistUser();
+      } else {
+        showToast(`🧭 ${currentMapAngle}°`);
+      }
+    }
+
+    /* ================= ПӘНДІК КВЕСТТЕР (ЖАУАП ЖАЗУ АРҚЫЛЫ) ================= */
+    function getQuestsForStudent() {
+      const tier = getGradeTier(currentUser.grade);
+      return QUEST_BANK_BY_TIER[tier] || QUEST_BANK_BY_TIER[8];
+    }
+
+    function renderQuests() {
+      const tier = getGradeTier(currentUser.grade);
+      document.getElementById('quest-grade-label').textContent = `${tier}${t('gradeSuffix')}`;
+      const list = document.getElementById('quests-list');
+      list.innerHTML = '';
+
+      getQuestsForStudent().forEach(q => {
+        const done = currentUser.completedQuestsToday.includes(q.id);
+        const subj = q.subject[currentLang] || q.subject.kk;
+        const questionText = q.q[currentLang] || q.q.kk;
+
+        const card = document.createElement('div');
+        card.className = 'quest-item';
+        card.innerHTML = `
+          <div>
+            <div>
+              <span class="reward-tag">+${q.reward} ⭐</span>
+              <span class="subject-badge">${subj}</span>
+            </div>
+            <p style="font-size:0.93rem; font-weight:600; margin-top:10px; line-height:1.4;">${questionText}</p>
+            ${done ? '' : `<input type="text" id="ans-${q.id}" class="quest-answer-input" placeholder="${t('answerPlaceholder')}">`}
+          </div>
+          <button class="btn ${done ? 'btn-outline' : ''}" ${done ? 'disabled' : ''} onclick="submitQuestAnswer('${q.id}')">
+            ${done ? t('doneTodayBtn') : t('checkAnswerBtn')}
+          </button>
+        `;
+        list.appendChild(card);
+      });
+    }
+
+    function submitQuestAnswer(qId) {
+      checkDailyReset();
+      if (currentUser.completedQuestsToday.includes(qId)) return;
+
+      const quest = getQuestsForStudent().find(x => x.id === qId);
+      if (!quest) return;
+
+      const inputEl = document.getElementById(`ans-${qId}`);
+      const userVal = (inputEl ? inputEl.value : '').trim().toLowerCase();
+
+      if (!userVal) {
+        showToast(t('msgEmptyAnswer'));
+        return;
+      }
+
+      const isCorrect = quest.answers.some(ans => ans.toLowerCase() === userVal);
+      if (!isCorrect) {
+        showToast(t('msgWrongAnswer'));
+        return;
+      }
+
+      currentUser.completedQuestsToday.push(qId);
+      const subj = quest.subject[currentLang] || quest.subject.kk;
+      addStars(quest.reward, subj);
+      persistUser();
+      renderQuests();
+    }
+
+    /* ================= ДОСТАР ЖҮЙЕСІ ================= */
+    function sendFriendRequest() {
+      const targetName = document.getElementById('friend-username-input').value.trim();
+      if (!targetName) return;
+
+      if (targetName === currentUser.username) {
+        showToast(t('msgFriendSelf'));
+        return;
+      }
+
+      const db = getUsersDB();
+      const targetUser = db[targetName];
+
+      if (!targetUser) {
+        showToast(t('msgFriendNotFound'));
+        return;
+      }
+
+      ensureUserFields(targetUser);
+
+      if (
+        currentUser.friends.includes(targetName) ||
+        currentUser.friendRequestsOut.includes(targetName)
+      ) {
+        showToast(t('msgFriendAlready'));
+        return;
+      }
+
+      // Егер қарсы тарап бұрын ұсыныс жіберген болса — бірден дос болады
+      if (currentUser.friendRequestsIn.includes(targetName)) {
+        acceptFriendRequest(targetName);
+        document.getElementById('friend-username-input').value = '';
+        return;
+      }
+
+      currentUser.friendRequestsOut.push(targetName);
+      targetUser.friendRequestsIn.push(currentUser.username);
+
+      db[currentUser.username] = currentUser;
+      db[targetName] = targetUser;
+      saveUsersDB(db);
+
+      document.getElementById('friend-username-input').value = '';
+      showToast(t('msgFriendSent'));
+      renderFriends();
+    }
+
+    function acceptFriendRequest(fromUser) {
+      const db = getUsersDB();
+      const sender = db[fromUser];
+
+      currentUser.friendRequestsIn = currentUser.friendRequestsIn.filter(u => u !== fromUser);
+      if (!currentUser.friends.includes(fromUser)) currentUser.friends.push(fromUser);
+
+      if (sender) {
+        ensureUserFields(sender);
+        sender.friendRequestsOut = sender.friendRequestsOut.filter(u => u !== currentUser.username);
+        if (!sender.friends.includes(currentUser.username)) sender.friends.push(currentUser.username);
+        db[fromUser] = sender;
+      }
+
+      db[currentUser.username] = currentUser;
+      saveUsersDB(db);
+      showToast(t('msgFriendAccepted'));
+      renderFriends();
+    }
+
+    function declineFriendRequest(fromUser) {
+      const db = getUsersDB();
+      const sender = db[fromUser];
+
+      currentUser.friendRequestsIn = currentUser.friendRequestsIn.filter(u => u !== fromUser);
+      if (sender) {
+        ensureUserFields(sender);
+        sender.friendRequestsOut = sender.friendRequestsOut.filter(u => u !== currentUser.username);
+        db[fromUser] = sender;
+      }
+
+      db[currentUser.username] = currentUser;
+      saveUsersDB(db);
+      renderFriends();
+    }
+
+    function removeFriend(friendName) {
+      const db = getUsersDB();
+      const friendObj = db[friendName];
+
+      currentUser.friends = currentUser.friends.filter(u => u !== friendName);
+      if (friendObj) {
+        ensureUserFields(friendObj);
+        friendObj.friends = friendObj.friends.filter(u => u !== currentUser.username);
+        db[friendName] = friendObj;
+      }
+
+      db[currentUser.username] = currentUser;
+      saveUsersDB(db);
+      renderFriends();
+    }
+
+    function renderFriends() {
+      const db = getUsersDB();
+      const inEl = document.getElementById('incoming-requests-list');
+      const listEl = document.getElementById('friends-list');
+
+      if (!currentUser.friendRequestsIn.length) {
+        inEl.innerHTML = `<p style="color:var(--muted); font-size:0.88rem;">${t('noIncoming')}</p>`;
+      } else {
+        inEl.innerHTML = currentUser.friendRequestsIn.map(u => {
+          const grade = db[u] ? db[u].grade : '';
+          return `
+            <div class="friend-row">
+              <span>👤 <strong>${u}</strong> ${grade ? '(' + grade + ')' : ''}</span>
+              <div style="display:flex; gap:6px;">
+                <button class="btn" onclick="acceptFriendRequest('${u}')">${t('acceptBtn')}</button>
+                <button class="btn btn-danger" onclick="declineFriendRequest('${u}')">${t('declineBtn')}</button>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      if (!currentUser.friends.length) {
+        listEl.innerHTML = `<p style="color:var(--muted); font-size:0.88rem;">${t('noFriends')}</p>`;
+      } else {
+        listEl.innerHTML = currentUser.friends.map(u => {
+          const fData = db[u];
+          return `
+            <div class="friend-row">
+              <span>🤝 <strong>${u}</strong> ${fData ? `(${fData.grade}) • ⭐ ${fData.stars}` : ''}</span>
+              <button class="btn btn-outline" onclick="removeFriend('${u}')">${t('removeFriendBtn')}</button>
+            </div>
+          `;
+        }).join('');
+      }
+    }
+
+    /* ================= МАГАЗИН КЕШБЭКА ================= */
+    function renderShop() {
+      const list = document.getElementById('shop-list');
+      list.innerHTML = '';
+      SHOP_ITEMS.forEach(item => {
+        const canAfford = currentUser.stars >= item.cost;
+        const title = item.title[currentLang] || item.title.kk;
+        const desc = item.desc[currentLang] || item.desc.kk;
+        const card = document.createElement('div');
+        card.className = 'shop-item';
+        card.innerHTML = `
+          <div>
+            <span class="reward-tag">${item.cost} ⭐</span>
+            <h3 style="margin-top:8px;">${title}</h3>
+            <p style="font-size:0.88rem; color:var(--muted); margin-top:4px;">${desc}</p>
+          </div>
+          <button class="btn btn-gold" ${canAfford ? '' : 'disabled'} onclick="buyShopItem('${item.id}')">
+            ${canAfford ? t('buyBtn') : t('notEnoughStars')}
+          </button>
+        `;
+        list.appendChild(card);
+      });
+
+      const couponsEl = document.getElementById('my-coupons');
+      if (currentUser.coupons && currentUser.coupons.length > 0) {
+        couponsEl.innerHTML = currentUser.coupons.map(c =>
+          `<div style="background:#ecfdf5; border:1px solid #a7f3d0; padding:9px 12px; border-radius:10px; margin-bottom:6px; color:#065f46; font-weight:600;">
+            🎟️ ${c.title} — <code>${c.code}</code>
+          </div>`
+        ).join('');
+      } else {
+        couponsEl.textContent = t('noCoupons');
+      }
+    }
+
+    function buyShopItem(id) {
+      const item = SHOP_ITEMS.find(x => x.id === id);
+      if (!item || currentUser.stars < item.cost) return;
+      currentUser.stars -= item.cost;
+      const code = 'SQ-' + Math.floor(1000 + Math.random() * 9000);
+      const title = item.title[currentLang] || item.title.kk;
+      currentUser.coupons.push({ title, code });
+      persistUser();
+      renderAll();
+      showToast(`🎟️ ${code}`);
+    }
+
+    /* ================= РЕЙТИНГ ================= */
+    function renderRatingRows(list) {
+      const tbody = document.getElementById('rating-tbody');
+      if (!list.length) {
+        tbody.innerHTML = '<tr><td colspan="4" style="color:var(--muted);">—</td></tr>';
+        return;
+      }
+      tbody.innerHTML = list.map((u, idx) => `
+        <tr style="${currentUser && u.username === currentUser.username ? 'background:#ecfdf5; font-weight:700;' : ''}">
+          <td>${idx + 1}</td>
+          <td>${u.username} ${currentUser && u.username === currentUser.username ? t('youTag') : ''}</td>
+          <td>${u.grade}</td>
+          <td>⭐ ${u.stars}</td>
+        </tr>
+      `).join('');
+    }
+
+    async function renderRating() {
+      const noteEl = document.getElementById('rating-source-note');
+      const localList = Object.values(getUsersDB()).sort((a, b) => b.stars - a.stars);
+      if (!CLOUD_SYNC_CONFIG.enabled || !CLOUD_SYNC_CONFIG.endpoint || !CLOUD_SYNC_CONFIG.apiKey) {
+        noteEl.textContent = 'Offline';
+        renderRatingRows(localList);
+        return;
+      }
+      try {
+        const res = await fetch(
+          `${CLOUD_SYNC_CONFIG.endpoint}?select=username,grade,stars&order=stars.desc`,
+          { method: 'GET', headers: getSupabaseHeaders() }
+        );
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const cloudRows = await res.json();
+        noteEl.textContent = 'Supabase Cloud';
+        renderRatingRows(Array.isArray(cloudRows) ? cloudRows : localList);
+      } catch (err) {
+        noteEl.textContent = 'Local DB';
+        renderRatingRows(localList);
+      }
+    }
+
+    /* ================= ОБНОВЛЕНИЕ UI ================= */
+    function updateHeaderAndHome() {
+      document.getElementById('display-user').textContent = currentUser.username;
+      document.getElementById('display-grade').textContent = currentUser.grade;
+      document.getElementById('welcome-name').textContent = currentUser.username;
+      document.getElementById('header-stars').textContent = currentUser.stars;
+      document.getElementById('main-stars').textContent = currentUser.stars;
+      document.getElementById('header-daily').textContent = currentUser.dailyEarned;
+      document.getElementById('daily-limit-text').textContent = `${currentUser.dailyEarned} / ${DAILY_LIMIT}`;
+      document.getElementById('quest-daily-status').textContent = `${currentUser.dailyEarned}/${DAILY_LIMIT}`;
+      document.getElementById('daily-progress-bar').style.width = Math.min(100, (currentUser.dailyEarned / DAILY_LIMIT) * 100) + '%';
+    }
+
+    function renderAll() {
+      updateHeaderAndHome();
+      changePlan(document.getElementById('plan-select').value || '0');
+      renderQuests();
+      renderFriends();
+      renderShop();
+      renderRating();
+    }
+
+    function showSection(secId, btn) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.getElementById('sec-' + secId).classList.add('active');
+      document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      if (secId === 'rating') renderRating();
+      if (secId === 'shop') renderShop();
+      if (secId === 'friends') renderFriends();
+    }
+
+    function showToast(msg) {
+      const tEl = document.getElementById('toast');
+      tEl.textContent = msg;
+      tEl.classList.add('show');
+      setTimeout(() => tEl.classList.remove('show'), 3400);
+    }
+
+    window.onload = () => {
+      setLanguage(currentLang);
+      refreshDeviceLockUI();
+      const activeName = sessionStorage.getItem(ACTIVE_SESSION_KEY);
+      const db = getUsersDB();
+      if (activeName && db[activeName]) {
+        loginSuccess(db[activeName]);
+      }
+    };
+  </script>
+</body>
+</html>
