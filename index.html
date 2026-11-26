@@ -51,6 +51,14 @@
     .auth-lang-bar .lang-btn.active {
       background: var(--primary); color: white; border-color: var(--primary);
     }
+    .site-logo-auth {
+      width: 84px; height: 84px; object-fit: cover; border-radius: 20px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.14); display: inline-block;
+    }
+    .site-logo-header {
+      width: 44px; height: 44px; object-fit: cover; border-radius: 12px;
+      border: 2px solid rgba(255,255,255,0.45);
+    }
     header {
       background: linear-gradient(135deg, var(--primary) 0%, #083825 100%);
       color: white; padding: 1rem 1rem 1.6rem; text-align: center;
@@ -87,11 +95,11 @@
     #auth-screen { max-width: 440px; margin: 40px auto; position: relative; z-index: 30; }
     .input-group { margin-bottom: 14px; }
     .input-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px; color: var(--muted); }
-    .input-group input, .input-group select {
+    .input-group input, .input-group select, .input-group textarea {
       width: 100%; padding: 11px 14px; border: 2px solid #e2e8f0; border-radius: 12px;
-      font-size: 0.98rem; outline: none; background: white;
+      font-size: 0.98rem; outline: none; background: white; font-family: inherit;
     }
-    .input-group input:focus, .input-group select:focus { border-color: var(--primary); }
+    .input-group input:focus, .input-group select:focus, .input-group textarea:focus { border-color: var(--primary); }
     .btn {
       background: var(--primary); color: white; border: none; padding: 10px 16px;
       border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 0.9rem;
@@ -165,7 +173,19 @@
     }
     .friend-row {
       display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
-      padding: 10px 14px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; margin-bottom: 8px;
+      padding: 10px 14px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; margin-bottom: 8px;
+    }
+    .news-card {
+      border: 1px solid #e2e8f0; border-left: 5px solid var(--primary);
+      border-radius: 14px; padding: 16px; background: #ffffff; margin-bottom: 12px;
+    }
+    .news-meta {
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
+      font-size: 0.82rem; color: var(--muted); margin-bottom: 6px;
+    }
+    .president-badge {
+      background: #fef3c7; color: #92400e; padding: 3px 10px;
+      border-radius: 999px; font-size: 0.78rem; font-weight: 700;
     }
     #toast {
       position: fixed; bottom: 22px; right: 22px; background: #0f172a; color: white;
@@ -186,7 +206,7 @@
   <div class="bg-decor" style="bottom: 18%; left: 5%; animation-delay: 3s;">📚</div>
   <div class="bg-decor" style="bottom: 25%; right: 6%; animation-delay: 4s;">🎓</div>
 
-  <!-- АВТОРИЗАЦИЯ (1 АККАУНТ НА УСТРОЙСТВО) -->
+  <!-- АВТОРИЗАЦИЯ -->
   <div id="auth-screen" class="card">
     <div class="auth-lang-bar">
       <button class="lang-btn active" data-lang="kk" onclick="setLanguage('kk')">ҚАЗ</button>
@@ -195,8 +215,8 @@
     </div>
 
     <div style="text-align: center; margin-bottom: 18px;">
-      <div style="font-size: 2.8rem;">🏫🧭</div>
-      <h2 style="color: var(--primary); margin-top: 6px;">SchoolQuest</h2>
+      <img src="logo.png" alt="SchoolQuest Logo" class="site-logo-auth" onerror="handleLogoFallback(this)">
+      <h2 style="color: var(--primary); margin-top: 8px;">SchoolQuest</h2>
       <p id="txt-auth-sub" style="color: var(--muted); font-size: 0.88rem;">Жаңа оқушыға арналған мектеп бағдары</p>
     </div>
 
@@ -233,7 +253,7 @@
     <button id="btn-auth-submit" class="btn" style="width: 100%; margin-top: 4px;" onclick="handleAuth()">Жалғастыру 🚀</button>
   </div>
 
-  <!-- ОСНОВНОЙ ИНТЕРФЕЙС -->
+  <!-- НЕГІЗГІ ИНТЕРФЕЙС -->
   <div id="app-wrapper" style="display: none;">
     <header>
       <div class="lang-bar">
@@ -241,10 +261,16 @@
         <button class="lang-btn" data-lang="ru" onclick="setLanguage('ru')">РУС</button>
         <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">ENG</button>
       </div>
-      <h1>🏫 SchoolQuest</h1>
-      <p id="txt-header-sub">Мектеп сызбасы • Пәндік квесттер • Достар • Кешбэк</p>
+      <h1>
+        <img src="logo.png" alt="SchoolQuest Logo" class="site-logo-header" onerror="handleLogoFallback(this)">
+        SchoolQuest
+      </h1>
+      <p id="txt-header-sub">Мектеп сызбасы • Пәндік квесттер • Жаңалықтар • Достар • Кешбэк</p>
       <div class="user-bar">
-        <span>👋 <strong id="display-user"></strong> (<span id="display-grade"></span>)</span>
+        <span>
+          👋 <strong id="display-user"></strong> (<span id="display-grade"></span>)
+          <span id="president-header-badge" class="president-badge" style="display:none; margin-left:6px;">👑 Мектеп президенті</span>
+        </span>
         <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
           <span class="badge-pill">⭐ <span id="header-stars">0</span></span>
           <span class="badge-pill"><span id="txt-today">Бүгін:</span> <span id="header-daily">0</span>/100 ⭐</span>
@@ -255,6 +281,7 @@
 
     <nav>
       <button id="nav-home" class="active" onclick="showSection('home', this)">🏠 Басты бет</button>
+      <button id="nav-news" onclick="showSection('news', this)">📰 Жаңалықтар</button>
       <button id="nav-map" onclick="showSection('map', this)">🗺️ Мектеп картасы</button>
       <button id="nav-quests" onclick="showSection('quests', this)">🎯 Квесттер</button>
       <button id="nav-friends" onclick="showSection('friends', this)">🤝 Достар</button>
@@ -289,6 +316,50 @@
               <tbody id="bell-tbody"></tbody>
             </table>
           </div>
+        </div>
+      </section>
+
+      <!-- ЖАҢАЛЫҚТАР (МЕКТЕП ПРЕЗИДЕНТІ) -->
+      <section id="sec-news" class="section">
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <div>
+              <h2 id="txt-news-title">📰 Мектеп жаңалықтары</h2>
+              <p id="txt-news-sub" style="color: var(--muted); font-size: 0.88rem; margin-top: 4px;">
+                Мектеп президентінің ресми хабарландырулары мен жаңалықтары.
+              </p>
+            </div>
+            <span id="president-mode-status" class="badge-pill" style="background:#f1f5f9; color:var(--muted);">👤 Оқушы режимі</span>
+          </div>
+
+          <div id="president-login-box" class="info-box">
+            <h3 id="txt-pres-auth-title">👑 Мектеп президентіне арнайы кіру</h3>
+            <p id="txt-pres-auth-desc" style="font-size:0.85rem; color:var(--muted); margin:4px 0 10px;">
+              Жаңалық жариялау үшін мектеп президентінің арнайы құпия сөзін енгізіңіз.
+            </p>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <input type="password" id="president-code-input" placeholder="Арнайы құпия сөз..." style="flex:1; min-width:200px; padding:10px 12px; border:2px solid #cbd5e1; border-radius:10px;">
+              <button id="btn-president-unlock" class="btn btn-gold" onclick="unlockPresidentMode()">🔓 Растау</button>
+            </div>
+          </div>
+
+          <div id="president-composer-box" class="info-box" style="display:none; border-color:#fcd34d; background:#fffbeb;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
+              <h3 id="txt-pres-post-title">✍️ Жаңа жаңалық жариялау</h3>
+              <button id="btn-president-lock" class="btn btn-outline" onclick="lockPresidentMode()">🔒 Режимнен шығу</button>
+            </div>
+            <div class="input-group">
+              <label id="lbl-news-title">Жаңалық тақырыбы</label>
+              <input type="text" id="news-title-input" placeholder="Мысалы: Күзгі бал / Олимпиада нәтижесі">
+            </div>
+            <div class="input-group">
+              <label id="lbl-news-body">Мәтіні</label>
+              <textarea id="news-body-input" rows="3" placeholder="Жаңалық мәтінін жазыңыз..."></textarea>
+            </div>
+            <button id="btn-publish-news" class="btn" onclick="publishNews()">📢 Жариялау</button>
+          </div>
+
+          <div id="news-feed" style="margin-top: 18px;"></div>
         </div>
       </section>
 
@@ -361,13 +432,20 @@
       <!-- ДОСТАР -->
       <section id="sec-friends" class="section">
         <div class="card">
-          <h2 id="txt-friends-title">🤝 Достар және достық ұсыныстары</h2>
-          <p id="txt-friends-sub" style="color: var(--muted); font-size: 0.88rem; margin-top: 4px;">
-            Басқа оқушының логинін жазып, достық ұсынысын жіберіңіз.
-          </p>
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <div>
+              <h2 id="txt-friends-title">🤝 Достар және достық ұсыныстары</h2>
+              <p id="txt-friends-sub" style="color: var(--muted); font-size: 0.88rem; margin-top: 4px;">
+                Тіркелген оқушылар тізімінен логинді таңдап, достық ұсынысын жіберіңіз.
+              </p>
+            </div>
+            <button id="btn-refresh-friends" class="btn btn-outline" onclick="renderFriends()">↻ Тізімді жаңарту</button>
+          </div>
 
           <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px;">
-            <input type="text" id="friend-username-input" placeholder="Оқушы логині (мыс: aruzhan_9a)" style="flex: 1; min-width: 210px; padding: 10px 14px; border: 2px solid #cbd5e1; border-radius: 12px;">
+            <select id="friend-select" style="flex: 1; min-width: 220px; padding: 10px 14px; border: 2px solid var(--primary); border-radius: 12px; font-weight: 600; background: white;">
+              <option value="">-- Оқушы логинін таңдаңыз --</option>
+            </select>
             <button id="btn-send-friend" class="btn" onclick="sendFriendRequest()">➕ Достық ұсыну</button>
           </div>
 
@@ -379,6 +457,11 @@
           <div class="info-box" style="margin-top: 14px;">
             <h3 id="txt-my-friends">👥 Менің достарым</h3>
             <div id="friends-list" style="margin-top: 10px;"></div>
+          </div>
+
+          <div class="info-box" style="margin-top: 14px;">
+            <h3 id="txt-all-users">📋 Тіркелген оқушылар (барлық логиндер)</h3>
+            <div id="all-registered-users-list" style="margin-top: 10px;"></div>
           </div>
         </div>
       </section>
@@ -419,6 +502,21 @@
   <div id="toast"></div>
 
   <script>
+    /* ================= ЛОГОТИП FALLBACK ================= */
+    function handleLogoFallback(imgEl) {
+      if (!imgEl || imgEl.dataset.fallbackApplied) return;
+      imgEl.dataset.fallbackApplied = '1';
+      const svg = encodeURIComponent(
+        `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+          <rect width="120" height="120" rx="28" fill="#0f5c3e"/>
+          <polygon points="60,22 98,42 60,62 22,42" fill="#f59e0b"/>
+          <path d="M36 52 V76 C36 85 84 85 84 76 V52 L60 65 Z" fill="#ffffff"/>
+          <circle cx="94" cy="28" r="10" fill="#fde68a"/>
+        </svg>`
+      );
+      imgEl.src = `data:image/svg+xml;utf8,${svg}`;
+    }
+
     /* ================= ТІЛДЕР (ҚАЗ / РУС / ENG) ================= */
     let currentLang = localStorage.getItem('sq_lang') || 'kk';
 
@@ -433,10 +531,12 @@
         gradeLbl: 'Сыныбыңды таңда',
         selectGradeOpt: '-- Сыныпты таңдаңыз --',
         continueBtn: 'Жалғастыру 🚀',
-        headerSub: 'Мектеп сызбасы • Пәндік квесттер • Достар • Кешбэк',
+        headerSub: 'Мектеп сызбасы • Пәндік квесттер • Жаңалықтар • Достар • Кешбэк',
         today: 'Бүгін:',
         logout: 'Шығу',
+        presBadge: '👑 Мектеп президенті',
         navHome: '🏠 Басты бет',
+        navNews: '📰 Жаңалықтар',
         navMap: '🗺️ Мектеп картасы',
         navQuests: '🎯 Квесттер',
         navFriends: '🤝 Достар',
@@ -453,6 +553,23 @@
         thBreak: 'Үзіліс',
         lessonWord: '-сабақ',
         minWord: 'мин',
+        newsTitle: '📰 Мектеп жаңалықтары',
+        newsSub: 'Мектеп президентінің ресми хабарландырулары мен жаңалықтары.',
+        studentModeTag: '👤 Оқушы режимі',
+        presModeTag: '👑 Президент режимі белсенді',
+        presAuthTitle: '👑 Мектеп президентіне арнайы кіру',
+        presAuthDesc: 'Жаңалық жариялау үшін мектеп президентінің арнайы құпия сөзін енгізіңіз.',
+        presCodePh: 'Арнайы құпия сөз...',
+        presUnlockBtn: '🔓 Растау',
+        presPostTitle: '✍️ Жаңа жаңалық жариялау',
+        presLockBtn: '🔒 Режимнен шығу',
+        lblNewsTitle: 'Жаңалық тақырыбы',
+        newsTitlePh: 'Мысалы: Күзгі бал / Олимпиада нәтижесі',
+        lblNewsBody: 'Мәтіні',
+        newsBodyPh: 'Жаңалық мәтінін жазыңыз...',
+        publishNewsBtn: '📢 Жариялау',
+        noNews: 'Әзірге жаңалықтар жарияланбаған.',
+        deleteBtn: 'Өшіру',
         mapTitle: '🗺️ Мектеп картасы және постер-ориентаторлар',
         mapDesc: 'Кабинетті таңдап, орналасуын көріңіз және қабырғадағы постер кодын енгізіп, картаны қажетті бағытқа бұрыңыз.',
         floor1: '📐 Чертёж 1 (1-қабат)',
@@ -470,11 +587,16 @@
         checkAnswerBtn: 'Тексеру және алу',
         doneTodayBtn: '✅ Бүгін орындалды',
         friendsTitle: '🤝 Достар және достық ұсыныстары',
-        friendsSub: 'Басқа оқушының логинін жазып, достық ұсынысын жіберіңіз.',
-        friendInputPh: 'Оқушы логині (мыс: aruzhan_9a)',
+        friendsSub: 'Тіркелген оқушылар тізімінен логинді таңдап, достық ұсынысын жіберіңіз.',
+        refreshFriendsBtn: '↻ Тізімді жаңарту',
+        selectFriendOpt: '-- Оқушы логинін таңдаңыз --',
         sendFriendBtn: '➕ Достық ұсыну',
         incomingReqTitle: '📩 Келген достық ұсыныстары',
         myFriendsTitle: '👥 Менің достарым',
+        allUsersTitle: '📋 Тіркелген оқушылар (барлық логиндер)',
+        noOtherStudents: 'Басқа тіркелген оқушылар әзірге жоқ.',
+        statusFriend: '✅ Дос',
+        statusSent: '⏳ Ұсыныс жіберілді',
         noIncoming: 'Жаңа достық ұсыныстары жоқ.',
         noFriends: 'Әзірге достар тізімі бос.',
         acceptBtn: 'Қабылдау',
@@ -492,11 +614,15 @@
         thClass: 'Сынып',
         thStars: 'Жұлдызша',
         youTag: '(Сен)',
+        msgWrongPresCode: '❌ Құпия сөз қате!',
+        msgPresUnlocked: '👑 Мектеп президенті режимі қосылды!',
+        msgNewsEmpty: '⚠️ Тақырыбы мен мәтінін толтырыңыз.',
+        msgNewsPublished: '📢 Жаңалық жарияланды!',
         msgWrongAnswer: '❌ Жауап қате! Қайта ойланып көр.',
         msgEmptyAnswer: '⚠️ Алдымен жауабыңызды жазыңыз.',
+        msgSelectFriend: '⚠️ Алдымен оқушыны таңдаңыз.',
         msgFriendSent: '📨 Достық ұсынысы жіберілді!',
         msgFriendSelf: '⚠️ Өзіңізге достық ұсынысын жібере алмайсыз.',
-        msgFriendNotFound: '❌ Мұндай логинмен оқушы табылмады.',
         msgFriendAlready: 'ℹ️ Бұл оқушымен доссыз немесе ұсыныс жіберілген.',
         msgFriendAccepted: '🤝 Достық қабылданды!'
       },
@@ -510,10 +636,12 @@
         gradeLbl: 'Выбери свой класс',
         selectGradeOpt: '-- Выберите класс --',
         continueBtn: 'Продолжить 🚀',
-        headerSub: 'Схема школы • Предметные квесты • Друзья • Кешбэк',
+        headerSub: 'Схема школы • Предметные квесты • Новости • Друзья • Кешбэк',
         today: 'Сегодня:',
         logout: 'Выйти',
+        presBadge: '👑 Президент школы',
         navHome: '🏠 Главная',
+        navNews: '📰 Новости',
         navMap: '🗺️ Карта школы',
         navQuests: '🎯 Квесты',
         navFriends: '🤝 Друзья',
@@ -530,6 +658,23 @@
         thBreak: 'Перемена',
         lessonWord: '-й урок',
         minWord: 'мин',
+        newsTitle: '📰 Школьные новости',
+        newsSub: 'Официальные объявления и новости от президента школы.',
+        studentModeTag: '👤 Режим ученика',
+        presModeTag: '👑 Режим президента активен',
+        presAuthTitle: '👑 Специальный вход для президента школы',
+        presAuthDesc: 'Введите специальный пароль президента школы, чтобы публиковать новости.',
+        presCodePh: 'Специальный пароль...',
+        presUnlockBtn: '🔓 Подтвердить',
+        presPostTitle: '✍️ Опубликовать новость',
+        presLockBtn: '🔒 Выйти из режима',
+        lblNewsTitle: 'Заголовок новости',
+        newsTitlePh: 'Например: Осенний бал / Итоги олимпиады',
+        lblNewsBody: 'Текст новости',
+        newsBodyPh: 'Напишите текст новости...',
+        publishNewsBtn: '📢 Опубликовать',
+        noNews: 'Новостей пока нет.',
+        deleteBtn: 'Удалить',
         mapTitle: '🗺️ Карта школы и постеры-ориентаторы',
         mapDesc: 'Выберите кабинет, чтобы увидеть его расположение, или введите код постера со стены для поворота карты.',
         floor1: '📐 Чертёж 1 (1-й этаж)',
@@ -547,11 +692,16 @@
         checkAnswerBtn: 'Проверить и забрать',
         doneTodayBtn: '✅ Выполнено сегодня',
         friendsTitle: '🤝 Друзья и заявки в друзья',
-        friendsSub: 'Введите логин другого ученика, чтобы отправить запрос в друзья.',
-        friendInputPh: 'Логин ученика (напр: aruzhan_9a)',
+        friendsSub: 'Выберите логин из списка зарегистрированных учеников и отправьте заявку в друзья.',
+        refreshFriendsBtn: '↻ Обновить список',
+        selectFriendOpt: '-- Выберите логин ученика --',
         sendFriendBtn: '➕ Добавить в друзья',
         incomingReqTitle: '📩 Входящие заявки в друзья',
         myFriendsTitle: '👥 Мои друзья',
+        allUsersTitle: '📋 Зарегистрированные ученики (все логины)',
+        noOtherStudents: 'Других зарегистрированных учеников пока нет.',
+        statusFriend: '✅ Друг',
+        statusSent: '⏳ Заявка отправлена',
         noIncoming: 'Новых заявок в друзья нет.',
         noFriends: 'Список друзей пока пуст.',
         acceptBtn: 'Принять',
@@ -569,11 +719,15 @@
         thClass: 'Класс',
         thStars: 'Звёзды',
         youTag: '(Вы)',
+        msgWrongPresCode: '❌ Неверный пароль!',
+        msgPresUnlocked: '👑 Режим президента школы включён!',
+        msgNewsEmpty: '⚠️ Заполните заголовок и текст новости.',
+        msgNewsPublished: '📢 Новость опубликована!',
         msgWrongAnswer: '❌ Неверный ответ! Попробуйте ещё раз.',
         msgEmptyAnswer: '⚠️ Сначала введите ответ.',
+        msgSelectFriend: '⚠️ Сначала выберите ученика.',
         msgFriendSent: '📨 Заявка в друзья отправлена!',
         msgFriendSelf: '⚠️ Нельзя отправить заявку самому себе.',
-        msgFriendNotFound: '❌ Ученик с таким логином не найден.',
         msgFriendAlready: 'ℹ️ Вы уже друзья или заявка уже отправлена.',
         msgFriendAccepted: '🤝 Заявка в друзья принята!'
       },
@@ -587,10 +741,12 @@
         gradeLbl: 'Select your grade',
         selectGradeOpt: '-- Choose grade --',
         continueBtn: 'Continue 🚀',
-        headerSub: 'School Blueprint • Subject Quests • Friends • Cashback',
+        headerSub: 'School Blueprint • Subject Quests • News • Friends • Cashback',
         today: 'Today:',
         logout: 'Logout',
+        presBadge: '👑 School President',
         navHome: '🏠 Home',
+        navNews: '📰 News',
         navMap: '🗺️ School Map',
         navQuests: '🎯 Quests',
         navFriends: '🤝 Friends',
@@ -607,6 +763,23 @@
         thBreak: 'Break',
         lessonWord: ' Lesson',
         minWord: 'min',
+        newsTitle: '📰 School News',
+        newsSub: 'Official announcements and news from the School President.',
+        studentModeTag: '👤 Student Mode',
+        presModeTag: '👑 President Mode Active',
+        presAuthTitle: '👑 School President Secret Access',
+        presAuthDesc: 'Enter the special School President password to publish announcements.',
+        presCodePh: 'Secret password...',
+        presUnlockBtn: '🔓 Unlock',
+        presPostTitle: '✍️ Publish a News Post',
+        presLockBtn: '🔒 Exit Mode',
+        lblNewsTitle: 'Headline',
+        newsTitlePh: 'e.g. Autumn Gala / Olympiad Results',
+        lblNewsBody: 'Content',
+        newsBodyPh: 'Write the announcement...',
+        publishNewsBtn: '📢 Publish',
+        noNews: 'No news published yet.',
+        deleteBtn: 'Delete',
         mapTitle: '🗺️ School Map & Poster Orientators',
         mapDesc: 'Select a classroom to see its location or enter a wall poster code to rotate the map.',
         floor1: '📐 Blueprint 1 (1st Floor)',
@@ -624,11 +797,16 @@
         checkAnswerBtn: 'Submit Answer',
         doneTodayBtn: '✅ Completed Today',
         friendsTitle: '🤝 Friends & Friend Requests',
-        friendsSub: 'Enter another student’s username to send a friend request.',
-        friendInputPh: 'Student username (e.g. aruzhan_9a)',
+        friendsSub: 'Pick a login from registered students and send a friend request.',
+        refreshFriendsBtn: '↻ Refresh List',
+        selectFriendOpt: '-- Select a student login --',
         sendFriendBtn: '➕ Send Request',
         incomingReqTitle: '📩 Incoming Friend Requests',
         myFriendsTitle: '👥 My Friends',
+        allUsersTitle: '📋 Registered Students (all logins)',
+        noOtherStudents: 'No other registered students yet.',
+        statusFriend: '✅ Friend',
+        statusSent: '⏳ Request Sent',
         noIncoming: 'No incoming friend requests.',
         noFriends: 'Your friends list is empty.',
         acceptBtn: 'Accept',
@@ -646,11 +824,15 @@
         thClass: 'Grade',
         thStars: 'Stars',
         youTag: '(You)',
+        msgWrongPresCode: '❌ Invalid password!',
+        msgPresUnlocked: '👑 School President mode activated!',
+        msgNewsEmpty: '⚠️ Please enter both title and content.',
+        msgNewsPublished: '📢 News published!',
         msgWrongAnswer: '❌ Incorrect answer! Try again.',
         msgEmptyAnswer: '⚠️ Please enter an answer first.',
+        msgSelectFriend: '⚠️ Please select a student first.',
         msgFriendSent: '📨 Friend request sent!',
         msgFriendSelf: '⚠️ You cannot send a friend request to yourself.',
-        msgFriendNotFound: '❌ Student with this username was not found.',
         msgFriendAlready: 'ℹ️ Already friends or request already sent.',
         msgFriendAccepted: '🤝 Friend request accepted!'
       }
@@ -684,8 +866,10 @@
       document.getElementById('txt-header-sub').textContent = t('headerSub');
       document.getElementById('txt-today').textContent = t('today');
       document.getElementById('btn-logout').textContent = t('logout');
+      document.getElementById('president-header-badge').textContent = t('presBadge');
 
       document.getElementById('nav-home').textContent = t('navHome');
+      document.getElementById('nav-news').textContent = t('navNews');
       document.getElementById('nav-map').textContent = t('navMap');
       document.getElementById('nav-quests').textContent = t('navQuests');
       document.getElementById('nav-friends').textContent = t('navFriends');
@@ -702,6 +886,20 @@
       document.getElementById('th-time').textContent = t('thTime');
       document.getElementById('th-break').textContent = t('thBreak');
 
+      document.getElementById('txt-news-title').textContent = t('newsTitle');
+      document.getElementById('txt-news-sub').textContent = t('newsSub');
+      document.getElementById('txt-pres-auth-title').textContent = t('presAuthTitle');
+      document.getElementById('txt-pres-auth-desc').textContent = t('presAuthDesc');
+      document.getElementById('president-code-input').placeholder = t('presCodePh');
+      document.getElementById('btn-president-unlock').textContent = t('presUnlockBtn');
+      document.getElementById('txt-pres-post-title').textContent = t('presPostTitle');
+      document.getElementById('btn-president-lock').textContent = t('presLockBtn');
+      document.getElementById('lbl-news-title').textContent = t('lblNewsTitle');
+      document.getElementById('news-title-input').placeholder = t('newsTitlePh');
+      document.getElementById('lbl-news-body').textContent = t('lblNewsBody');
+      document.getElementById('news-body-input').placeholder = t('newsBodyPh');
+      document.getElementById('btn-publish-news').textContent = t('publishNewsBtn');
+
       document.getElementById('txt-map-title').textContent = t('mapTitle');
       document.getElementById('txt-map-desc').textContent = t('mapDesc');
       document.getElementById('opt-floor-1').textContent = t('floor1');
@@ -717,10 +915,11 @@
 
       document.getElementById('txt-friends-title').textContent = t('friendsTitle');
       document.getElementById('txt-friends-sub').textContent = t('friendsSub');
-      document.getElementById('friend-username-input').placeholder = t('friendInputPh');
+      document.getElementById('btn-refresh-friends').textContent = t('refreshFriendsBtn');
       document.getElementById('btn-send-friend').textContent = t('sendFriendBtn');
       document.getElementById('txt-incoming-req').textContent = t('incomingReqTitle');
       document.getElementById('txt-my-friends').textContent = t('myFriendsTitle');
+      document.getElementById('txt-all-users').textContent = t('allUsersTitle');
 
       document.getElementById('txt-shop-title').textContent = t('shopTitle');
       document.getElementById('txt-shop-sub').textContent = t('shopSub');
@@ -737,6 +936,9 @@
 
     /* ================= НАСТРОЙКИ И БАЗА ================= */
     const DAILY_LIMIT = 100;
+    const PRESIDENT_SECRET_CODE = 'PRESIDENT2026';
+    const PRESIDENT_SESSION_KEY = 'sq_president_unlocked';
+    const NEWS_DB_KEY = 'sq_school_news_db';
     const DEVICE_LOCK_KEY = 'sq_device_bound_user';
     const USERS_DB_KEY = 'sq_real_users_db';
     const ACTIVE_SESSION_KEY = 'sq_active_session';
@@ -792,7 +994,6 @@
       'POST-IT':    { angle: 180 }
     };
 
-    /* ================= СЫНЫПҚА САЙ ПӘНДІК КВЕСТТЕР (ЖАУАП ЖАЗУ АРҚЫЛЫ) ================= */
     const QUEST_BANK_BY_TIER = {
       8: [
         {
@@ -980,7 +1181,6 @@
       ]
     };
 
-    /* ================= ЖАҢАРТЫЛҒАН КЕШБЭК ДҮКЕНІ (КЕЗЕКСІЗ ӨТУ АЛЫНДЫ) ================= */
     const SHOP_ITEMS = [
       {
         id: 'sp_hw',
@@ -1044,6 +1244,120 @@
     let currentUser = null;
     let currentMapAngle = 0;
 
+    function isPresidentUnlocked() {
+      return sessionStorage.getItem(PRESIDENT_SESSION_KEY) === '1';
+    }
+
+    function unlockPresidentMode() {
+      const codeInput = document.getElementById('president-code-input');
+      const code = (codeInput ? codeInput.value : '').trim();
+      if (code !== PRESIDENT_SECRET_CODE) {
+        showToast(t('msgWrongPresCode'));
+        return;
+      }
+      sessionStorage.setItem(PRESIDENT_SESSION_KEY, '1');
+      codeInput.value = '';
+      showToast(t('msgPresUnlocked'));
+      updatePresidentUI();
+      renderNews();
+    }
+
+    function lockPresidentMode() {
+      sessionStorage.removeItem(PRESIDENT_SESSION_KEY);
+      updatePresidentUI();
+      renderNews();
+    }
+
+    function updatePresidentUI() {
+      const unlocked = isPresidentUnlocked();
+      document.getElementById('president-header-badge').style.display = unlocked ? 'inline-block' : 'none';
+      document.getElementById('president-login-box').style.display = unlocked ? 'none' : 'block';
+      document.getElementById('president-composer-box').style.display = unlocked ? 'block' : 'none';
+      const statusBadge = document.getElementById('president-mode-status');
+      statusBadge.textContent = unlocked ? t('presModeTag') : t('studentModeTag');
+      statusBadge.style.background = unlocked ? '#fef3c7' : '#f1f5f9';
+      statusBadge.style.color = unlocked ? '#92400e' : 'var(--muted)';
+    }
+
+    function getNewsDB() {
+      const raw = localStorage.getItem(NEWS_DB_KEY);
+      if (raw) return JSON.parse(raw);
+      const initial = [
+        {
+          id: 'n_welcome',
+          title: 'SchoolQuest жаңалықтар тақтасы ашылды!',
+          body: 'Құрметті оқушылар, мектеп өміріндегі барлық маңызды хабарландырулар мен іс-шаралар осы бөлімде жарияланады.',
+          author: currentUser ? currentUser.username : 'president',
+          date: getTodayStr()
+        }
+      ];
+      localStorage.setItem(NEWS_DB_KEY, JSON.stringify(initial));
+      return initial;
+    }
+
+    function saveNewsDB(list) {
+      localStorage.setItem(NEWS_DB_KEY, JSON.stringify(list));
+    }
+
+    function publishNews() {
+      if (!isPresidentUnlocked()) return;
+      const titleEl = document.getElementById('news-title-input');
+      const bodyEl = document.getElementById('news-body-input');
+      const title = (titleEl.value || '').trim();
+      const body = (bodyEl.value || '').trim();
+
+      if (!title || !body) {
+        showToast(t('msgNewsEmpty'));
+        return;
+      }
+
+      const list = getNewsDB();
+      list.unshift({
+        id: 'n_' + Date.now(),
+        title,
+        body,
+        author: currentUser ? currentUser.username : 'president',
+        date: new Date().toLocaleString()
+      });
+      saveNewsDB(list);
+
+      titleEl.value = '';
+      bodyEl.value = '';
+      showToast(t('msgNewsPublished'));
+      renderNews();
+    }
+
+    function deleteNews(id) {
+      if (!isPresidentUnlocked()) return;
+      const filtered = getNewsDB().filter(n => n.id !== id);
+      saveNewsDB(filtered);
+      renderNews();
+    }
+
+    function renderNews() {
+      updatePresidentUI();
+      const feed = document.getElementById('news-feed');
+      const list = getNewsDB();
+      const unlocked = isPresidentUnlocked();
+
+      if (!list.length) {
+        feed.innerHTML = `<p style="color:var(--muted); font-size:0.9rem;">${t('noNews')}</p>`;
+        return;
+      }
+
+      feed.innerHTML = list.map(item => `
+        <div class="news-card">
+          <div class="news-meta">
+            <span><span class="president-badge">${t('presBadge')}</span> • <strong>${item.author}</strong></span>
+            <span>${item.date}</span>
+          </div>
+          <h3 style="margin-bottom:6px;">${item.title}</h3>
+          <p style="font-size:0.93rem; line-height:1.5; color:var(--text);">${item.body}</p>
+          ${unlocked ? `<div style="margin-top:10px; text-align:right;"><button class="btn btn-danger" onclick="deleteNews('${item.id}')">${t('deleteBtn')}</button></div>` : ''}
+        </div>
+      `).join('');
+    }
+
     function getTodayStr() {
       return new Date().toISOString().split('T')[0];
     }
@@ -1068,6 +1382,15 @@
         'Authorization': `Bearer ${CLOUD_SYNC_CONFIG.apiKey}`,
         ...extra
       };
+    }
+
+    function ensureUserFields(u) {
+      if (!Array.isArray(u.friends)) u.friends = [];
+      if (!Array.isArray(u.friendRequestsIn)) u.friendRequestsIn = [];
+      if (!Array.isArray(u.friendRequestsOut)) u.friendRequestsOut = [];
+      if (!Array.isArray(u.coupons)) u.coupons = [];
+      if (!Array.isArray(u.completedQuestsToday)) u.completedQuestsToday = [];
+      if (!Array.isArray(u.usedPostersToday)) u.usedPostersToday = [];
     }
 
     /* ================= АВТОРИЗАЦИЯ ================= */
@@ -1148,15 +1471,6 @@
         syncUserToCloud(db[username]);
         loginSuccess(db[username]);
       }
-    }
-
-    function ensureUserFields(u) {
-      if (!Array.isArray(u.friends)) u.friends = [];
-      if (!Array.isArray(u.friendRequestsIn)) u.friendRequestsIn = [];
-      if (!Array.isArray(u.friendRequestsOut)) u.friendRequestsOut = [];
-      if (!Array.isArray(u.coupons)) u.coupons = [];
-      if (!Array.isArray(u.completedQuestsToday)) u.completedQuestsToday = [];
-      if (!Array.isArray(u.usedPostersToday)) u.usedPostersToday = [];
     }
 
     function loginSuccess(user) {
@@ -1306,7 +1620,7 @@
       }
     }
 
-    /* ================= ПӘНДІК КВЕСТТЕР (ЖАУАП ЖАЗУ АРҚЫЛЫ) ================= */
+    /* ================= ПӘНДІК КВЕСТТЕР ================= */
     function getQuestsForStudent() {
       const tier = getGradeTier(currentUser.grade);
       return QUEST_BANK_BY_TIER[tier] || QUEST_BANK_BY_TIER[8];
@@ -1371,9 +1685,54 @@
     }
 
     /* ================= ДОСТАР ЖҮЙЕСІ ================= */
-    function sendFriendRequest() {
-      const targetName = document.getElementById('friend-username-input').value.trim();
-      if (!targetName) return;
+    async function getAllRegisteredStudents() {
+      const merged = new Map();
+
+      const localDb = getUsersDB();
+      Object.values(localDb).forEach(u => {
+        if (u && u.username) {
+          merged.set(u.username, {
+            username: u.username,
+            grade: u.grade || '—',
+            stars: u.stars || 0
+          });
+        }
+      });
+
+      if (CLOUD_SYNC_CONFIG.enabled && CLOUD_SYNC_CONFIG.endpoint && CLOUD_SYNC_CONFIG.apiKey) {
+        try {
+          const res = await fetch(
+            `${CLOUD_SYNC_CONFIG.endpoint}?select=username,grade,stars`,
+            { method: 'GET', headers: getSupabaseHeaders() }
+          );
+          if (res.ok) {
+            const cloudRows = await res.json();
+            if (Array.isArray(cloudRows)) {
+              cloudRows.forEach(row => {
+                if (row && row.username) {
+                  const existing = merged.get(row.username);
+                  merged.set(row.username, {
+                    username: row.username,
+                    grade: row.grade || (existing ? existing.grade : '—'),
+                    stars: typeof row.stars === 'number' ? row.stars : (existing ? existing.stars : 0)
+                  });
+                }
+              });
+            }
+          }
+        } catch (_) {}
+      }
+
+      return Array.from(merged.values()).filter(u => u.username !== currentUser.username);
+    }
+
+    function sendFriendRequest(explicitTarget = null) {
+      const selectEl = document.getElementById('friend-select');
+      const targetName = (explicitTarget || (selectEl ? selectEl.value : '')).trim();
+      if (!targetName) {
+        showToast(t('msgSelectFriend'));
+        return;
+      }
 
       if (targetName === currentUser.username) {
         showToast(t('msgFriendSelf'));
@@ -1382,13 +1741,7 @@
 
       const db = getUsersDB();
       const targetUser = db[targetName];
-
-      if (!targetUser) {
-        showToast(t('msgFriendNotFound'));
-        return;
-      }
-
-      ensureUserFields(targetUser);
+      ensureUserFields(currentUser);
 
       if (
         currentUser.friends.includes(targetName) ||
@@ -1398,21 +1751,25 @@
         return;
       }
 
-      // Егер қарсы тарап бұрын ұсыныс жіберген болса — бірден дос болады
       if (currentUser.friendRequestsIn.includes(targetName)) {
         acceptFriendRequest(targetName);
-        document.getElementById('friend-username-input').value = '';
         return;
       }
 
       currentUser.friendRequestsOut.push(targetName);
-      targetUser.friendRequestsIn.push(currentUser.username);
+
+      if (targetUser) {
+        ensureUserFields(targetUser);
+        if (!targetUser.friendRequestsIn.includes(currentUser.username)) {
+          targetUser.friendRequestsIn.push(currentUser.username);
+        }
+        db[targetName] = targetUser;
+      }
 
       db[currentUser.username] = currentUser;
-      db[targetName] = targetUser;
       saveUsersDB(db);
+      syncUserToCloud(currentUser);
 
-      document.getElementById('friend-username-input').value = '';
       showToast(t('msgFriendSent'));
       renderFriends();
     }
@@ -1433,6 +1790,7 @@
 
       db[currentUser.username] = currentUser;
       saveUsersDB(db);
+      syncUserToCloud(currentUser);
       showToast(t('msgFriendAccepted'));
       renderFriends();
     }
@@ -1469,11 +1827,25 @@
       renderFriends();
     }
 
-    function renderFriends() {
+    async function renderFriends() {
+      ensureUserFields(currentUser);
       const db = getUsersDB();
-      const inEl = document.getElementById('incoming-requests-list');
-      const listEl = document.getElementById('friends-list');
+      const students = await getAllRegisteredStudents();
 
+      const selectEl = document.getElementById('friend-select');
+      const prevVal = selectEl.value;
+      selectEl.innerHTML = `<option value="">${t('selectFriendOpt')}</option>`;
+      students.forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s.username;
+        opt.textContent = `${s.username} (${s.grade}) • ⭐ ${s.stars}`;
+        selectEl.appendChild(opt);
+      });
+      if (prevVal && students.some(s => s.username === prevVal)) {
+        selectEl.value = prevVal;
+      }
+
+      const inEl = document.getElementById('incoming-requests-list');
       if (!currentUser.friendRequestsIn.length) {
         inEl.innerHTML = `<p style="color:var(--muted); font-size:0.88rem;">${t('noIncoming')}</p>`;
       } else {
@@ -1491,15 +1863,43 @@
         }).join('');
       }
 
+      const listEl = document.getElementById('friends-list');
       if (!currentUser.friends.length) {
         listEl.innerHTML = `<p style="color:var(--muted); font-size:0.88rem;">${t('noFriends')}</p>`;
       } else {
         listEl.innerHTML = currentUser.friends.map(u => {
-          const fData = db[u];
+          const found = students.find(s => s.username === u) || db[u];
           return `
             <div class="friend-row">
-              <span>🤝 <strong>${u}</strong> ${fData ? `(${fData.grade}) • ⭐ ${fData.stars}` : ''}</span>
+              <span>🤝 <strong>${u}</strong> ${found ? `(${found.grade}) • ⭐ ${found.stars}` : ''}</span>
               <button class="btn btn-outline" onclick="removeFriend('${u}')">${t('removeFriendBtn')}</button>
+            </div>
+          `;
+        }).join('');
+      }
+
+      const allEl = document.getElementById('all-registered-users-list');
+      if (!students.length) {
+        allEl.innerHTML = `<p style="color:var(--muted); font-size:0.88rem;">${t('noOtherStudents')}</p>`;
+      } else {
+        allEl.innerHTML = students.map(s => {
+          const isFriend = currentUser.friends.includes(s.username);
+          const isSent = currentUser.friendRequestsOut.includes(s.username);
+          const hasIncoming = currentUser.friendRequestsIn.includes(s.username);
+
+          let actionHtml = `<button class="btn" onclick="sendFriendRequest('${s.username}')">${t('sendFriendBtn')}</button>`;
+          if (isFriend) {
+            actionHtml = `<span class="badge-pill" style="background:#dcfce7; color:#166534;">${t('statusFriend')}</span>`;
+          } else if (isSent) {
+            actionHtml = `<span class="badge-pill" style="background:#fef3c7; color:#92400e;">${t('statusSent')}</span>`;
+          } else if (hasIncoming) {
+            actionHtml = `<button class="btn" onclick="acceptFriendRequest('${s.username}')">${t('acceptBtn')}</button>`;
+          }
+
+          return `
+            <div class="friend-row">
+              <span>🎓 <strong>${s.username}</strong> (${s.grade}) • ⭐ ${s.stars}</span>
+              ${actionHtml}
             </div>
           `;
         }).join('');
@@ -1608,6 +2008,7 @@
 
     function renderAll() {
       updateHeaderAndHome();
+      renderNews();
       changePlan(document.getElementById('plan-select').value || '0');
       renderQuests();
       renderFriends();
@@ -1620,6 +2021,7 @@
       document.getElementById('sec-' + secId).classList.add('active');
       document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
       if (btn) btn.classList.add('active');
+      if (secId === 'news') renderNews();
       if (secId === 'rating') renderRating();
       if (secId === 'shop') renderShop();
       if (secId === 'friends') renderFriends();
