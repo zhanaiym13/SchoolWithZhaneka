@@ -125,17 +125,18 @@
     }
     .limit-bar-fill { background: var(--accent); height: 100%; width: 0%; transition: width 0.35s ease; }
 
+    /* ЧЕРТЁЖ СХЕМАСЫ */
     .blueprint-stage {
-      background: #0f172a; border-radius: 18px; padding: 16px;
+      background: #0f172a; border-radius: 18px; padding: 14px;
       border: 4px solid #334155; overflow: hidden; position: relative;
     }
     .blueprint-frame {
       position: relative; width: 100%; max-width: 860px; margin: 0 auto; border-radius: 12px;
-      overflow: hidden; background: #1e293b; cursor: crosshair;
+      overflow: hidden; background: #f8fafc; cursor: crosshair;
       transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-      user-select: none;
+      user-select: none; min-height: 360px;
     }
-    .blueprint-frame img {
+    .blueprint-svg {
       width: 100%; height: auto; display: block;
     }
     .locked-room-pin {
@@ -451,12 +452,46 @@
 
           <div class="blueprint-stage">
             <div class="blueprint-frame" id="blueprint-frame" onclick="handleMapClick(event)">
-              <img id="blueprint-img" src="school-floors-map.jpg" alt="1-4 қабаттар мектеп сызбасы" onerror="handlePlanImageError()">
+              <svg id="floor-sketch-svg" class="blueprint-svg" viewBox="0 0 860 440" xmlns="http://www.w3.org/2000/svg">
+                <rect x="0" y="0" width="860" height="440" fill="#f8fafc"/>
+                <text x="430" y="30" text-anchor="middle" font-size="18" font-weight="800" fill="#0f5c3e" id="svg-floor-heading">1-ҚАБАТ СЫЗБАСЫ</text>
+
+                <!-- Сол қанат (жоғары және төмен бөліктер) -->
+                <rect x="35" y="55" width="165" height="145" rx="8" fill="#e2e8f0" stroke="#334155" stroke-width="2.5"/>
+                <text x="117" y="128" text-anchor="middle" font-size="13" font-weight="700" fill="#1e293b">Сол қанат (Жоғары)</text>
+
+                <rect x="35" y="235" width="165" height="150" rx="8" fill="#e2e8f0" stroke="#334155" stroke-width="2.5"/>
+                <text x="117" y="310" text-anchor="middle" font-size="13" font-weight="700" fill="#1e293b">Сол қанат (Төмен)</text>
+
+                <!-- Сол дәліз -->
+                <rect x="200" y="55" width="52" height="330" fill="#ecfdf5" stroke="#0f5c3e" stroke-width="1.5"/>
+
+                <!-- Орталық бөлік -->
+                <rect x="252" y="55" width="356" height="150" rx="8" fill="#fef3c7" stroke="#b45309" stroke-width="2.5" id="svg-center-top"/>
+                <text x="430" y="130" text-anchor="middle" font-size="15" font-weight="800" fill="#92400e" id="svg-center-top-label">Орталық аймақ (Жоғары)</text>
+
+                <rect x="252" y="225" width="356" height="160" rx="8" fill="#f1f5f9" stroke="#334155" stroke-width="2.5" id="svg-center-bot"/>
+                <text x="430" y="305" text-anchor="middle" font-size="15" font-weight="800" fill="#1e293b" id="svg-center-bot-label">Орталық зал / Бөлік</text>
+
+                <!-- Оң дәліз -->
+                <rect x="608" y="55" width="52" height="330" fill="#ecfdf5" stroke="#0f5c3e" stroke-width="1.5"/>
+
+                <!-- Оң қанат (жоғары және төмен бөліктер) -->
+                <rect x="660" y="55" width="165" height="145" rx="8" fill="#e2e8f0" stroke="#334155" stroke-width="2.5"/>
+                <text x="742" y="128" text-anchor="middle" font-size="13" font-weight="700" fill="#1e293b">Оң қанат (Жоғары)</text>
+
+                <rect x="660" y="235" width="165" height="150" rx="8" fill="#e2e8f0" stroke="#334155" stroke-width="2.5"/>
+                <text x="742" y="310" text-anchor="middle" font-size="13" font-weight="700" fill="#1e293b">Оң қанат (Төмен)</text>
+
+                <!-- Баспалдақ / өткел белгілері -->
+                <rect x="208" y="190" width="36" height="44" rx="4" fill="#cbd5e1" stroke="#475569" stroke-width="1.5"/>
+                <text x="226" y="216" text-anchor="middle" font-size="10" font-weight="700" fill="#0f172a">↕</text>
+
+                <rect x="616" y="190" width="36" height="44" rx="4" fill="#cbd5e1" stroke="#475569" stroke-width="1.5"/>
+                <text x="634" y="216" text-anchor="middle" font-size="10" font-weight="700" fill="#0f172a">↕</text>
+              </svg>
               <div id="draft-room-pin" class="draft-room-pin" style="display:none;">📍 Жаңа нүкте</div>
               <div id="locked-pins-layer"></div>
-            </div>
-            <div id="plan-fallback-msg" style="display:none; color:#fbbf24; font-size:0.85rem; text-align:center; margin-top:8px;">
-              Сызба суреті табылмады: <code>school-floors-map.jpg</code> файлын репозиторийге жүктеңіз.
             </div>
           </div>
 
@@ -607,11 +642,11 @@
 
   <script>
     const SCHOOL_SOCIAL_LINKS = {
-      author: { title: { kk: '💻 Жоба авторы', ru: '💻 Автор проекта', en: '💻 Project Author' }, handle: '@_zhannixs', url: 'https://www.instagram.com/_zhannixs/' },
-      president: { title: { kk: '👑 Мектеп президенті', ru: '👑 Президент школы', en: '👑 School President' }, handle: '@n_nuraxqw', url: 'https://www.instagram.com/n_nuraxqw/' },
-      school: { title: { kk: '🏫 Мектеп парақшасы', ru: '🏫 Страница школы', en: '🏫 School Page' }, handle: '@astana_keleshekmektebi_109', url: 'https://www.instagram.com/astana_keleshekmektebi_109/' },
-      parliament: { title: { kk: '🏛️ Мектеп парламенті', ru: '🏛️ Школьный парламент', en: '🏛️ School Parliament' }, handle: '@109parliament_official', url: 'https://www.instagram.com/109parliament_official/' },
-      podcast: { title: { kk: '🎙️ Мектеп подкасты', ru: '🎙️ Школьный подкаст', en: '🎙️ School Podcast' }, handle: '@109oy_podcast', url: 'https://www.instagram.com/109oy_podcast/' }
+      author: { title: { kk: '💻 Жоба авторы', ru: '💻 Автор проекта', en: '💻 Project Author' }, handle: '@_zhannixs', url: 'https://www.instagram.com/_zhannixs' },
+      president: { title: { kk: '👑 Мектеп президенті', ru: '👑 Президент школы', en: '👑 School President' }, handle: '@n_nuraxqw', url: 'https://www.instagram.com/n_nuraxqw' },
+      school: { title: { kk: '🏫 Мектеп парақшасы', ru: '🏫 Страница школы', en: '🏫 School Page' }, handle: '@astana_keleshekmektebi_109', url: 'https://www.instagram.com/astana_keleshekmektebi_109' },
+      parliament: { title: { kk: '🏛️ Мектеп парламенті', ru: '🏛️ Школьный парламент', en: '🏛️ School Parliament' }, handle: '@109parliament_official', url: 'https://www.instagram.com/109parliament_official' },
+      podcast: { title: { kk: '🎙️ Мектеп подкасты', ru: '🎙️ Школьный подкаст', en: '🎙️ School Podcast' }, handle: '@109oy_podcast', url: 'https://www.instagram.com/109oy_podcast' }
     };
 
     function renderInstagramFooter() {
@@ -1272,6 +1307,28 @@
       localStorage.setItem(LOCKED_ROOMS_KEY, JSON.stringify(list));
     }
 
+    function updateFloorSvgLabels() {
+      const heading = document.getElementById('svg-floor-heading');
+      const topLbl = document.getElementById('svg-center-top-label');
+      const botLbl = document.getElementById('svg-center-bot-label');
+      if (!heading || !topLbl || !botLbl) return;
+
+      heading.textContent = `${selectedFloor}${t('floorUnit').toUpperCase()} СЫЗБАСЫ`;
+      if (selectedFloor === 1) {
+        topLbl.textContent = '1-қабат орталық бөлігі';
+        botLbl.textContent = '1-қабат төменгі зал / бөлік';
+      } else if (selectedFloor === 2) {
+        topLbl.textContent = '2-қабат орталық бөлігі';
+        botLbl.textContent = '2-қабат орталық өткел';
+      } else if (selectedFloor === 3) {
+        topLbl.textContent = '3-қабат орталық бөлігі';
+        botLbl.textContent = '3-қабат акт / зал бөлігі';
+      } else {
+        topLbl.textContent = '4-қабат орталық бөлігі';
+        botLbl.textContent = '4-қабат орталық бөлік';
+      }
+    }
+
     function selectFloor(floorNum, btnEl) {
       selectedFloor = floorNum;
       draftCoords = null;
@@ -1284,16 +1341,13 @@
         b.className = parseInt(b.dataset.floor, 10) === floorNum ? 'btn floor-btn' : 'btn btn-outline floor-btn';
       });
       updateActiveFloorBadge();
+      updateFloorSvgLabels();
       renderMapPinsAndList();
     }
 
     function updateActiveFloorBadge() {
       const el = document.getElementById('active-floor-text');
       if (el) el.textContent = `${selectedFloor}${t('floorUnit')}`;
-    }
-
-    function handlePlanImageError() {
-      document.getElementById('plan-fallback-msg').style.display = 'block';
     }
 
     function handleMapClick(event) {
@@ -1368,6 +1422,7 @@
     }
 
     function renderMapPinsAndList() {
+      updateFloorSvgLabels();
       const pinsLayer = document.getElementById('locked-pins-layer');
       const listEl = document.getElementById('saved-rooms-list');
       if (!pinsLayer || !listEl) return;
