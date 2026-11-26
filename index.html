@@ -124,27 +124,44 @@
       max-width: 340px; margin: 12px auto 6px; overflow: hidden;
     }
     .limit-bar-fill { background: var(--accent); height: 100%; width: 0%; transition: width 0.35s ease; }
+
     .blueprint-stage {
-      background: #0f172a; border-radius: 18px; padding: 18px;
+      background: #0f172a; border-radius: 18px; padding: 16px;
       border: 4px solid #334155; overflow: hidden; position: relative;
     }
     .blueprint-frame {
-      position: relative; max-width: 740px; margin: 10px auto; border-radius: 12px;
-      overflow: hidden; background: #1e293b; min-height: 340px;
-      display: flex; align-items: center; justify-content: center;
-      transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+      position: relative; width: 100%; max-width: 860px; margin: 0 auto; border-radius: 12px;
+      overflow: hidden; background: #1e293b; cursor: crosshair;
+      transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+      user-select: none;
     }
-    .blueprint-frame img { width: 100%; height: auto; max-height: 460px; object-fit: contain; display: block; }
-    .room-pin {
-      position: absolute; transform: translate(-50%, -50%);
-      background: var(--accent); color: #0f172a; font-weight: 800; font-size: 0.78rem;
-      padding: 5px 10px; border-radius: 999px; box-shadow: 0 4px 14px rgba(0,0,0,0.45);
-      border: 2px solid white; z-index: 6; white-space: nowrap;
+    .blueprint-frame img {
+      width: 100%; height: auto; display: block;
+    }
+    .locked-room-pin {
+      position: absolute; transform: translate(-50%, -100%);
+      background: #0f5c3e; color: #ffffff; font-weight: 800; font-size: 0.75rem;
+      padding: 4px 9px; border-radius: 999px; box-shadow: 0 3px 10px rgba(0,0,0,0.45);
+      border: 2px solid #fbbf24; z-index: 6; white-space: nowrap; cursor: pointer;
+    }
+    .draft-room-pin {
+      position: absolute; transform: translate(-50%, -100%);
+      background: #f59e0b; color: #0f172a; font-weight: 800; font-size: 0.75rem;
+      padding: 4px 9px; border-radius: 999px; box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      border: 2px solid #ffffff; z-index: 8; white-space: nowrap; pointer-events: none;
     }
     .compass-badge {
       display: inline-flex; align-items: center; gap: 8px; background: #f1f5f9;
       padding: 8px 14px; border-radius: 12px; font-weight: 700; font-size: 0.9rem;
     }
+    .room-chip-list {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px;
+    }
+    .room-chip {
+      background: #ecfdf5; border: 1px solid #a7f3d0; color: #065f46;
+      padding: 6px 11px; border-radius: 10px; font-size: 0.84rem; font-weight: 600;
+    }
+
     .info-box {
       background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; padding: 14px; margin-top: 14px;
     }
@@ -188,7 +205,6 @@
       background: #fef3c7; color: #92400e; padding: 3px 10px;
       border-radius: 999px; font-size: 0.78rem; font-weight: 700;
     }
-    /* АСТЫНДАҒЫ ҚЫЗЫҚТЫ ДЕКОРЛАР ЖӘНЕ INSTAGRAM ФУТЕРІ */
     .bottom-decor-strip {
       max-width: 980px; margin: 10px auto 0; padding: 0 16px; position: relative; z-index: 5;
     }
@@ -256,7 +272,6 @@
   <div class="bg-decor" style="bottom: 18%; left: 5%; animation-delay: 3s;">📚</div>
   <div class="bg-decor" style="bottom: 25%; right: 6%; animation-delay: 4s;">🎓</div>
 
-  <!-- АВТОРИЗАЦИЯ -->
   <div id="auth-screen" class="card">
     <div class="auth-lang-bar">
       <button class="lang-btn active" data-lang="kk" onclick="setLanguage('kk')">ҚАЗ</button>
@@ -303,7 +318,6 @@
     <button id="btn-auth-submit" class="btn" style="width: 100%; margin-top: 4px;" onclick="handleAuth()">Жалғастыру 🚀</button>
   </div>
 
-  <!-- НЕГІЗГІ ИНТЕРФЕЙС -->
   <div id="app-wrapper" style="display: none;">
     <header>
       <div class="lang-bar">
@@ -340,7 +354,6 @@
     </nav>
 
     <main>
-      <!-- БАСТЫ БЕТ -->
       <section id="sec-home" class="section active">
         <div class="card">
           <h2><span id="txt-hello">Сәлем,</span> <span id="welcome-name"></span>! 🎒</h2>
@@ -369,7 +382,6 @@
         </div>
       </section>
 
-      <!-- ЖАҢАЛЫҚТАР (МЕКТЕП ПРЕЗИДЕНТІ + 3 ТІЛГЕ АУДАРМА) -->
       <section id="sec-news" class="section">
         <div class="card">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
@@ -413,49 +425,75 @@
         </div>
       </section>
 
-      <!-- МЕКТЕП КАРТАСЫ -->
       <section id="sec-map" class="section">
         <div class="card">
-          <h2 id="txt-map-title">🗺️ Мектеп картасы және постер-ориентаторлар</h2>
-          <p id="txt-map-desc" style="color: var(--muted); font-size: 0.88rem; margin-bottom: 14px;">
-            Кабинетті таңдап, орналасуын көріңіз және қабырғадағы постер кодын енгізіп, картаны қажетті бағытқа бұрыңыз.
-          </p>
-
-          <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 14px;">
-            <select id="plan-select" onchange="changePlan(this.value)" style="padding: 9px 12px; border-radius: 10px; border: 2px solid var(--primary); font-weight: 600;">
-              <option value="0" id="opt-floor-1">📐 Чертёж 1 (1-қабат)</option>
-              <option value="1" id="opt-floor-2">📐 Чертёж 2 (2-қабат)</option>
-            </select>
-
-            <select id="room-select" onchange="selectRoom(this.value)" style="padding: 9px 12px; border-radius: 10px; border: 2px solid var(--primary); font-weight: 600; flex: 1; min-width: 210px;">
-              <option value="">-- Кабинетті таңдаңыз --</option>
-            </select>
-
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <div>
+              <h2 id="txt-map-title">🗺️ Мектеп картасы (1–4 қабат)</h2>
+              <p id="txt-map-desc" style="color: var(--muted); font-size: 0.88rem; margin-top: 4px;">
+                Қабатты таңдап, сызбаның кез келген бөлігін басыңыз да, кабинет нөмірін енгізіп сақтаңыз. Бір кабинетті бір рет енгізген соң, қайта енгізуге болмайды.
+              </p>
+            </div>
             <div class="compass-badge">
               🧭 <span id="txt-orient">Бағдар:</span> <span id="compass-angle">0°</span>
             </div>
           </div>
 
+          <div style="display:flex; flex-wrap:wrap; gap:8px; margin:14px 0;">
+            <button class="btn floor-btn" data-floor="1" onclick="selectFloor(1, this)">1-қабат</button>
+            <button class="btn btn-outline floor-btn" data-floor="2" onclick="selectFloor(2, this)">2-қабат</button>
+            <button class="btn btn-outline floor-btn" data-floor="3" onclick="selectFloor(3, this)">3-қабат</button>
+            <button class="btn btn-outline floor-btn" data-floor="4" onclick="selectFloor(4, this)">4-қабат</button>
+            <span class="badge-pill" style="background:#fef3c7; color:#92400e; margin-left:auto;">
+              📍 <span id="txt-active-floor-lbl">Таңдалған қабат:</span> <strong id="active-floor-text">1-қабат</strong>
+            </span>
+          </div>
+
           <div class="blueprint-stage">
-            <div class="blueprint-frame" id="blueprint-frame">
-              <img id="blueprint-img" src="чертеж1.png" alt="Мектеп сызбасы" onerror="handlePlanImageError(this)">
-              <div id="room-pin" class="room-pin" style="display: none;">📍 Кабинет</div>
+            <div class="blueprint-frame" id="blueprint-frame" onclick="handleMapClick(event)">
+              <img id="blueprint-img" src="school-floors-map.jpg" alt="1-4 қабаттар мектеп сызбасы" onerror="handlePlanImageError()">
+              <div id="draft-room-pin" class="draft-room-pin" style="display:none;">📍 Жаңа нүкте</div>
+              <div id="locked-pins-layer"></div>
             </div>
             <div id="plan-fallback-msg" style="display:none; color:#fbbf24; font-size:0.85rem; text-align:center; margin-top:8px;">
-              Файл табылмады: <code>чертеж1.png</code> / <code>чертеж2.png</code>.
+              Сызба суреті табылмады: <code>school-floors-map.jpg</code> файлын репозиторийге жүктеңіз.
             </div>
           </div>
 
-          <div id="room-details" class="info-box" style="display: none;">
-            <h3 id="rd-title"></h3>
-            <p id="rd-meta" style="font-size: 0.9rem; margin-top: 4px;"></p>
-            <p id="rd-pos" style="font-size: 0.88rem; color: var(--muted); margin-top: 4px;"></p>
+          <div class="info-box" style="border-color:#a7f3d0; background:#f0fdf4;">
+            <h3 id="txt-add-room-title">✏️ Кабинет нөмірін белгілеу және сақтау (+15 ⭐)</h3>
+            <p id="txt-add-room-desc" style="font-size:0.85rem; color:var(--muted); margin:4px 0 10px;">
+              Алдымен сызбадан қажетті жерді басыңыз, сосын кабинет нөмірін немесе атауын жазып сақтаңыз.
+            </p>
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap:10px;">
+              <div>
+                <label style="font-size:0.78rem; font-weight:700; color:var(--muted);" id="lbl-coord-x">X координата (%)</label>
+                <input type="text" id="room-coord-x" readonly placeholder="Картаны бас..." style="width:100%; padding:9px 11px; border:2px solid #cbd5e1; border-radius:10px; background:#f8fafc; font-weight:700;">
+              </div>
+              <div>
+                <label style="font-size:0.78rem; font-weight:700; color:var(--muted);" id="lbl-coord-y">Y координата (%)</label>
+                <input type="text" id="room-coord-y" readonly placeholder="Картаны бас..." style="width:100%; padding:9px 11px; border:2px solid #cbd5e1; border-radius:10px; background:#f8fafc; font-weight:700;">
+              </div>
+              <div>
+                <label style="font-size:0.78rem; font-weight:700; color:var(--muted);" id="lbl-room-num">Кабинет нөмірі / атауы</label>
+                <input type="text" id="room-number-input" placeholder="Мысалы: 105 немесе Асхана" style="width:100%; padding:9px 11px; border:2px solid #cbd5e1; border-radius:10px; background:#ffffff;">
+              </div>
+            </div>
+            <div style="margin-top:10px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+              <button id="btn-save-room" class="btn" onclick="saveMappedRoom()">💾 Кабинетті бекіту (+15 ⭐)</button>
+              <span id="room-status-msg" style="font-size:0.84rem; color:var(--muted);"></span>
+            </div>
+          </div>
+
+          <div class="info-box">
+            <h3 id="txt-saved-rooms-title">📌 Бекітілген кабинеттер (қайта енгізу жабық)</h3>
+            <div id="saved-rooms-list" class="room-chip-list"></div>
           </div>
 
           <div class="info-box">
             <h3 id="txt-poster-title">🪧 Қабырғадағы постер-ориентатор коды</h3>
-            <p id="txt-poster-desc" style="font-size: 0.85rem; color: var(--muted); margin: 4px 0 10px;">
-              Постер кодын жазыңыз (мысалы: <code>POST-NORTH</code>, <code>POST-EAST</code>, <code>POST-SOUTH</code>, <code>POST-WEST</code> немесе <code>R101</code>).
+            <p id="txt-poster-desc" style="font-size:0.85rem; color:var(--muted); margin:4px 0 10px;">
+              Постер кодын жазыңыз (мысалы: <code>POST-NORTH</code>, <code>POST-EAST</code>, <code>POST-SOUTH</code>, <code>POST-WEST</code>).
             </p>
             <div style="display: flex; gap: 8px; flex-wrap: wrap;">
               <input type="text" id="poster-code-input" placeholder="POST-EAST" style="flex: 1; min-width: 200px; padding: 10px 12px; border: 2px solid #cbd5e1; border-radius: 10px;">
@@ -465,7 +503,6 @@
         </div>
       </section>
 
-      <!-- ПӘНДІК КВЕСТТЕР -->
       <section id="sec-quests" class="section">
         <div class="card">
           <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
@@ -479,7 +516,6 @@
         </div>
       </section>
 
-      <!-- ДОСТАР -->
       <section id="sec-friends" class="section">
         <div class="card">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
@@ -516,7 +552,6 @@
         </div>
       </section>
 
-      <!-- КЕШБЭК ДҮКЕНІ -->
       <section id="sec-shop" class="section">
         <div class="card">
           <h2 id="txt-shop-title">🎁 Кешбэк дүкені</h2>
@@ -528,7 +563,6 @@
         </div>
       </section>
 
-      <!-- РЕЙТИНГ -->
       <section id="sec-rating" class="section">
         <div class="card">
           <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
@@ -548,7 +582,6 @@
       </section>
     </main>
 
-    <!-- АСТЫНДАҒЫ ҚЫЗЫҚТЫ ДЕКОРЛАР -->
     <div class="bottom-decor-strip">
       <div class="decor-ribbon">
         <span class="decor-sticker">✨ Білім — таусылмайтын қазына</span>
@@ -559,7 +592,6 @@
       </div>
     </div>
 
-    <!-- INSTAGRAM БЛОКТАРЫ: АВТОР, ПРЕЗИДЕНТ, МЕКТЕП, ПАРЛАМЕНТ, ПОДКАСТ -->
     <footer class="site-footer">
       <div class="footer-card">
         <h3 id="txt-socials-title">📱 Біздің ресми Instagram парақшаларымыз</h3>
@@ -574,33 +606,12 @@
   <div id="toast"></div>
 
   <script>
-    /* ================= INSTAGRAM ПАРАҚШАЛАРЫ ================= */
     const SCHOOL_SOCIAL_LINKS = {
-      author: {
-        title: { kk: '💻 Жоба авторы', ru: '💻 Автор проекта', en: '💻 Project Author' },
-        handle: '@_zhannixs',
-        url: 'https://www.instagram.com/_zhannixs?dmpr=MW5vNDVobHg1ang3dw%3D%3D&utm_source=qr'
-      },
-      president: {
-        title: { kk: '👑 Мектеп президенті', ru: '👑 Президент школы', en: '👑 School President' },
-        handle: '@n_nuraxqw',
-        url: 'https://www.instagram.com/n_nuraxqw?bqrl=OHBhY3c2cGkwdWI4'
-      },
-      school: {
-        title: { kk: '🏫 Мектеп парақшасы', ru: '🏫 Страница школы', en: '🏫 School Page' },
-        handle: '@astana_keleshekmektebi_109',
-        url: 'https://www.instagram.com/astana_keleshekmektebi_109?dmpr=MXhxYXZvbWtiYWJ4MA=='
-      },
-      parliament: {
-        title: { kk: '🏛️ Мектеп парламенті', ru: '🏛️ Школьный парламент', en: '🏛️ School Parliament' },
-        handle: '@109parliament_official',
-        url: 'https://www.instagram.com/109parliament_official?cnvx=ODFuZXB3ZTk4eGN0&wa_status_inline=true'
-      },
-      podcast: {
-        title: { kk: '🎙️ Мектеп подкасты', ru: '🎙️ Школьный подкаст', en: '🎙️ School Podcast' },
-        handle: '@109oy_podcast',
-        url: 'https://www.instagram.com/109oy_podcast?hvrq=MWg3Y3ZtcjBkNjl5OQ=='
-      }
+      author: { title: { kk: '💻 Жоба авторы', ru: '💻 Автор проекта', en: '💻 Project Author' }, handle: '@_zhannixs', url: 'https://www.instagram.com/_zhannixs/' },
+      president: { title: { kk: '👑 Мектеп президенті', ru: '👑 Президент школы', en: '👑 School President' }, handle: '@n_nuraxqw', url: 'https://www.instagram.com/n_nuraxqw/' },
+      school: { title: { kk: '🏫 Мектеп парақшасы', ru: '🏫 Страница школы', en: '🏫 School Page' }, handle: '@astana_keleshekmektebi_109', url: 'https://www.instagram.com/astana_keleshekmektebi_109/' },
+      parliament: { title: { kk: '🏛️ Мектеп парламенті', ru: '🏛️ Школьный парламент', en: '🏛️ School Parliament' }, handle: '@109parliament_official', url: 'https://www.instagram.com/109parliament_official/' },
+      podcast: { title: { kk: '🎙️ Мектеп подкасты', ru: '🎙️ Школьный подкаст', en: '🎙️ School Podcast' }, handle: '@109oy_podcast', url: 'https://www.instagram.com/109oy_podcast/' }
     };
 
     function renderInstagramFooter() {
@@ -621,7 +632,6 @@
       }).join('');
     }
 
-    /* ================= ҚАЗАҚША -> РУС / ENG АВТОАУДАРМА ЖҮЙЕСІ ================= */
     const KK_TO_RU_PHRASES = [
       ['құрметті оқушылар', 'дорогие ученики'],
       ['мектеп жаңалықтары', 'школьные новости'],
@@ -633,15 +643,9 @@
       ['ертең', 'завтра'],
       ['бүгін', 'сегодня'],
       ['мектепте', 'в школе'],
-      ['кабинетте', 'в кабинете'],
-      ['сағат', 'в'],
       ['өтеді', 'пройдёт'],
       ['басталды', 'начался'],
-      ['қош келдіңіздер', 'добро пожаловать'],
       ['құттықтаймыз', 'поздравляем'],
-      ['жеңімпаздар', 'победители'],
-      ['қатысыңыздар', 'примите участие'],
-      ['баршаңызды', 'всех вас'],
       ['шақырамыз', 'приглашаем']
     ];
 
@@ -656,43 +660,30 @@
       ['ертең', 'tomorrow'],
       ['бүгін', 'today'],
       ['мектепте', 'at school'],
-      ['кабинетте', 'in room'],
-      ['сағат', 'at'],
       ['өтеді', 'will take place'],
       ['басталды', 'has started'],
-      ['қош келдіңіздер', 'welcome'],
       ['құттықтаймыз', 'congratulations'],
-      ['жеңімпаздар', 'winners'],
-      ['қатысыңыздар', 'join us'],
-      ['баршаңызды', 'everyone'],
       ['шақырамыз', 'we invite']
     ];
 
     const KK_TO_RU_WORDS = {
-      'мектеп': 'школа', 'оқушы': 'ученик', 'оқушылар': 'ученики', 'мұғалім': 'учитель',
-      'сабақ': 'урок', 'квест': 'квест', 'квесттер': 'квесты', 'жұлдызша': 'звезда',
-      'жұлдызшалар': 'звёзды', 'рейтинг': 'рейтинг', 'дүкен': 'магазин', 'кешбэк': 'кешбэк',
+      'мектеп': 'школа', 'оқушы': 'ученик', 'оқушылар': 'ученики', 'сабақ': 'урок',
+      'квест': 'квест', 'жұлдызша': 'звезда', 'рейтинг': 'рейтинг', 'кешбэк': 'кешбэк',
       'президент': 'президент', 'парламент': 'парламент', 'подкаст': 'подкаст',
-      'жаңалық': 'новость', 'жаңалықтар': 'новости', 'іс-шара': 'мероприятие',
-      'кездесу': 'встреча', 'уақыт': 'время', 'күн': 'день', 'апта': 'неделя',
-      'жақсы': 'хорошо', 'жаңа': 'новый'
+      'жаңалық': 'новость', 'жаңалықтар': 'новости', 'жаңа': 'новый'
     };
 
     const KK_TO_EN_WORDS = {
-      'мектеп': 'school', 'оқушы': 'student', 'оқушылар': 'students', 'мұғалім': 'teacher',
-      'сабақ': 'lesson', 'квест': 'quest', 'квесттер': 'quests', 'жұлдызша': 'star',
-      'жұлдызшалар': 'stars', 'рейтинг': 'leaderboard', 'дүкен': 'shop', 'кешбэк': 'cashback',
+      'мектеп': 'school', 'оқушы': 'student', 'оқушылар': 'students', 'сабақ': 'lesson',
+      'квест': 'quest', 'жұлдызша': 'star', 'рейтинг': 'leaderboard', 'кешбэк': 'cashback',
       'президент': 'president', 'парламент': 'parliament', 'подкаст': 'podcast',
-      'жаңалық': 'news', 'жаңалықтар': 'news', 'іс-шара': 'event',
-      'кездесу': 'meeting', 'уақыт': 'time', 'күн': 'day', 'апта': 'week',
-      'жақсы': 'good', 'жаңа': 'new'
+      'жаңалық': 'news', 'жаңалықтар': 'news', 'жаңа': 'new'
     };
 
     function translateKkText(kkText, targetLang) {
       if (!kkText || targetLang === 'kk') return kkText;
       const phrases = targetLang === 'ru' ? KK_TO_RU_PHRASES : KK_TO_EN_PHRASES;
       const words = targetLang === 'ru' ? KK_TO_RU_WORDS : KK_TO_EN_WORDS;
-
       let out = kkText;
       phrases.forEach(([src, dst]) => {
         const re = new RegExp(src.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
@@ -701,7 +692,6 @@
           return isCap ? dst.charAt(0).toUpperCase() + dst.slice(1) : dst;
         });
       });
-
       out = out.replace(/[а-яәіңғүұқөһ-]+/gi, token => {
         const lower = token.toLowerCase();
         if (!words[lower]) return token;
@@ -709,11 +699,9 @@
         const isCap = token[0] === token[0].toUpperCase();
         return isCap ? mapped.charAt(0).toUpperCase() + mapped.slice(1) : mapped;
       });
-
       return out;
     }
 
-    /* ================= ЛОГОТИП FALLBACK ================= */
     function handleLogoFallback(imgEl) {
       if (!imgEl || imgEl.dataset.fallbackApplied) return;
       imgEl.dataset.fallbackApplied = '1';
@@ -728,7 +716,6 @@
       imgEl.src = `data:image/svg+xml;utf8,${svg}`;
     }
 
-    /* ================= ТІЛДЕР (ҚАЗ / РУС / ENG) ================= */
     let currentLang = localStorage.getItem('sq_lang') || 'kk';
 
     const I18N = {
@@ -781,14 +768,22 @@
         publishNewsBtn: '📢 Жариялау',
         noNews: 'Әзірге жаңалықтар жарияланбаған.',
         deleteBtn: 'Өшіру',
-        mapTitle: '🗺️ Мектеп картасы және постер-ориентаторлар',
-        mapDesc: 'Кабинетті таңдап, орналасуын көріңіз және қабырғадағы постер кодын енгізіп, картаны қажетті бағытқа бұрыңыз.',
-        floor1: '📐 Чертёж 1 (1-қабат)',
-        floor2: '📐 Чертёж 2 (2-қабат)',
-        selectRoomOpt: '-- Кабинетті таңдаңыз --',
+        mapTitle: '🗺️ Мектеп картасы (1–4 қабат)',
+        mapDesc: 'Қабатты таңдап, сызбаның кез келген бөлігін басыңыз да, кабинет нөмірін енгізіп сақтаңыз. Бір кабинетті бір рет енгізген соң, қайта енгізуге болмайды.',
         orient: 'Бағдар:',
+        activeFloorLbl: 'Таңдалған қабат:',
+        floorUnit: '-қабат',
+        addRoomTitle: '✏️ Кабинет нөмірін белгілеу және сақтау (+15 ⭐)',
+        addRoomDesc: 'Алдымен сызбадан қажетті жерді басыңыз, сосын кабинет нөмірін немесе атауын жазып сақтаңыз.',
+        lblCoordX: 'X координата (%)',
+        lblCoordY: 'Y координата (%)',
+        lblRoomNum: 'Кабинет нөмірі / атауы',
+        roomNumPh: 'Мысалы: 105 немесе Асхана',
+        saveRoomBtn: '💾 Кабинетті бекіту (+15 ⭐)',
+        savedRoomsTitle: '📌 Бекітілген кабинеттер (қайта енгізу жабық)',
+        noSavedRooms: 'Бұл қабатта әлі бекітілген кабинет жоқ. Сызбадан нүкте таңдап, алғашқы кабинетті енгізіңіз.',
         posterTitle: '🪧 Қабырғадағы постер-ориентатор коды',
-        posterDesc: 'Постер кодын жазыңыз (мысалы: POST-NORTH, POST-EAST, POST-SOUTH, POST-WEST немесе R101).',
+        posterDesc: 'Постер кодын жазыңыз (мысалы: POST-NORTH, POST-EAST, POST-SOUTH, POST-WEST).',
         posterBtn: '🔄 Картаны бұру (+10 ⭐)',
         gradeSuffix: '-сынып',
         questsHeading: 'пәндік квесттер',
@@ -831,6 +826,10 @@
         msgPresUnlocked: '👑 Мектеп президенті режимі қосылды!',
         msgNewsEmpty: '⚠️ Тақырыбы мен мәтінін толтырыңыз.',
         msgNewsPublished: '📢 Жаңалық жарияланды!',
+        msgPickPointFirst: '⚠️ Алдымен сызбадан нүктені басып таңдаңыз.',
+        msgRoomEmpty: '⚠️ Кабинет нөмірін немесе атауын жазыңыз.',
+        msgRoomExists: '🔒 Бұл кабинет бұрын енгізіліп қойған! Қайта енгізуге болмайды.',
+        msgRoomSaved: '✅ Кабинет сақталды және бекітілді!',
         msgWrongAnswer: '❌ Жауап қате! Қайта ойланып көр.',
         msgEmptyAnswer: '⚠️ Алдымен жауабыңызды жазыңыз.',
         msgSelectFriend: '⚠️ Алдымен оқушыны таңдаңыз.',
@@ -888,14 +887,22 @@
         publishNewsBtn: '📢 Опубликовать',
         noNews: 'Новостей пока нет.',
         deleteBtn: 'Удалить',
-        mapTitle: '🗺️ Карта школы и постеры-ориентаторы',
-        mapDesc: 'Выберите кабинет, чтобы увидеть его расположение, или введите код постера со стены для поворота карты.',
-        floor1: '📐 Чертёж 1 (1-й этаж)',
-        floor2: '📐 Чертёж 2 (2-й этаж)',
-        selectRoomOpt: '-- Выберите кабинет --',
+        mapTitle: '🗺️ Карта школы (1–4 этажи)',
+        mapDesc: 'Выберите этаж, нажмите на нужную точку схемы и введите номер кабинета. После сохранения повторный ввод этого кабинета закрыт.',
         orient: 'Ориентир:',
+        activeFloorLbl: 'Выбранный этаж:',
+        floorUnit: ' этаж',
+        addRoomTitle: '✏️ Указать и сохранить номер кабинета (+15 ⭐)',
+        addRoomDesc: 'Сначала кликните по точке на схеме, затем введите номер или название кабинета.',
+        lblCoordX: 'Координата X (%)',
+        lblCoordY: 'Координата Y (%)',
+        lblRoomNum: 'Номер / название кабинета',
+        roomNumPh: 'Например: 105 или Столовая',
+        saveRoomBtn: '💾 Закрепить кабинет (+15 ⭐)',
+        savedRoomsTitle: '📌 Закреплённые кабинеты (повторный ввод закрыт)',
+        noSavedRooms: 'На этом этаже пока нет сохранённых кабинетов. Кликните по схеме, чтобы добавить первый.',
         posterTitle: '🪧 Код настенного постера-ориентатора',
-        posterDesc: 'Введите код постера (например: POST-NORTH, POST-EAST, POST-SOUTH, POST-WEST или R101).',
+        posterDesc: 'Введите код постера (например: POST-NORTH, POST-EAST, POST-SOUTH, POST-WEST).',
         posterBtn: '🔄 Повернуть карту (+10 ⭐)',
         gradeSuffix: ' класс',
         questsHeading: 'предметные квесты',
@@ -938,6 +945,10 @@
         msgPresUnlocked: '👑 Режим президента школы включён!',
         msgNewsEmpty: '⚠️ Заполните заголовок и текст новости.',
         msgNewsPublished: '📢 Новость опубликована!',
+        msgPickPointFirst: '⚠️ Сначала выберите точку на карте кликом.',
+        msgRoomEmpty: '⚠️ Введите номер или название кабинета.',
+        msgRoomExists: '🔒 Этот кабинет уже закреплён! Повторно добавить нельзя.',
+        msgRoomSaved: '✅ Кабинет сохранён и закреплён!',
         msgWrongAnswer: '❌ Неверный ответ! Попробуйте ещё раз.',
         msgEmptyAnswer: '⚠️ Сначала введите ответ.',
         msgSelectFriend: '⚠️ Сначала выберите ученика.',
@@ -995,14 +1006,22 @@
         publishNewsBtn: '📢 Publish',
         noNews: 'No news published yet.',
         deleteBtn: 'Delete',
-        mapTitle: '🗺️ School Map & Poster Orientators',
-        mapDesc: 'Select a classroom to see its location or enter a wall poster code to rotate the map.',
-        floor1: '📐 Blueprint 1 (1st Floor)',
-        floor2: '📐 Blueprint 2 (2nd Floor)',
-        selectRoomOpt: '-- Select a classroom --',
+        mapTitle: '🗺️ School Map (Floors 1–4)',
+        mapDesc: 'Select a floor, click any spot on the blueprint, and enter the classroom number. Once saved, re-entry is locked.',
         orient: 'Direction:',
+        activeFloorLbl: 'Selected floor:',
+        floorUnit: ' Floor',
+        addRoomTitle: '✏️ Pin & Save Classroom Number (+15 ⭐)',
+        addRoomDesc: 'Click a spot on the blueprint first, then enter the classroom number or name.',
+        lblCoordX: 'X Coordinate (%)',
+        lblCoordY: 'Y Coordinate (%)',
+        lblRoomNum: 'Classroom Number / Name',
+        roomNumPh: 'e.g. 105 or Cafeteria',
+        saveRoomBtn: '💾 Lock Classroom (+15 ⭐)',
+        savedRoomsTitle: '📌 Locked Classrooms (re-entry disabled)',
+        noSavedRooms: 'No locked classrooms on this floor yet. Click the blueprint to add one.',
         posterTitle: '🪧 Wall Poster Orientator Code',
-        posterDesc: 'Enter a poster code (e.g. POST-NORTH, POST-EAST, POST-SOUTH, POST-WEST, or R101).',
+        posterDesc: 'Enter a poster code (e.g. POST-NORTH, POST-EAST, POST-SOUTH, POST-WEST).',
         posterBtn: '🔄 Rotate Map (+10 ⭐)',
         gradeSuffix: 'th Grade',
         questsHeading: 'Subject Quests',
@@ -1045,6 +1064,10 @@
         msgPresUnlocked: '👑 School President mode activated!',
         msgNewsEmpty: '⚠️ Please enter both title and content.',
         msgNewsPublished: '📢 News published!',
+        msgPickPointFirst: '⚠️ Click a spot on the map first.',
+        msgRoomEmpty: '⚠️ Enter a classroom number or name.',
+        msgRoomExists: '🔒 This classroom is already locked and cannot be re-entered.',
+        msgRoomSaved: '✅ Classroom saved and locked!',
         msgWrongAnswer: '❌ Incorrect answer! Try again.',
         msgEmptyAnswer: '⚠️ Please enter an answer first.',
         msgSelectFriend: '⚠️ Please select a student first.',
@@ -1120,9 +1143,16 @@
 
       document.getElementById('txt-map-title').textContent = t('mapTitle');
       document.getElementById('txt-map-desc').textContent = t('mapDesc');
-      document.getElementById('opt-floor-1').textContent = t('floor1');
-      document.getElementById('opt-floor-2').textContent = t('floor2');
       document.getElementById('txt-orient').textContent = t('orient');
+      document.getElementById('txt-active-floor-lbl').textContent = t('activeFloorLbl');
+      document.getElementById('txt-add-room-title').textContent = t('addRoomTitle');
+      document.getElementById('txt-add-room-desc').textContent = t('addRoomDesc');
+      document.getElementById('lbl-coord-x').textContent = t('lblCoordX');
+      document.getElementById('lbl-coord-y').textContent = t('lblCoordY');
+      document.getElementById('lbl-room-num').textContent = t('lblRoomNum');
+      document.getElementById('room-number-input').placeholder = t('roomNumPh');
+      document.getElementById('btn-save-room').textContent = t('saveRoomBtn');
+      document.getElementById('txt-saved-rooms-title').textContent = t('savedRoomsTitle');
       document.getElementById('txt-poster-title').textContent = t('posterTitle');
       document.getElementById('txt-poster-desc').textContent = t('posterDesc');
       document.getElementById('btn-poster-apply').textContent = t('posterBtn');
@@ -1153,13 +1183,14 @@
       document.getElementById('txt-socials-sub').textContent = t('socialsSub');
 
       renderBellSchedule();
+      updateActiveFloorBadge();
     }
 
-    /* ================= НАСТРОЙКИ И БАЗА ================= */
     const DAILY_LIMIT = 100;
     const PRESIDENT_SECRET_CODE = 'PRESIDENT2026';
     const PRESIDENT_SESSION_KEY = 'sq_president_unlocked';
     const NEWS_DB_KEY = 'sq_school_news_db';
+    const LOCKED_ROOMS_KEY = 'sq_locked_rooms_db';
     const DEVICE_LOCK_KEY = 'sq_device_bound_user';
     const USERS_DB_KEY = 'sq_real_users_db';
     const ACTIVE_SESSION_KEY = 'sq_active_session';
@@ -1191,279 +1222,196 @@
       `).join('');
     }
 
-    const FLOOR_PLANS = [
-      { id: 0, file: 'чертеж1.png' },
-      { id: 1, file: 'чертеж2.png' }
-    ];
-
-    const ROOMS_DATA = [
-      { id: 'r101', name: { kk: '101 кабинет (Физика)', ru: '101 кабинет (Физика)', en: 'Room 101 (Physics)' }, floorIndex: 0, block: 'A', x: 72, y: 34, posterAngle: 90 },
-      { id: 'r102', name: { kk: '102 кабинет (Химия)', ru: '102 кабинет (Химия)', en: 'Room 102 (Chemistry)' }, floorIndex: 0, block: 'A', x: 72, y: 62, posterAngle: 90 },
-      { id: 'gym1', name: { kk: 'Спортзал', ru: 'Спортзал', en: 'Gymnasium' }, floorIndex: 0, block: 'B', x: 24, y: 50, posterAngle: 270 },
-      { id: 'lib2', name: { kk: 'Кітапхана', ru: 'Библиотека', en: 'Library' }, floorIndex: 1, block: 'Center', x: 30, y: 35, posterAngle: 0 },
-      { id: 'it204', name: { kk: '204 кабинет (Информатика)', ru: '204 кабинет (Информатика)', en: 'Room 204 (IT)' }, floorIndex: 1, block: 'C', x: 76, y: 40, posterAngle: 180 },
-      { id: 'adm205', name: { kk: '205 кабинет (Тәрбие / Завуч)', ru: '205 кабинет (Завуч)', en: 'Room 205 (Vice Principal)' }, floorIndex: 1, block: 'Center', x: 52, y: 30, posterAngle: 0 }
-    ];
-
     const POSTER_ORIENTATORS = {
       'POST-NORTH': { angle: 0 },
       'POST-EAST':  { angle: 90 },
       'POST-SOUTH': { angle: 180 },
-      'POST-WEST':  { angle: 270 },
-      'POST-101':   { angle: 90 },
-      'POST-LIB':   { angle: 0 },
-      'POST-IT':    { angle: 180 }
+      'POST-WEST':  { angle: 270 }
     };
 
     const QUEST_BANK_BY_TIER = {
       8: [
-        {
-          id: '8q_alg',
-          subject: { kk: 'Алгебра', ru: 'Алгебра', en: 'Algebra' },
-          q: {
-            kk: 'Квадрат теңдеуді шеш: x² - 9 = 0. Оң түбірін жаз.',
-            ru: 'Решите квадратное уравнение: x² - 9 = 0. Напишите положительный корень.',
-            en: 'Solve the quadratic equation: x² - 9 = 0. Enter the positive root.'
-          },
-          answers: ['3'],
-          reward: 30
-        },
-        {
-          id: '8q_hist',
-          subject: { kk: 'Қазақстан тарихы', ru: 'История Казахстана', en: 'History of Kazakhstan' },
-          q: {
-            kk: 'Қазақ хандығы қай жылы құрылды? (тек санмен жаз)',
-            ru: 'В каком году было образовано Казахское ханство? (напишите только год)',
-            en: 'In what year was the Kazakh Khanate founded? (numbers only)'
-          },
-          answers: ['1465'],
-          reward: 30
-        },
-        {
-          id: '8q_phys',
-          subject: { kk: 'Физика', ru: 'Физика', en: 'Physics' },
-          q: {
-            kk: 'Электр тогының күшін өлшейтін құрал қалай аталады?',
-            ru: 'Как называется прибор для измерения силы электрического тока?',
-            en: 'What instrument measures electric current?'
-          },
-          answers: ['амперметр', 'ammeter'],
-          reward: 25
-        },
-        {
-          id: '8q_chem',
-          subject: { kk: 'Химия', ru: 'Химия', en: 'Chemistry' },
-          q: {
-            kk: 'Судың химиялық формуласын жаз (мысалы: CO2).',
-            ru: 'Напишите химическую формулу воды (например: CO2).',
-            en: 'Write the chemical formula of water (e.g. CO2).'
-          },
-          answers: ['h2o', 'н2о'],
-          reward: 25
-        }
+        { id: '8q_alg', subject: { kk: 'Алгебра', ru: 'Алгебра', en: 'Algebra' }, q: { kk: 'Квадрат теңдеуді шеш: x² - 9 = 0. Оң түбірін жаз.', ru: 'Решите квадратное уравнение: x² - 9 = 0. Напишите положительный корень.', en: 'Solve x² - 9 = 0. Enter the positive root.' }, answers: ['3'], reward: 30 },
+        { id: '8q_hist', subject: { kk: 'Қазақстан тарихы', ru: 'История Казахстана', en: 'History of Kazakhstan' }, q: { kk: 'Қазақ хандығы қай жылы құрылды?', ru: 'В каком году было образовано Казахское ханство?', en: 'In what year was the Kazakh Khanate founded?' }, answers: ['1465'], reward: 30 },
+        { id: '8q_phys', subject: { kk: 'Физика', ru: 'Физика', en: 'Physics' }, q: { kk: 'Электр тогының күшін өлшейтін құрал?', ru: 'Прибор для измерения силы электрического тока?', en: 'Instrument measuring electric current?' }, answers: ['амперметр', 'ammeter'], reward: 25 }
       ],
       9: [
-        {
-          id: '9q_alg',
-          subject: { kk: 'Алгебра', ru: 'Алгебра', en: 'Algebra' },
-          q: {
-            kk: 'Арифметикалық прогрессияда a₁ = 2, d = 3. 5-ші мүшесін (a₅) тап.',
-            ru: 'В арифметической прогрессии a₁ = 2, d = 3. Найдите 5-й член (a₅).',
-            en: 'In an arithmetic progression a₁ = 2, d = 3. Find the 5th term (a₅).'
-          },
-          answers: ['14'],
-          reward: 35
-        },
-        {
-          id: '9q_hist',
-          subject: { kk: 'Қазақстан тарихы', ru: 'История Казахстана', en: 'History of Kazakhstan' },
-          q: {
-            kk: 'Қазақстан Республикасы Тәуелсіздігін қай жылы жариялады?',
-            ru: 'В каком году Республика Казахстан провозгласила Независимость?',
-            en: 'In what year did the Republic of Kazakhstan declare Independence?'
-          },
-          answers: ['1991'],
-          reward: 30
-        },
-        {
-          id: '9q_it',
-          subject: { kk: 'Информатика', ru: 'Информатика', en: 'Computer Science' },
-          q: {
-            kk: 'Екілік санау жүйесіндегі 101 саны ондық жүйеде нешеге тең?',
-            ru: 'Чему равно двоичное число 101 в десятичной системе счисления?',
-            en: 'What is binary 101 in decimal?'
-          },
-          answers: ['5'],
-          reward: 30
-        },
-        {
-          id: '9q_phys',
-          subject: { kk: 'Физика', ru: 'Физика', en: 'Physics' },
-          q: {
-            kk: 'Күштің ХБЖ (СИ) жүйесіндегі өлшем бірлігі қалай аталады?',
-            ru: 'Как называется единица измерения силы в системе СИ?',
-            en: 'What is the SI unit of force?'
-          },
-          answers: ['ньютон', 'newton', 'н', 'n'],
-          reward: 25
-        }
+        { id: '9q_alg', subject: { kk: 'Алгебра', ru: 'Алгебра', en: 'Algebra' }, q: { kk: 'Арифметикалық прогрессияда a₁ = 2, d = 3. 5-ші мүшесін (a₅) тап.', ru: 'В прогрессии a₁ = 2, d = 3. Найдите 5-й член (a₅).', en: 'In progression a₁ = 2, d = 3. Find 5th term (a₅).' }, answers: ['14'], reward: 35 },
+        { id: '9q_hist', subject: { kk: 'Қазақстан тарихы', ru: 'История Казахстана', en: 'History of Kazakhstan' }, q: { kk: 'Қазақстан Тәуелсіздігін қай жылы жариялады?', ru: 'В каком году Казахстан провозгласил Независимость?', en: 'In what year did Kazakhstan declare Independence?' }, answers: ['1991'], reward: 30 },
+        { id: '9q_it', subject: { kk: 'Информатика', ru: 'Информатика', en: 'Computer Science' }, q: { kk: 'Екілік 101 саны ондық жүйеде нешеге тең?', ru: 'Чему равно двоичное 101 в десятичной системе?', en: 'What is binary 101 in decimal?' }, answers: ['5'], reward: 30 }
       ],
       10: [
-        {
-          id: '10q_alg',
-          subject: { kk: 'Алгебра', ru: 'Алгебра', en: 'Algebra' },
-          q: {
-            kk: 'sin(30°) мәнін ондық бөлшек түрінде жаз (мысалы: 0.2).',
-            ru: 'Запишите значение sin(30°) в виде десятичной дроби (например: 0.2).',
-            en: 'Write the value of sin(30°) as a decimal (e.g. 0.2).'
-          },
-          answers: ['0.5', '0,5'],
-          reward: 35
-        },
-        {
-          id: '10q_hist',
-          subject: { kk: 'Қазақстан тарихы', ru: 'История Казахстана', en: 'History of Kazakhstan' },
-          q: {
-            kk: '«Алтын адам» қай қорғаннан табылды?',
-            ru: 'В каком кургане был найден «Золотой человек»?',
-            en: 'In which burial mound was the "Golden Man" discovered?'
-          },
-          answers: ['есік', 'есик', 'иссык', 'issyk', 'esik'],
-          reward: 30
-        },
-        {
-          id: '10q_chem',
-          subject: { kk: 'Химия', ru: 'Химия', en: 'Chemistry' },
-          q: {
-            kk: 'Метанның химиялық формуласын жаз.',
-            ru: 'Напишите химическую формулу метана.',
-            en: 'Write the chemical formula of methane.'
-          },
-          answers: ['ch4', 'сн4'],
-          reward: 30
-        },
-        {
-          id: '10q_it',
-          subject: { kk: 'Информатика', ru: 'Информатика', en: 'Computer Science' },
-          q: {
-            kk: '1 байтта неше бит бар?',
-            ru: 'Сколько бит в 1 байте?',
-            en: 'How many bits are in 1 byte?'
-          },
-          answers: ['8'],
-          reward: 25
-        }
+        { id: '10q_alg', subject: { kk: 'Алгебра', ru: 'Алгебра', en: 'Algebra' }, q: { kk: 'sin(30°) мәнін ондық бөлшекпен жаз.', ru: 'Запишите sin(30°) в виде десятичной дроби.', en: 'Write sin(30°) as a decimal.' }, answers: ['0.5', '0,5'], reward: 35 },
+        { id: '10q_hist', subject: { kk: 'Қазақстан тарихы', ru: 'История Казахстана', en: 'History of Kazakhstan' }, q: { kk: '«Алтын адам» қай қорғаннан табылды?', ru: 'В каком кургане найден «Золотой человек»?', en: 'In which mound was the Golden Man found?' }, answers: ['есік', 'есик', 'иссык', 'issyk', 'esik'], reward: 30 },
+        { id: '10q_it', subject: { kk: 'Информатика', ru: 'Информатика', en: 'Computer Science' }, q: { kk: '1 байтта неше бит бар?', ru: 'Сколько бит в 1 байте?', en: 'How many bits in 1 byte?' }, answers: ['8'], reward: 25 }
       ],
       11: [
-        {
-          id: '11q_alg',
-          subject: { kk: 'Алгебра', ru: 'Алгебра', en: 'Algebra' },
-          q: {
-            kk: 'log₂(16) мәні нешеге тең?',
-            ru: 'Чему равно значение log₂(16)?',
-            en: 'What is the value of log₂(16)?'
-          },
-          answers: ['4'],
-          reward: 35
-        },
-        {
-          id: '11q_hist',
-          subject: { kk: 'Қазақстан тарихы', ru: 'История Казахстана', en: 'History of Kazakhstan' },
-          q: {
-            kk: 'Қазақстан Республикасының Конституциясы қай жылы қабылданды?',
-            ru: 'В каком году была принята действующая Конституция Республики Казахстан?',
-            en: 'In what year was the current Constitution of Kazakhstan adopted?'
-          },
-          answers: ['1995'],
-          reward: 35
-        },
-        {
-          id: '11q_phys',
-          subject: { kk: 'Физика', ru: 'Физика', en: 'Physics' },
-          q: {
-            kk: 'Вакуумдағы жарық жылдамдығы шамамен неше км/с? (санмен: 300000)',
-            ru: 'Чему равна скорость света в вакууме в км/с? (числом: 300000)',
-            en: 'What is the speed of light in vacuum in km/s? (number: 300000)'
-          },
-          answers: ['300000', '300 000'],
-          reward: 30
-        },
-        {
-          id: '11q_alg2',
-          subject: { kk: 'Алгебра', ru: 'Алгебра', en: 'Algebra' },
-          q: {
-            kk: 'f(x) = 3x² функциясының x = 2 нүктесіндегі туындысын (f\'(2)) тап.',
-            ru: 'Найдите производную функции f(x) = 3x² в точке x = 2 (f\'(2)).',
-            en: 'Find the derivative of f(x) = 3x² at x = 2 (f\'(2)).'
-          },
-          answers: ['12'],
-          reward: 35
-        }
+        { id: '11q_alg', subject: { kk: 'Алгебра', ru: 'Алгебра', en: 'Algebra' }, q: { kk: 'log₂(16) мәні нешеге тең?', ru: 'Чему равно log₂(16)?', en: 'What is log₂(16)?' }, answers: ['4'], reward: 35 },
+        { id: '11q_hist', subject: { kk: 'Қазақстан тарихы', ru: 'История Казахстана', en: 'History of Kazakhstan' }, q: { kk: 'Қазақстан Конституциясы қай жылы қабылданды?', ru: 'В каком году принята Конституция Казахстана?', en: 'In what year was Kazakhstan Constitution adopted?' }, answers: ['1995'], reward: 35 },
+        { id: '11q_alg2', subject: { kk: 'Алгебра', ru: 'Алгебра', en: 'Algebra' }, q: { kk: 'f(x) = 3x² функциясының x = 2 нүктесіндегі туындысы?', ru: 'Производная f(x) = 3x² в точке x = 2?', en: 'Derivative of f(x) = 3x² at x = 2?' }, answers: ['12'], reward: 35 }
       ]
     };
 
     const SHOP_ITEMS = [
-      {
-        id: 'sp_hw',
-        title: {
-          kk: '📝 Үй тапсырмасынан 1 рет босату',
-          ru: '📝 Освобождение от 1 домашнего задания',
-          en: '📝 1 Homework Pass'
-        },
-        desc: {
-          kk: 'Кез келген бір пән бойынша үй тапсырмасын орындамауға мүмкіндік беретін ресми купон.',
-          ru: 'Официальный купон на пропуск одного домашнего задания по выбору.',
-          en: 'Official pass to skip one homework assignment of your choice.'
-        },
-        cost: 120
-      },
-      {
-        id: 'sp_bonus',
-        title: {
-          kk: '📈 БЖБ / ТЖБ-ға +1 балл бонусы',
-          ru: '📈 Бонус +1 балл к СОР / СОЧ',
-          en: '📈 +1 Point Bonus on Assessment'
-        },
-        desc: {
-          kk: 'Бөлім бойынша жиынтық бағалау нәтижесіне қосымша +1 балл қосу сертификаты.',
-          ru: 'Сертификат на добавление +1 дополнительного балла к результату СОР.',
-          en: 'Certificate adding +1 extra point to your unit assessment score.'
-        },
-        cost: 180
-      },
-      {
-        id: 'sp_book',
-        title: {
-          kk: '📚 Кітапхана VIP-оқырманы',
-          ru: '📚 VIP-читатель библиотеки',
-          en: '📚 Library VIP Reader Pass'
-        },
-        desc: {
-          kk: 'Мектеп кітапханасына келген жаңа бестселлер кітаптарды ең бірінші болып алу құқығы.',
-          ru: 'Право первым брать новые книги-бестселлеры в школьной библиотеке.',
-          en: 'Priority access to borrow newly arrived bestseller books from the school library.'
-        },
-        cost: 90
-      },
-      {
-        id: 'sp_kit',
-        title: {
-          kk: '📓 SchoolQuest блокноты мен қаламы',
-          ru: '📓 Фирменный блокнот и ручка SchoolQuest',
-          en: '📓 SchoolQuest Notebook & Pen Set'
-        },
-        desc: {
-          kk: 'Мектеп логотипі бар сапалы блокнот және қалам жиынтығы.',
-          ru: 'Качественный блокнот и ручка с символикой школы.',
-          en: 'High-quality notebook and pen set with the school emblem.'
-        },
-        cost: 150
-      }
+      { id: 'sp_hw', title: { kk: '📝 Үй тапсырмасынан 1 рет босату', ru: '📝 Освобождение от 1 домашнего задания', en: '📝 1 Homework Pass' }, desc: { kk: 'Кез келген бір пән бойынша үй тапсырмасын өткізбеу купоны.', ru: 'Купон на пропуск одного домашнего задания.', en: 'Pass to skip one homework assignment.' }, cost: 120 },
+      { id: 'sp_bonus', title: { kk: '📈 БЖБ / ТЖБ-ға +1 балл бонусы', ru: '📈 Бонус +1 балл к СОР / СОЧ', en: '📈 +1 Point Assessment Bonus' }, desc: { kk: 'Жиынтық бағалауға қосымша +1 балл сертификаты.', ru: 'Сертификат на +1 балл к СОР.', en: 'Certificate adding +1 point to assessment.' }, cost: 180 },
+      { id: 'sp_book', title: { kk: '📚 Кітапхана VIP-оқырманы', ru: '📚 VIP-читатель библиотеки', en: '📚 Library VIP Pass' }, desc: { kk: 'Жаңа кітаптарды бірінші болып алу құқығы.', ru: 'Приоритет при получении новых книг.', en: 'Priority access to new library books.' }, cost: 90 }
     ];
 
     let authMode = 'login';
     let currentUser = null;
     let currentMapAngle = 0;
+    let selectedFloor = 1;
+    let draftCoords = null;
+
+    function getLockedRoomsDB() {
+      return JSON.parse(localStorage.getItem(LOCKED_ROOMS_KEY) || '[]');
+    }
+
+    function saveLockedRoomsDB(list) {
+      localStorage.setItem(LOCKED_ROOMS_KEY, JSON.stringify(list));
+    }
+
+    function selectFloor(floorNum, btnEl) {
+      selectedFloor = floorNum;
+      draftCoords = null;
+      document.getElementById('room-coord-x').value = '';
+      document.getElementById('room-coord-y').value = '';
+      document.getElementById('draft-room-pin').style.display = 'none';
+      document.getElementById('room-status-msg').textContent = '';
+
+      document.querySelectorAll('.floor-btn').forEach(b => {
+        b.className = parseInt(b.dataset.floor, 10) === floorNum ? 'btn floor-btn' : 'btn btn-outline floor-btn';
+      });
+      updateActiveFloorBadge();
+      renderMapPinsAndList();
+    }
+
+    function updateActiveFloorBadge() {
+      const el = document.getElementById('active-floor-text');
+      if (el) el.textContent = `${selectedFloor}${t('floorUnit')}`;
+    }
+
+    function handlePlanImageError() {
+      document.getElementById('plan-fallback-msg').style.display = 'block';
+    }
+
+    function handleMapClick(event) {
+      if (event.target.closest('.locked-room-pin')) return;
+      const frame = document.getElementById('blueprint-frame');
+      const rect = frame.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+
+      const xPct = (((event.clientX - rect.left) / rect.width) * 100).toFixed(1);
+      const yPct = (((event.clientY - rect.top) / rect.height) * 100).toFixed(1);
+
+      draftCoords = { x: parseFloat(xPct), y: parseFloat(yPct) };
+      document.getElementById('room-coord-x').value = `${xPct}%`;
+      document.getElementById('room-coord-y').value = `${yPct}%`;
+
+      const pin = document.getElementById('draft-room-pin');
+      pin.style.display = 'block';
+      pin.style.left = `${xPct}%`;
+      pin.style.top = `${yPct}%`;
+      pin.textContent = `📍 ${selectedFloor}${t('floorUnit')} (${xPct}%, ${yPct}%)`;
+      document.getElementById('room-status-msg').textContent = '';
+    }
+
+    function normalizeRoomKey(name) {
+      return name.trim().toLowerCase().replace(/\s+/g, ' ');
+    }
+
+    function saveMappedRoom() {
+      if (!currentUser) return;
+      if (!draftCoords) {
+        showToast(t('msgPickPointFirst'));
+        return;
+      }
+      const rawName = (document.getElementById('room-number-input').value || '').trim();
+      if (!rawName) {
+        showToast(t('msgRoomEmpty'));
+        return;
+      }
+
+      const normKey = normalizeRoomKey(rawName);
+      const allRooms = getLockedRoomsDB();
+      const alreadyExists = allRooms.some(r => r.normKey === normKey);
+
+      if (alreadyExists) {
+        document.getElementById('room-status-msg').textContent = t('msgRoomExists');
+        showToast(t('msgRoomExists'));
+        return;
+      }
+
+      const entry = {
+        id: 'rm_' + Date.now(),
+        floor: selectedFloor,
+        roomNumber: rawName,
+        normKey,
+        x: draftCoords.x,
+        y: draftCoords.y,
+        addedBy: currentUser.username
+      };
+
+      allRooms.push(entry);
+      saveLockedRoomsDB(allRooms);
+
+      addStars(15, rawName);
+
+      draftCoords = null;
+      document.getElementById('room-number-input').value = '';
+      document.getElementById('room-coord-x').value = '';
+      document.getElementById('room-coord-y').value = '';
+      document.getElementById('draft-room-pin').style.display = 'none';
+      document.getElementById('room-status-msg').textContent = t('msgRoomSaved');
+      renderMapPinsAndList();
+    }
+
+    function renderMapPinsAndList() {
+      const pinsLayer = document.getElementById('locked-pins-layer');
+      const listEl = document.getElementById('saved-rooms-list');
+      if (!pinsLayer || !listEl) return;
+
+      const allRooms = getLockedRoomsDB();
+      const floorRooms = allRooms.filter(r => r.floor === selectedFloor);
+
+      pinsLayer.innerHTML = floorRooms.map(r => `
+        <div class="locked-room-pin" style="left:${r.x}%; top:${r.y}%;" title="${r.roomNumber} (${r.addedBy})">
+          🔒 ${r.roomNumber}
+        </div>
+      `).join('');
+
+      if (!floorRooms.length) {
+        listEl.innerHTML = `<p style="color:var(--muted); font-size:0.86rem;">${t('noSavedRooms')}</p>`;
+      } else {
+        listEl.innerHTML = floorRooms.map(r => `
+          <span class="room-chip">🔒 ${r.roomNumber} • (${r.x}%, ${r.y}%) • @${r.addedBy}</span>
+        `).join('');
+      }
+    }
+
+    function setMapAngle(deg) {
+      currentMapAngle = ((deg % 360) + 360) % 360;
+      document.getElementById('blueprint-frame').style.transform = `rotate(${currentMapAngle}deg)`;
+      document.getElementById('compass-angle').textContent = `${currentMapAngle}°`;
+    }
+
+    function applyPosterOrientation() {
+      const rawCode = document.getElementById('poster-code-input').value.trim().toUpperCase();
+      if (!rawCode || !POSTER_ORIENTATORS[rawCode]) {
+        showToast('❌ POST-NORTH / POST-EAST / POST-SOUTH / POST-WEST');
+        return;
+      }
+      setMapAngle(POSTER_ORIENTATORS[rawCode].angle);
+      checkDailyReset();
+      if (!currentUser.usedPostersToday.includes(rawCode)) {
+        currentUser.usedPostersToday.push(rawCode);
+        addStars(10, rawCode);
+        persistUser();
+      } else {
+        showToast(`🧭 ${currentMapAngle}°`);
+      }
+    }
 
     function isPresidentUnlocked() {
       return sessionStorage.getItem(PRESIDENT_SESSION_KEY) === '1';
@@ -1503,15 +1451,13 @@
     function getNewsDB() {
       const raw = localStorage.getItem(NEWS_DB_KEY);
       if (raw) return JSON.parse(raw);
-      const initial = [
-        {
-          id: 'n_welcome',
-          titleKk: 'SchoolQuest жаңалықтар тақтасы ашылды!',
-          bodyKk: 'Құрметті оқушылар, мектеп өміріндегі барлық маңызды хабарландырулар мен іс-шаралар осы бөлімде жарияланады.',
-          author: currentUser ? currentUser.username : 'president',
-          date: getTodayStr()
-        }
-      ];
+      const initial = [{
+        id: 'n_welcome',
+        titleKk: 'SchoolQuest жаңалықтар тақтасы ашылды!',
+        bodyKk: 'Құрметті оқушылар, мектеп өміріндегі маңызды хабарландырулар мен іс-шаралар осы бөлімде жарияланады.',
+        author: currentUser ? currentUser.username : 'president',
+        date: getTodayStr()
+      }];
       localStorage.setItem(NEWS_DB_KEY, JSON.stringify(initial));
       return initial;
     }
@@ -1526,12 +1472,10 @@
       const bodyEl = document.getElementById('news-body-input');
       const titleKk = (titleEl.value || '').trim();
       const bodyKk = (bodyEl.value || '').trim();
-
       if (!titleKk || !bodyKk) {
         showToast(t('msgNewsEmpty'));
         return;
       }
-
       const list = getNewsDB();
       list.unshift({
         id: 'n_' + Date.now(),
@@ -1541,7 +1485,6 @@
         date: new Date().toLocaleString()
       });
       saveNewsDB(list);
-
       titleEl.value = '';
       bodyEl.value = '';
       showToast(t('msgNewsPublished'));
@@ -1550,8 +1493,7 @@
 
     function deleteNews(id) {
       if (!isPresidentUnlocked()) return;
-      const filtered = getNewsDB().filter(n => n.id !== id);
-      saveNewsDB(filtered);
+      saveNewsDB(getNewsDB().filter(n => n.id !== id));
       renderNews();
     }
 
@@ -1560,17 +1502,13 @@
       const feed = document.getElementById('news-feed');
       const list = getNewsDB();
       const unlocked = isPresidentUnlocked();
-
       if (!list.length) {
         feed.innerHTML = `<p style="color:var(--muted); font-size:0.9rem;">${t('noNews')}</p>`;
         return;
       }
-
       feed.innerHTML = list.map(item => {
-        const baseTitle = item.titleKk || item.title || '';
-        const baseBody = item.bodyKk || item.body || '';
-        const shownTitle = translateKkText(baseTitle, currentLang);
-        const shownBody = translateKkText(baseBody, currentLang);
+        const shownTitle = translateKkText(item.titleKk || item.title || '', currentLang);
+        const shownBody = translateKkText(item.bodyKk || item.body || '', currentLang);
         return `
           <div class="news-card">
             <div class="news-meta">
@@ -1585,23 +1523,13 @@
       }).join('');
     }
 
-    function getTodayStr() {
-      return new Date().toISOString().split('T')[0];
-    }
-
-    function getUsersDB() {
-      return JSON.parse(localStorage.getItem(USERS_DB_KEY) || '{}');
-    }
-
-    function saveUsersDB(db) {
-      localStorage.setItem(USERS_DB_KEY, JSON.stringify(db));
-    }
-
+    function getTodayStr() { return new Date().toISOString().split('T')[0]; }
+    function getUsersDB() { return JSON.parse(localStorage.getItem(USERS_DB_KEY) || '{}'); }
+    function saveUsersDB(db) { localStorage.setItem(USERS_DB_KEY, JSON.stringify(db)); }
     function getGradeTier(gradeStr) {
       const match = String(gradeStr || '').match(/^(8|9|10|11)/);
       return match ? parseInt(match[1], 10) : 8;
     }
-
     function getSupabaseHeaders(extra = {}) {
       return {
         'Content-Type': 'application/json',
@@ -1610,7 +1538,6 @@
         ...extra
       };
     }
-
     function ensureUserFields(u) {
       if (!Array.isArray(u.friends)) u.friends = [];
       if (!Array.isArray(u.friendRequestsIn)) u.friendRequestsIn = [];
@@ -1620,7 +1547,6 @@
       if (!Array.isArray(u.usedPostersToday)) u.usedPostersToday = [];
     }
 
-    /* ================= АВТОРИЗАЦИЯ ================= */
     function switchAuthMode(mode) {
       authMode = mode;
       document.getElementById('tab-login').className = mode === 'login' ? 'btn' : 'btn btn-outline';
@@ -1644,55 +1570,30 @@
       const username = document.getElementById('auth-username').value.trim();
       const password = document.getElementById('auth-password').value.trim();
       const grade = document.getElementById('auth-grade').value;
-
       if (!username || !password) {
         showToast('⚠️ Логин / пароль!');
         return;
       }
-
       const db = getUsersDB();
       const boundUser = localStorage.getItem(DEVICE_LOCK_KEY);
 
       if (authMode === 'register') {
-        if (!grade) {
-          showToast('⚠️ ' + t('gradeLbl'));
-          return;
-        }
-        if (boundUser && boundUser !== username) {
-          showToast(`🔒 ${t('deviceLock')} ${boundUser}`);
-          return;
-        }
-        if (db[username]) {
-          showToast('⚠️ Login busy');
-          return;
-        }
+        if (!grade) { showToast('⚠️ ' + t('gradeLbl')); return; }
+        if (boundUser && boundUser !== username) { showToast(`🔒 ${t('deviceLock')} ${boundUser}`); return; }
+        if (db[username]) { showToast('⚠️ Login busy'); return; }
         db[username] = {
-          username,
-          password,
-          grade,
-          stars: 0,
-          dailyDate: getTodayStr(),
-          dailyEarned: 0,
-          completedQuestsToday: [],
-          usedPostersToday: [],
-          coupons: [],
-          friends: [],
-          friendRequestsIn: [],
-          friendRequestsOut: []
+          username, password, grade, stars: 0,
+          dailyDate: getTodayStr(), dailyEarned: 0,
+          completedQuestsToday: [], usedPostersToday: [],
+          coupons: [], friends: [], friendRequestsIn: [], friendRequestsOut: []
         };
         saveUsersDB(db);
         localStorage.setItem(DEVICE_LOCK_KEY, username);
         syncUserToCloud(db[username]);
         loginSuccess(db[username]);
       } else {
-        if (boundUser && boundUser !== username) {
-          showToast(`🔒 ${t('deviceLock')} ${boundUser}`);
-          return;
-        }
-        if (!db[username] || db[username].password !== password) {
-          showToast('❌ Error');
-          return;
-        }
+        if (boundUser && boundUser !== username) { showToast(`🔒 ${t('deviceLock')} ${boundUser}`); return; }
+        if (!db[username] || db[username].password !== password) { showToast('❌ Error'); return; }
         ensureUserFields(db[username]);
         localStorage.setItem(DEVICE_LOCK_KEY, username);
         syncUserToCloud(db[username]);
@@ -1738,18 +1639,17 @@
 
     function syncUserToCloud(userObj) {
       if (!CLOUD_SYNC_CONFIG.enabled || !CLOUD_SYNC_CONFIG.endpoint || !CLOUD_SYNC_CONFIG.apiKey) return;
-      const payload = {
-        username: userObj.username,
-        grade: userObj.grade,
-        stars: userObj.stars,
-        daily_date: userObj.dailyDate,
-        daily_earned: userObj.dailyEarned,
-        updated_at: new Date().toISOString()
-      };
       fetch(`${CLOUD_SYNC_CONFIG.endpoint}?on_conflict=username`, {
         method: 'POST',
         headers: getSupabaseHeaders({ 'Prefer': 'resolution=merge-duplicates,return=minimal' }),
-        body: JSON.stringify(payload)
+        body: JSON.stringify({
+          username: userObj.username,
+          grade: userObj.grade,
+          stars: userObj.stars,
+          daily_date: userObj.dailyDate,
+          daily_earned: userObj.dailyEarned,
+          updated_at: new Date().toISOString()
+        })
       }).catch(() => {});
     }
 
@@ -1769,85 +1669,6 @@
       return added;
     }
 
-    /* ================= КАРТА ================= */
-    function changePlan(indexStr) {
-      const idx = parseInt(indexStr, 10) || 0;
-      const plan = FLOOR_PLANS[idx] || FLOOR_PLANS[0];
-      const img = document.getElementById('blueprint-img');
-      document.getElementById('plan-fallback-msg').style.display = 'none';
-      img.src = plan.file;
-      populateRoomsForPlan(idx);
-    }
-
-    function handlePlanImageError() {
-      document.getElementById('plan-fallback-msg').style.display = 'block';
-    }
-
-    function populateRoomsForPlan(floorIndex) {
-      const select = document.getElementById('room-select');
-      select.innerHTML = `<option value="">${t('selectRoomOpt')}</option>`;
-      ROOMS_DATA.filter(r => r.floorIndex === floorIndex).forEach(r => {
-        const opt = document.createElement('option');
-        opt.value = r.id;
-        opt.textContent = `${r.name[currentLang] || r.name.kk} (${r.block})`;
-        select.appendChild(opt);
-      });
-      document.getElementById('room-pin').style.display = 'none';
-      document.getElementById('room-details').style.display = 'none';
-    }
-
-    function selectRoom(roomId) {
-      const pin = document.getElementById('room-pin');
-      const details = document.getElementById('room-details');
-      if (!roomId) {
-        pin.style.display = 'none';
-        details.style.display = 'none';
-        return;
-      }
-      const room = ROOMS_DATA.find(r => r.id === roomId);
-      if (!room) return;
-      const rName = room.name[currentLang] || room.name.kk;
-      pin.style.display = 'block';
-      pin.style.left = room.x + '%';
-      pin.style.top = room.y + '%';
-      pin.textContent = `📍 ${rName}`;
-      details.style.display = 'block';
-      document.getElementById('rd-title').textContent = rName;
-      document.getElementById('rd-meta').textContent = `Block: ${room.block}`;
-    }
-
-    function setMapAngle(deg) {
-      currentMapAngle = ((deg % 360) + 360) % 360;
-      document.getElementById('blueprint-frame').style.transform = `rotate(${currentMapAngle}deg)`;
-      document.getElementById('compass-angle').textContent = `${currentMapAngle}°`;
-    }
-
-    function applyPosterOrientation() {
-      const rawCode = document.getElementById('poster-code-input').value.trim().toUpperCase();
-      if (!rawCode) return;
-      let targetAngle = null;
-      if (POSTER_ORIENTATORS[rawCode]) {
-        targetAngle = POSTER_ORIENTATORS[rawCode].angle;
-      } else {
-        const matchedRoom = ROOMS_DATA.find(r => r.id.toUpperCase() === rawCode);
-        if (matchedRoom) targetAngle = matchedRoom.posterAngle;
-      }
-      if (targetAngle === null) {
-        showToast('❌ POST-NORTH / POST-EAST / R101');
-        return;
-      }
-      setMapAngle(targetAngle);
-      checkDailyReset();
-      if (!currentUser.usedPostersToday.includes(rawCode)) {
-        currentUser.usedPostersToday.push(rawCode);
-        addStars(10, rawCode);
-        persistUser();
-      } else {
-        showToast(`🧭 ${currentMapAngle}°`);
-      }
-    }
-
-    /* ================= ПӘНДІК КВЕСТТЕР ================= */
     function getQuestsForStudent() {
       const tier = getGradeTier(currentUser.grade);
       return QUEST_BANK_BY_TIER[tier] || QUEST_BANK_BY_TIER[8];
@@ -1858,20 +1679,15 @@
       document.getElementById('quest-grade-label').textContent = `${tier}${t('gradeSuffix')}`;
       const list = document.getElementById('quests-list');
       list.innerHTML = '';
-
       getQuestsForStudent().forEach(q => {
         const done = currentUser.completedQuestsToday.includes(q.id);
         const subj = q.subject[currentLang] || q.subject.kk;
         const questionText = q.q[currentLang] || q.q.kk;
-
         const card = document.createElement('div');
         card.className = 'quest-item';
         card.innerHTML = `
           <div>
-            <div>
-              <span class="reward-tag">+${q.reward} ⭐</span>
-              <span class="subject-badge">${subj}</span>
-            </div>
+            <div><span class="reward-tag">+${q.reward} ⭐</span><span class="subject-badge">${subj}</span></div>
             <p style="font-size:0.93rem; font-weight:600; margin-top:10px; line-height:1.4;">${questionText}</p>
             ${done ? '' : `<input type="text" id="ans-${q.id}" class="quest-answer-input" placeholder="${t('answerPlaceholder')}">`}
           </div>
@@ -1886,52 +1702,28 @@
     function submitQuestAnswer(qId) {
       checkDailyReset();
       if (currentUser.completedQuestsToday.includes(qId)) return;
-
       const quest = getQuestsForStudent().find(x => x.id === qId);
       if (!quest) return;
-
       const inputEl = document.getElementById(`ans-${qId}`);
       const userVal = (inputEl ? inputEl.value : '').trim().toLowerCase();
-
-      if (!userVal) {
-        showToast(t('msgEmptyAnswer'));
-        return;
-      }
-
-      const isCorrect = quest.answers.some(ans => ans.toLowerCase() === userVal);
-      if (!isCorrect) {
-        showToast(t('msgWrongAnswer'));
-        return;
-      }
-
+      if (!userVal) { showToast(t('msgEmptyAnswer')); return; }
+      if (!quest.answers.some(ans => ans.toLowerCase() === userVal)) { showToast(t('msgWrongAnswer')); return; }
       currentUser.completedQuestsToday.push(qId);
-      const subj = quest.subject[currentLang] || quest.subject.kk;
-      addStars(quest.reward, subj);
+      addStars(quest.reward, quest.subject[currentLang] || quest.subject.kk);
       persistUser();
       renderQuests();
     }
 
-    /* ================= ДОСТАР ЖҮЙЕСІ ================= */
     async function getAllRegisteredStudents() {
       const merged = new Map();
-
-      const localDb = getUsersDB();
-      Object.values(localDb).forEach(u => {
+      Object.values(getUsersDB()).forEach(u => {
         if (u && u.username) {
-          merged.set(u.username, {
-            username: u.username,
-            grade: u.grade || '—',
-            stars: u.stars || 0
-          });
+          merged.set(u.username, { username: u.username, grade: u.grade || '—', stars: u.stars || 0 });
         }
       });
-
       if (CLOUD_SYNC_CONFIG.enabled && CLOUD_SYNC_CONFIG.endpoint && CLOUD_SYNC_CONFIG.apiKey) {
         try {
-          const res = await fetch(
-            `${CLOUD_SYNC_CONFIG.endpoint}?select=username,grade,stars`,
-            { method: 'GET', headers: getSupabaseHeaders() }
-          );
+          const res = await fetch(`${CLOUD_SYNC_CONFIG.endpoint}?select=username,grade,stars`, { method: 'GET', headers: getSupabaseHeaders() });
           if (res.ok) {
             const cloudRows = await res.json();
             if (Array.isArray(cloudRows)) {
@@ -1949,54 +1741,34 @@
           }
         } catch (_) {}
       }
-
       return Array.from(merged.values()).filter(u => u.username !== currentUser.username);
     }
 
     function sendFriendRequest(explicitTarget = null) {
       const selectEl = document.getElementById('friend-select');
       const targetName = (explicitTarget || (selectEl ? selectEl.value : '')).trim();
-      if (!targetName) {
-        showToast(t('msgSelectFriend'));
-        return;
-      }
-
-      if (targetName === currentUser.username) {
-        showToast(t('msgFriendSelf'));
-        return;
-      }
-
+      if (!targetName) { showToast(t('msgSelectFriend')); return; }
+      if (targetName === currentUser.username) { showToast(t('msgFriendSelf')); return; }
       const db = getUsersDB();
       const targetUser = db[targetName];
       ensureUserFields(currentUser);
-
-      if (
-        currentUser.friends.includes(targetName) ||
-        currentUser.friendRequestsOut.includes(targetName)
-      ) {
+      if (currentUser.friends.includes(targetName) || currentUser.friendRequestsOut.includes(targetName)) {
         showToast(t('msgFriendAlready'));
         return;
       }
-
       if (currentUser.friendRequestsIn.includes(targetName)) {
         acceptFriendRequest(targetName);
         return;
       }
-
       currentUser.friendRequestsOut.push(targetName);
-
       if (targetUser) {
         ensureUserFields(targetUser);
-        if (!targetUser.friendRequestsIn.includes(currentUser.username)) {
-          targetUser.friendRequestsIn.push(currentUser.username);
-        }
+        if (!targetUser.friendRequestsIn.includes(currentUser.username)) targetUser.friendRequestsIn.push(currentUser.username);
         db[targetName] = targetUser;
       }
-
       db[currentUser.username] = currentUser;
       saveUsersDB(db);
       syncUserToCloud(currentUser);
-
       showToast(t('msgFriendSent'));
       renderFriends();
     }
@@ -2004,17 +1776,14 @@
     function acceptFriendRequest(fromUser) {
       const db = getUsersDB();
       const sender = db[fromUser];
-
       currentUser.friendRequestsIn = currentUser.friendRequestsIn.filter(u => u !== fromUser);
       if (!currentUser.friends.includes(fromUser)) currentUser.friends.push(fromUser);
-
       if (sender) {
         ensureUserFields(sender);
         sender.friendRequestsOut = sender.friendRequestsOut.filter(u => u !== currentUser.username);
         if (!sender.friends.includes(currentUser.username)) sender.friends.push(currentUser.username);
         db[fromUser] = sender;
       }
-
       db[currentUser.username] = currentUser;
       saveUsersDB(db);
       syncUserToCloud(currentUser);
@@ -2025,14 +1794,12 @@
     function declineFriendRequest(fromUser) {
       const db = getUsersDB();
       const sender = db[fromUser];
-
       currentUser.friendRequestsIn = currentUser.friendRequestsIn.filter(u => u !== fromUser);
       if (sender) {
         ensureUserFields(sender);
         sender.friendRequestsOut = sender.friendRequestsOut.filter(u => u !== currentUser.username);
         db[fromUser] = sender;
       }
-
       db[currentUser.username] = currentUser;
       saveUsersDB(db);
       renderFriends();
@@ -2041,14 +1808,12 @@
     function removeFriend(friendName) {
       const db = getUsersDB();
       const friendObj = db[friendName];
-
       currentUser.friends = currentUser.friends.filter(u => u !== friendName);
       if (friendObj) {
         ensureUserFields(friendObj);
         friendObj.friends = friendObj.friends.filter(u => u !== currentUser.username);
         db[friendName] = friendObj;
       }
-
       db[currentUser.username] = currentUser;
       saveUsersDB(db);
       renderFriends();
@@ -2058,7 +1823,6 @@
       ensureUserFields(currentUser);
       const db = getUsersDB();
       const students = await getAllRegisteredStudents();
-
       const selectEl = document.getElementById('friend-select');
       const prevVal = selectEl.value;
       selectEl.innerHTML = `<option value="">${t('selectFriendOpt')}</option>`;
@@ -2068,86 +1832,61 @@
         opt.textContent = `${s.username} (${s.grade}) • ⭐ ${s.stars}`;
         selectEl.appendChild(opt);
       });
-      if (prevVal && students.some(s => s.username === prevVal)) {
-        selectEl.value = prevVal;
-      }
+      if (prevVal && students.some(s => s.username === prevVal)) selectEl.value = prevVal;
 
       const inEl = document.getElementById('incoming-requests-list');
-      if (!currentUser.friendRequestsIn.length) {
-        inEl.innerHTML = `<p style="color:var(--muted); font-size:0.88rem;">${t('noIncoming')}</p>`;
-      } else {
-        inEl.innerHTML = currentUser.friendRequestsIn.map(u => {
-          const grade = db[u] ? db[u].grade : '';
-          return `
+      inEl.innerHTML = !currentUser.friendRequestsIn.length
+        ? `<p style="color:var(--muted); font-size:0.88rem;">${t('noIncoming')}</p>`
+        : currentUser.friendRequestsIn.map(u => `
             <div class="friend-row">
-              <span>👤 <strong>${u}</strong> ${grade ? '(' + grade + ')' : ''}</span>
+              <span>👤 <strong>${u}</strong> ${db[u] ? '(' + db[u].grade + ')' : ''}</span>
               <div style="display:flex; gap:6px;">
                 <button class="btn" onclick="acceptFriendRequest('${u}')">${t('acceptBtn')}</button>
                 <button class="btn btn-danger" onclick="declineFriendRequest('${u}')">${t('declineBtn')}</button>
               </div>
             </div>
-          `;
-        }).join('');
-      }
+          `).join('');
 
       const listEl = document.getElementById('friends-list');
-      if (!currentUser.friends.length) {
-        listEl.innerHTML = `<p style="color:var(--muted); font-size:0.88rem;">${t('noFriends')}</p>`;
-      } else {
-        listEl.innerHTML = currentUser.friends.map(u => {
-          const found = students.find(s => s.username === u) || db[u];
-          return `
-            <div class="friend-row">
-              <span>🤝 <strong>${u}</strong> ${found ? `(${found.grade}) • ⭐ ${found.stars}` : ''}</span>
-              <button class="btn btn-outline" onclick="removeFriend('${u}')">${t('removeFriendBtn')}</button>
-            </div>
-          `;
-        }).join('');
-      }
+      listEl.innerHTML = !currentUser.friends.length
+        ? `<p style="color:var(--muted); font-size:0.88rem;">${t('noFriends')}</p>`
+        : currentUser.friends.map(u => {
+            const found = students.find(s => s.username === u) || db[u];
+            return `
+              <div class="friend-row">
+                <span>🤝 <strong>${u}</strong> ${found ? `(${found.grade}) • ⭐ ${found.stars}` : ''}</span>
+                <button class="btn btn-outline" onclick="removeFriend('${u}')">${t('removeFriendBtn')}</button>
+              </div>
+            `;
+          }).join('');
 
       const allEl = document.getElementById('all-registered-users-list');
-      if (!students.length) {
-        allEl.innerHTML = `<p style="color:var(--muted); font-size:0.88rem;">${t('noOtherStudents')}</p>`;
-      } else {
-        allEl.innerHTML = students.map(s => {
-          const isFriend = currentUser.friends.includes(s.username);
-          const isSent = currentUser.friendRequestsOut.includes(s.username);
-          const hasIncoming = currentUser.friendRequestsIn.includes(s.username);
-
-          let actionHtml = `<button class="btn" onclick="sendFriendRequest('${s.username}')">${t('sendFriendBtn')}</button>`;
-          if (isFriend) {
-            actionHtml = `<span class="badge-pill" style="background:#dcfce7; color:#166534;">${t('statusFriend')}</span>`;
-          } else if (isSent) {
-            actionHtml = `<span class="badge-pill" style="background:#fef3c7; color:#92400e;">${t('statusSent')}</span>`;
-          } else if (hasIncoming) {
-            actionHtml = `<button class="btn" onclick="acceptFriendRequest('${s.username}')">${t('acceptBtn')}</button>`;
-          }
-
-          return `
-            <div class="friend-row">
-              <span>🎓 <strong>${s.username}</strong> (${s.grade}) • ⭐ ${s.stars}</span>
-              ${actionHtml}
-            </div>
-          `;
-        }).join('');
-      }
+      allEl.innerHTML = !students.length
+        ? `<p style="color:var(--muted); font-size:0.88rem;">${t('noOtherStudents')}</p>`
+        : students.map(s => {
+            const isFriend = currentUser.friends.includes(s.username);
+            const isSent = currentUser.friendRequestsOut.includes(s.username);
+            const hasIncoming = currentUser.friendRequestsIn.includes(s.username);
+            let actionHtml = `<button class="btn" onclick="sendFriendRequest('${s.username}')">${t('sendFriendBtn')}</button>`;
+            if (isFriend) actionHtml = `<span class="badge-pill" style="background:#dcfce7; color:#166534;">${t('statusFriend')}</span>`;
+            else if (isSent) actionHtml = `<span class="badge-pill" style="background:#fef3c7; color:#92400e;">${t('statusSent')}</span>`;
+            else if (hasIncoming) actionHtml = `<button class="btn" onclick="acceptFriendRequest('${s.username}')">${t('acceptBtn')}</button>`;
+            return `<div class="friend-row"><span>🎓 <strong>${s.username}</strong> (${s.grade}) • ⭐ ${s.stars}</span>${actionHtml}</div>`;
+          }).join('');
     }
 
-    /* ================= МАГАЗИН КЕШБЭКА ================= */
     function renderShop() {
       const list = document.getElementById('shop-list');
       list.innerHTML = '';
       SHOP_ITEMS.forEach(item => {
         const canAfford = currentUser.stars >= item.cost;
-        const title = item.title[currentLang] || item.title.kk;
-        const desc = item.desc[currentLang] || item.desc.kk;
         const card = document.createElement('div');
         card.className = 'shop-item';
         card.innerHTML = `
           <div>
             <span class="reward-tag">${item.cost} ⭐</span>
-            <h3 style="margin-top:8px;">${title}</h3>
-            <p style="font-size:0.88rem; color:var(--muted); margin-top:4px;">${desc}</p>
+            <h3 style="margin-top:8px;">${item.title[currentLang] || item.title.kk}</h3>
+            <p style="font-size:0.88rem; color:var(--muted); margin-top:4px;">${item.desc[currentLang] || item.desc.kk}</p>
           </div>
           <button class="btn btn-gold" ${canAfford ? '' : 'disabled'} onclick="buyShopItem('${item.id}')">
             ${canAfford ? t('buyBtn') : t('notEnoughStars')}
@@ -2155,17 +1894,10 @@
         `;
         list.appendChild(card);
       });
-
       const couponsEl = document.getElementById('my-coupons');
-      if (currentUser.coupons && currentUser.coupons.length > 0) {
-        couponsEl.innerHTML = currentUser.coupons.map(c =>
-          `<div style="background:#ecfdf5; border:1px solid #a7f3d0; padding:9px 12px; border-radius:10px; margin-bottom:6px; color:#065f46; font-weight:600;">
-            🎟️ ${c.title} — <code>${c.code}</code>
-          </div>`
-        ).join('');
-      } else {
-        couponsEl.textContent = t('noCoupons');
-      }
+      couponsEl.innerHTML = (currentUser.coupons && currentUser.coupons.length > 0)
+        ? currentUser.coupons.map(c => `<div style="background:#ecfdf5; border:1px solid #a7f3d0; padding:9px 12px; border-radius:10px; margin-bottom:6px; color:#065f46; font-weight:600;">🎟️ ${c.title} — <code>${c.code}</code></div>`).join('')
+        : t('noCoupons');
     }
 
     function buyShopItem(id) {
@@ -2173,28 +1905,24 @@
       if (!item || currentUser.stars < item.cost) return;
       currentUser.stars -= item.cost;
       const code = 'SQ-' + Math.floor(1000 + Math.random() * 9000);
-      const title = item.title[currentLang] || item.title.kk;
-      currentUser.coupons.push({ title, code });
+      currentUser.coupons.push({ title: item.title[currentLang] || item.title.kk, code });
       persistUser();
       renderAll();
       showToast(`🎟️ ${code}`);
     }
 
-    /* ================= РЕЙТИНГ ================= */
     function renderRatingRows(list) {
       const tbody = document.getElementById('rating-tbody');
-      if (!list.length) {
-        tbody.innerHTML = '<tr><td colspan="4" style="color:var(--muted);">—</td></tr>';
-        return;
-      }
-      tbody.innerHTML = list.map((u, idx) => `
-        <tr style="${currentUser && u.username === currentUser.username ? 'background:#ecfdf5; font-weight:700;' : ''}">
-          <td>${idx + 1}</td>
-          <td>${u.username} ${currentUser && u.username === currentUser.username ? t('youTag') : ''}</td>
-          <td>${u.grade}</td>
-          <td>⭐ ${u.stars}</td>
-        </tr>
-      `).join('');
+      tbody.innerHTML = !list.length
+        ? '<tr><td colspan="4" style="color:var(--muted);">—</td></tr>'
+        : list.map((u, idx) => `
+            <tr style="${currentUser && u.username === currentUser.username ? 'background:#ecfdf5; font-weight:700;' : ''}">
+              <td>${idx + 1}</td>
+              <td>${u.username} ${currentUser && u.username === currentUser.username ? t('youTag') : ''}</td>
+              <td>${u.grade}</td>
+              <td>⭐ ${u.stars}</td>
+            </tr>
+          `).join('');
     }
 
     async function renderRating() {
@@ -2206,21 +1934,17 @@
         return;
       }
       try {
-        const res = await fetch(
-          `${CLOUD_SYNC_CONFIG.endpoint}?select=username,grade,stars&order=stars.desc`,
-          { method: 'GET', headers: getSupabaseHeaders() }
-        );
+        const res = await fetch(`${CLOUD_SYNC_CONFIG.endpoint}?select=username,grade,stars&order=stars.desc`, { method: 'GET', headers: getSupabaseHeaders() });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const cloudRows = await res.json();
         noteEl.textContent = 'Supabase Cloud';
         renderRatingRows(Array.isArray(cloudRows) ? cloudRows : localList);
-      } catch (err) {
+      } catch (_) {
         noteEl.textContent = 'Local DB';
         renderRatingRows(localList);
       }
     }
 
-    /* ================= ОБНОВЛЕНИЕ UI ================= */
     function updateHeaderAndHome() {
       document.getElementById('display-user').textContent = currentUser.username;
       document.getElementById('display-grade').textContent = currentUser.grade;
@@ -2237,7 +1961,7 @@
       updateHeaderAndHome();
       renderNews();
       renderInstagramFooter();
-      changePlan(document.getElementById('plan-select').value || '0');
+      renderMapPinsAndList();
       renderQuests();
       renderFriends();
       renderShop();
@@ -2249,6 +1973,7 @@
       document.getElementById('sec-' + secId).classList.add('active');
       document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
       if (btn) btn.classList.add('active');
+      if (secId === 'map') renderMapPinsAndList();
       if (secId === 'news') renderNews();
       if (secId === 'rating') renderRating();
       if (secId === 'shop') renderShop();
