@@ -125,7 +125,6 @@
     }
     .limit-bar-fill { background: var(--accent); height: 100%; width: 0%; transition: width 0.35s ease; }
 
-    /* ФОТО СЫЗБА ТАҚТАСЫ */
     .blueprint-toolbar {
       display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
       margin: 12px 0; padding: 12px; background: #f8fafc;
@@ -223,6 +222,10 @@
     .news-card {
       border: 1px solid #e2e8f0; border-left: 5px solid var(--primary);
       border-radius: 14px; padding: 16px; background: #ffffff; margin-bottom: 12px;
+    }
+    .suggestion-card {
+      border: 1px solid #fde68a; border-left: 5px solid var(--accent);
+      border-radius: 14px; padding: 15px; background: #fffdf5; margin-bottom: 12px;
     }
     .news-meta {
       display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
@@ -356,7 +359,7 @@
         <img src="logo.png" alt="SchoolQuest Logo" class="site-logo-header" onerror="handleLogoFallback(this)">
         SchoolQuest
       </h1>
-      <p id="txt-header-sub">Мектеп сызбасы • Пәндік квесттер • Жаңалықтар • Достар • Кешбэк</p>
+      <p id="txt-header-sub">Мектеп сызбасы • Пәндік квесттер • Жаңалықтар • Ұсыныстар • Достар • Кешбэк</p>
       <div class="user-bar">
         <span>
           👋 <strong id="display-user"></strong> (<span id="display-grade"></span>)
@@ -373,6 +376,7 @@
     <nav>
       <button id="nav-home" class="active" onclick="showSection('home', this)">🏠 Басты бет</button>
       <button id="nav-news" onclick="showSection('news', this)">📰 Жаңалықтар</button>
+      <button id="nav-suggestions" onclick="showSection('suggestions', this)">💡 Ұсыныстар</button>
       <button id="nav-map" onclick="showSection('map', this)">🗺️ Мектеп картасы</button>
       <button id="nav-quests" onclick="showSection('quests', this)">🎯 Квесттер</button>
       <button id="nav-friends" onclick="showSection('friends', this)">🤝 Достар</button>
@@ -449,6 +453,41 @@
           </div>
 
           <div id="news-feed" style="margin-top: 18px;"></div>
+        </div>
+      </section>
+
+      <section id="sec-suggestions" class="section">
+        <div class="card">
+          <h2 id="txt-sug-title">💡 Ұсыныстар ұяшығы</h2>
+          <p id="txt-sug-sub" style="color: var(--muted); font-size: 0.88rem; margin-top: 4px;">
+            Мектепті жақсартуға, жаңа квесттерге, картаға немесе іс-шараларға қатысты ұсынысыңды қалдыр.
+          </p>
+
+          <div class="info-box" style="border-color:#fde68a; background:#fffbeb;">
+            <div class="input-group">
+              <label id="lbl-sug-cat">Ұсыныс бағыты</label>
+              <select id="suggestion-category-input">
+                <option value="school" id="opt-sug-school">🏫 Мектеп өмірі</option>
+                <option value="quests" id="opt-sug-quests">🎯 Квесттер</option>
+                <option value="map" id="opt-sug-map">🗺️ Мектеп картасы</option>
+                <option value="other" id="opt-sug-other">✨ Басқа идея</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label id="lbl-sug-topic">Ұсыныс тақырыбы</label>
+              <input type="text" id="suggestion-title-input" placeholder="Мысалы: Кітапханада оқу бұрышын ашу">
+            </div>
+            <div class="input-group">
+              <label id="lbl-sug-text">Ұсыныс мәтіні</label>
+              <textarea id="suggestion-body-input" rows="3" placeholder="Идеяңды немесе ұсынысыңды толығырақ жаз..."></textarea>
+            </div>
+            <button id="btn-send-suggestion" class="btn btn-gold" onclick="submitSuggestion()">💡 Ұсынысты жіберу</button>
+          </div>
+
+          <div style="margin-top: 20px;">
+            <h3 id="txt-sug-list-title">📋 Жіберілген ұсыныстар</h3>
+            <div id="suggestions-feed" style="margin-top: 12px;"></div>
+          </div>
         </div>
       </section>
 
@@ -645,11 +684,11 @@
 
   <script>
     const SCHOOL_SOCIAL_LINKS = {
-      author: { title: { kk: '💻 Жоба авторы', ru: '💻 Автор проекта', en: '💻 Project Author' }, handle: '@_zhannixs', url: 'https://www.instagram.com/_zhannixs' },
-      president: { title: { kk: '👑 Мектеп президенті', ru: '👑 Президент школы', en: '👑 School President' }, handle: '@n_nuraxqw', url: 'https://www.instagram.com/n_nuraxqw' },
-      school: { title: { kk: '🏫 Мектеп парақшасы', ru: '🏫 Страница школы', en: '🏫 School Page' }, handle: '@astana_keleshekmektebi_109', url: 'https://www.instagram.com/astana_keleshekmektebi_109' },
-      parliament: { title: { kk: '🏛️ Мектеп парламенті', ru: '🏛️ Школьный парламент', en: '🏛️ School Parliament' }, handle: '@109parliament_official', url: 'https://www.instagram.com/109parliament_official' },
-      podcast: { title: { kk: '🎙️ Мектеп подкасты', ru: '🎙️ Школьный подкаст', en: '🎙️ School Podcast' }, handle: '@109oy_podcast', url: 'https://www.instagram.com/109oy_podcast' }
+      author: { title: { kk: '💻 Жоба авторы', ru: '💻 Автор проекта', en: '💻 Project Author' }, handle: '@_zhannixs', url: 'https://www.instagram.com/_zhannixs/' },
+      president: { title: { kk: '👑 Мектеп президенті', ru: '👑 Президент школы', en: '👑 School President' }, handle: '@n_nuraxqw', url: 'https://www.instagram.com/n_nuraxqw/' },
+      school: { title: { kk: '🏫 Мектеп парақшасы', ru: '🏫 Страница школы', en: '🏫 School Page' }, handle: '@astana_keleshekmektebi_109', url: 'https://www.instagram.com/astana_keleshekmektebi_109/' },
+      parliament: { title: { kk: '🏛️ Мектеп парламенті', ru: '🏛️ Школьный парламент', en: '🏛️ School Parliament' }, handle: '@109parliament_official', url: 'https://www.instagram.com/109parliament_official/' },
+      podcast: { title: { kk: '🎙️ Мектеп подкасты', ru: '🎙️ Школьный подкаст', en: '🎙️ School Podcast' }, handle: '@109oy_podcast', url: 'https://www.instagram.com/109oy_podcast/' }
     };
 
     function renderInstagramFooter() {
@@ -767,12 +806,13 @@
         gradeLbl: 'Сыныбыңды таңда',
         selectGradeOpt: '-- Сыныпты таңдаңыз --',
         continueBtn: 'Жалғастыру 🚀',
-        headerSub: 'Мектеп сызбасы • Пәндік квесттер • Жаңалықтар • Достар • Кешбэк',
+        headerSub: 'Мектеп сызбасы • Пәндік квесттер • Жаңалықтар • Ұсыныстар • Достар • Кешбэк',
         today: 'Бүгін:',
         logout: 'Шығу',
         presBadge: '👑 Мектеп президенті',
         navHome: '🏠 Басты бет',
         navNews: '📰 Жаңалықтар',
+        navSuggestions: '💡 Ұсыныстар',
         navMap: '🗺️ Мектеп картасы',
         navQuests: '🎯 Квесттер',
         navFriends: '🤝 Достар',
@@ -806,6 +846,22 @@
         publishNewsBtn: '📢 Жариялау',
         noNews: 'Әзірге жаңалықтар жарияланбаған.',
         deleteBtn: 'Өшіру',
+        sugTitle: '💡 Ұсыныстар ұяшығы',
+        sugSub: 'Мектепті жақсартуға, жаңа квесттерге, картаға немесе іс-шараларға қатысты ұсынысыңды қалдыр.',
+        lblSugCat: 'Ұсыныс бағыты',
+        optSugSchool: '🏫 Мектеп өмірі',
+        optSugQuests: '🎯 Квесттер',
+        optSugMap: '🗺️ Мектеп картасы',
+        optSugOther: '✨ Басқа идея',
+        lblSugTopic: 'Ұсыныс тақырыбы',
+        sugTopicPh: 'Мысалы: Кітапханада оқу бұрышын ашу',
+        lblSugText: 'Ұсыныс мәтіні',
+        sugTextPh: 'Идеяңды немесе ұсынысыңды толығырақ жаз...',
+        sendSugBtn: '💡 Ұсынысты жіберу',
+        sugListTitle: '📋 Жіберілген ұсыныстар',
+        noSuggestions: 'Әзірге ұсыныстар жоқ. Алғашқы идеяңды қалдыр!',
+        msgSugEmpty: '⚠️ Ұсыныс тақырыбы мен мәтінін толтырыңыз.',
+        msgSugSent: '💡 Ұсынысыңыз сақталды!',
         mapTitle: '🗺️ Фото арқылы интерактивті сызба тақтасы (1–4 қабат)',
         mapDesc: 'Қабатты таңдап, сызба фотосын жүктеңіз немесе бар фотоның үстінен нүкте басып, кабинет нөмірін енгізіңіз.',
         uploadPhotoBtn: 'Қабат фотосын жүктеу',
@@ -893,12 +949,13 @@
         gradeLbl: 'Выбери свой класс',
         selectGradeOpt: '-- Выберите класс --',
         continueBtn: 'Продолжить 🚀',
-        headerSub: 'Схема школы • Предметные квесты • Новости • Друзья • Кешбэк',
+        headerSub: 'Схема школы • Предметные квесты • Новости • Предложения • Друзья • Кешбэк',
         today: 'Сегодня:',
         logout: 'Выйти',
         presBadge: '👑 Президент школы',
         navHome: '🏠 Главная',
         navNews: '📰 Новости',
+        navSuggestions: '💡 Предложения',
         navMap: '🗺️ Карта школы',
         navQuests: '🎯 Квесты',
         navFriends: '🤝 Друзья',
@@ -932,6 +989,22 @@
         publishNewsBtn: '📢 Опубликовать',
         noNews: 'Новостей пока нет.',
         deleteBtn: 'Удалить',
+        sugTitle: '💡 Ячейка предложений',
+        sugSub: 'Оставь предложение по улучшению школы, новым квестам, карте или событиям.',
+        lblSugCat: 'Направление предложения',
+        optSugSchool: '🏫 Школьная жизнь',
+        optSugQuests: '🎯 Квесты',
+        optSugMap: '🗺️ Карта школы',
+        optSugOther: '✨ Другая идея',
+        lblSugTopic: 'Тема предложения',
+        sugTopicPh: 'Например: Уголок чтения в библиотеке',
+        lblSugText: 'Текст предложения',
+        sugTextPh: 'Опиши свою идею или предложение подробнее...',
+        sendSugBtn: '💡 Отправить предложение',
+        sugListTitle: '📋 Отправленные предложения',
+        noSuggestions: 'Предложений пока нет. Оставь первую идею!',
+        msgSugEmpty: '⚠️ Заполните тему и текст предложения.',
+        msgSugSent: '💡 Предложение сохранено!',
         mapTitle: '🗺️ Интерактивная схема-доска по фото (1–4 этажи)',
         mapDesc: 'Выберите этаж, загрузите фото схемы и кликните по нужной точке, чтобы указать номер кабинета.',
         uploadPhotoBtn: 'Загрузить фото этажа',
@@ -1019,12 +1092,13 @@
         gradeLbl: 'Select your grade',
         selectGradeOpt: '-- Choose grade --',
         continueBtn: 'Continue 🚀',
-        headerSub: 'School Blueprint • Subject Quests • News • Friends • Cashback',
+        headerSub: 'School Blueprint • Subject Quests • News • Suggestions • Friends • Cashback',
         today: 'Today:',
         logout: 'Logout',
         presBadge: '👑 School President',
         navHome: '🏠 Home',
         navNews: '📰 News',
+        navSuggestions: '💡 Suggestions',
         navMap: '🗺️ School Map',
         navQuests: '🎯 Quests',
         navFriends: '🤝 Friends',
@@ -1058,6 +1132,22 @@
         publishNewsBtn: '📢 Publish',
         noNews: 'No news published yet.',
         deleteBtn: 'Delete',
+        sugTitle: '💡 Suggestions Box',
+        sugSub: 'Share ideas for improving the school, new quests, the map, or events.',
+        lblSugCat: 'Suggestion Category',
+        optSugSchool: '🏫 School Life',
+        optSugQuests: '🎯 Quests',
+        optSugMap: '🗺️ School Map',
+        optSugOther: '✨ Other Idea',
+        lblSugTopic: 'Suggestion Topic',
+        sugTopicPh: 'e.g. Reading corner in the library',
+        lblSugText: 'Suggestion Details',
+        sugTextPh: 'Write your idea or suggestion in detail...',
+        sendSugBtn: '💡 Submit Suggestion',
+        sugListTitle: '📋 Submitted Suggestions',
+        noSuggestions: 'No suggestions yet. Share the first idea!',
+        msgSugEmpty: '⚠️ Please enter both a topic and details.',
+        msgSugSent: '💡 Suggestion saved!',
         mapTitle: '🗺️ Photo Interactive Blueprint Board (Floors 1–4)',
         mapDesc: 'Select a floor, upload a blueprint photo, and click a point to enter the classroom number.',
         uploadPhotoBtn: 'Upload Floor Photo',
@@ -1170,6 +1260,7 @@
 
       document.getElementById('nav-home').textContent = t('navHome');
       document.getElementById('nav-news').textContent = t('navNews');
+      document.getElementById('nav-suggestions').textContent = t('navSuggestions');
       document.getElementById('nav-map').textContent = t('navMap');
       document.getElementById('nav-quests').textContent = t('navQuests');
       document.getElementById('nav-friends').textContent = t('navFriends');
@@ -1199,6 +1290,20 @@
       document.getElementById('lbl-news-body').textContent = t('lblNewsBody');
       document.getElementById('news-body-input').placeholder = t('newsBodyPh');
       document.getElementById('btn-publish-news').textContent = t('publishNewsBtn');
+
+      document.getElementById('txt-sug-title').textContent = t('sugTitle');
+      document.getElementById('txt-sug-sub').textContent = t('sugSub');
+      document.getElementById('lbl-sug-cat').textContent = t('lblSugCat');
+      document.getElementById('opt-sug-school').textContent = t('optSugSchool');
+      document.getElementById('opt-sug-quests').textContent = t('optSugQuests');
+      document.getElementById('opt-sug-map').textContent = t('optSugMap');
+      document.getElementById('opt-sug-other').textContent = t('optSugOther');
+      document.getElementById('lbl-sug-topic').textContent = t('lblSugTopic');
+      document.getElementById('suggestion-title-input').placeholder = t('sugTopicPh');
+      document.getElementById('lbl-sug-text').textContent = t('lblSugText');
+      document.getElementById('suggestion-body-input').placeholder = t('sugTextPh');
+      document.getElementById('btn-send-suggestion').textContent = t('sendSugBtn');
+      document.getElementById('txt-sug-list-title').textContent = t('sugListTitle');
 
       document.getElementById('txt-map-title').textContent = t('mapTitle');
       document.getElementById('txt-map-desc').textContent = t('mapDesc');
@@ -1249,6 +1354,88 @@
 
       renderBellSchedule();
       updateActiveFloorBadge();
+    }
+
+    const SUGGESTIONS_DB_KEY = 'sq_suggestions_db';
+
+    function getSuggestionsDB() {
+      return JSON.parse(localStorage.getItem(SUGGESTIONS_DB_KEY) || '[]');
+    }
+
+    function saveSuggestionsDB(list) {
+      localStorage.setItem(SUGGESTIONS_DB_KEY, JSON.stringify(list));
+    }
+
+    function getCategoryLabel(cat) {
+      if (cat === 'quests') return t('optSugQuests');
+      if (cat === 'map') return t('optSugMap');
+      if (cat === 'other') return t('optSugOther');
+      return t('optSugSchool');
+    }
+
+    function submitSuggestion() {
+      if (!currentUser) return;
+      const catEl = document.getElementById('suggestion-category-input');
+      const titleEl = document.getElementById('suggestion-title-input');
+      const bodyEl = document.getElementById('suggestion-body-input');
+
+      const category = catEl ? catEl.value : 'school';
+      const title = (titleEl ? titleEl.value : '').trim();
+      const body = (bodyEl ? bodyEl.value : '').trim();
+
+      if (!title || !body) {
+        showToast(t('msgSugEmpty'));
+        return;
+      }
+
+      const list = getSuggestionsDB();
+      list.unshift({
+        id: 'sug_' + Date.now(),
+        category,
+        title,
+        body,
+        author: currentUser.username,
+        grade: currentUser.grade,
+        date: new Date().toLocaleString()
+      });
+      saveSuggestionsDB(list);
+
+      titleEl.value = '';
+      bodyEl.value = '';
+      showToast(t('msgSugSent'));
+      renderSuggestions();
+    }
+
+    function deleteSuggestion(id) {
+      saveSuggestionsDB(getSuggestionsDB().filter(item => item.id !== id));
+      renderSuggestions();
+    }
+
+    function renderSuggestions() {
+      const feed = document.getElementById('suggestions-feed');
+      if (!feed) return;
+      const list = getSuggestionsDB();
+      if (!list.length) {
+        feed.innerHTML = `<p style="color:var(--muted); font-size:0.9rem;">${t('noSuggestions')}</p>`;
+        return;
+      }
+      feed.innerHTML = list.map(item => {
+        const canDelete = currentUser && (currentUser.username === item.author || isPresidentUnlocked());
+        return `
+          <div class="suggestion-card">
+            <div class="news-meta">
+              <span>
+                <span class="reward-tag">${getCategoryLabel(item.category)}</span>
+                • <strong>@${item.author}</strong> (${item.grade || '—'})
+              </span>
+              <span>${item.date}</span>
+            </div>
+            <h4 style="margin-bottom:6px; font-size:1rem;">${item.title}</h4>
+            <p style="font-size:0.92rem; line-height:1.45; color:var(--text);">${item.body}</p>
+            ${canDelete ? `<div style="margin-top:10px; text-align:right;"><button class="btn btn-danger" onclick="deleteSuggestion('${item.id}')">${t('deleteBtn')}</button></div>` : ''}
+          </div>
+        `;
+      }).join('');
     }
 
     const DAILY_LIMIT = 100;
@@ -1577,12 +1764,14 @@
       showToast(t('msgPresUnlocked'));
       updatePresidentUI();
       renderNews();
+      renderSuggestions();
     }
 
     function lockPresidentMode() {
       sessionStorage.removeItem(PRESIDENT_SESSION_KEY);
       updatePresidentUI();
       renderNews();
+      renderSuggestions();
     }
 
     function updatePresidentUI() {
@@ -2108,6 +2297,7 @@
     function renderAll() {
       updateHeaderAndHome();
       renderNews();
+      renderSuggestions();
       renderInstagramFooter();
       renderMapPinsAndList();
       renderQuests();
@@ -2123,6 +2313,7 @@
       if (btn) btn.classList.add('active');
       if (secId === 'map') renderMapPinsAndList();
       if (secId === 'news') renderNews();
+      if (secId === 'suggestions') renderSuggestions();
       if (secId === 'rating') renderRating();
       if (secId === 'shop') renderShop();
       if (secId === 'friends') renderFriends();
