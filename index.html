@@ -353,6 +353,9 @@
       <button id="nav-quests" onclick="showSection('quests', this)">🎯 Квесттер</button>
       <button id="nav-friends" onclick="showSection('friends', this)">🤝 Достар</button>
       <button id="nav-shop" onclick="showSection('shop', this)">🎁 Кешбэк дүкені</button>
+      <button class="nav-btn" data-tab="suggestions" onclick="switchTab('suggestions')">
+  💡 Ұсыныстар
+</button>
       <button id="nav-rating" onclick="showSection('rating', this)">🏆 Рейтинг</button>
     </nav>
 
@@ -574,7 +577,27 @@
           <div id="my-coupons" style="margin-top: 10px; color: var(--muted); font-size: 0.9rem;"></div>
         </div>
       </section>
+      ұсыныстар
+<section id="tab-suggestions" class="tab-content" style="display: none;">
+  <div class="card">
+    <h2>💡 Анонимді ұсыныс қалдыру</h2>
+    <p>Ұсынысыңыз толық анонимді түрде жіберіледі — атыңыз бен сыныбыңыз сұралмайды.</p>
 
+    <label for="suggestionCategory">Бағыты:</label>
+    <select id="suggestionCategory">
+      <option value="Мектепке ұсыныс">🏫 Мектепке ұсыныс</option>
+      <option value="SchoolQuest сайтына ұсыныс">🌐 Осы сайтқа (SchoolQuest) ұсыныс</option>
+      <option value="Басқа">✨ Басқа</option>
+    </select>
+
+    <label for="suggestionText">Ұсынысыңыз:</label>
+    <textarea id="suggestionText" rows="4" placeholder="Идеяңызды немесе ұсынысыңызды жазыңыз..."></textarea>
+
+    <button type="button" onclick="sendAnonymousSuggestion()">
+      📲 WhatsApp-қа жіберу
+    </button>
+  </div>
+</section>
       <!-- РЕЙТИНГ -->
       <section id="sec-rating" class="section">
         <div class="card">
@@ -667,7 +690,26 @@
         `;
       }).join('');
     }
+function sendAnonymousSuggestion() {
+  const categoryEl = document.getElementById("suggestionCategory");
+  const textEl = document.getElementById("suggestionText");
+  const category = categoryEl ? categoryEl.value : "Ұсыныс";
+  const text = textEl ? textEl.value.trim() : "";
 
+  if (!text) {
+    alert("Алдымен ұсынысыңызды жазыңыз.");
+    return;
+  }
+
+  const whatsappNumber = "77478252836";
+  const message =
+    `📩 *Анонимді ұсыныс*\n` +
+    `📌 *Бағыты:* ${category}\n` +
+    `💬 *Мәтіні:* ${text}`;
+
+  const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+  window.open(url, "_blank", "noopener,noreferrer");
+}
     /* ================= ҚАЗАҚША -> РУС / ENG АВТОАУДАРМА ================= */
     const KK_TO_RU_PHRASES = [
       ['құрметті оқушылар', 'дорогие ученики'],
