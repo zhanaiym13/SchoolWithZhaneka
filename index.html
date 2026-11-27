@@ -353,9 +353,7 @@
       <button id="nav-quests" onclick="showSection('quests', this)">🎯 Квесттер</button>
       <button id="nav-friends" onclick="showSection('friends', this)">🤝 Достар</button>
       <button id="nav-shop" onclick="showSection('shop', this)">🎁 Кешбэк дүкені</button>
-      <button class="nav-btn" data-tab="suggestions" onclick="switchTab('suggestions')">
-  💡 Ұсыныстар
-</button>
+      <button id="nav-suggestions" onclick="showSection('suggestions', this)">💡 Ұсыныстар</button>
       <button id="nav-rating" onclick="showSection('rating', this)">🏆 Рейтинг</button>
     </nav>
 
@@ -578,22 +576,28 @@
         </div>
       </section>
       ұсыныстар
-<section id="tab-suggestions" class="tab-content" style="display: none;">
+<section id="sec-suggestions" class="section">
   <div class="card">
     <h2>💡 Анонимді ұсыныс қалдыру</h2>
-    <p>Ұсынысыңыз толық анонимді түрде жіберіледі — атыңыз бен сыныбыңыз сұралмайды.</p>
+    <p style="color: var(--muted); font-size: 0.88rem; margin-top: 4px;">
+      Ұсынысыңыз анонимді түрде дайындалады — атыңыз бен сыныбыңыз сұралмайды.
+    </p>
 
-    <label for="suggestionCategory">Бағыты:</label>
-    <select id="suggestionCategory">
-      <option value="Мектепке ұсыныс">🏫 Мектепке ұсыныс</option>
-      <option value="SchoolQuest сайтына ұсыныс">🌐 Осы сайтқа (SchoolQuest) ұсыныс</option>
-      <option value="Басқа">✨ Басқа</option>
-    </select>
+    <div class="input-group" style="margin-top: 14px;">
+      <label for="suggestionCategory">Бағыты</label>
+      <select id="suggestionCategory">
+        <option value="Мектепке ұсыныс">🏫 Мектепке ұсыныс</option>
+        <option value="SchoolQuest сайтына ұсыныс">🌐 Осы сайтқа (SchoolQuest) ұсыныс</option>
+        <option value="Басқа">✨ Басқа</option>
+      </select>
+    </div>
 
-    <label for="suggestionText">Ұсынысыңыз:</label>
-    <textarea id="suggestionText" rows="4" placeholder="Идеяңызды немесе ұсынысыңызды жазыңыз..."></textarea>
+    <div class="input-group">
+      <label for="suggestionText">Ұсынысыңыз</label>
+      <textarea id="suggestionText" rows="4" placeholder="Идеяңызды немесе ұсынысыңызды жазыңыз..."></textarea>
+    </div>
 
-    <button type="button" onclick="sendAnonymousSuggestion()">
+    <button type="button" class="btn" onclick="sendAnonymousSuggestion()">
       📲 WhatsApp-қа жіберу
     </button>
   </div>
@@ -690,6 +694,22 @@
         `;
       }).join('');
     }
+function showSection(name, btn) {
+  document.querySelectorAll('.section').forEach((sec) => {
+    sec.classList.remove('active');
+  });
+  document.querySelectorAll('nav button').forEach((b) => {
+    b.classList.remove('active');
+  });
+
+  const target = document.getElementById(`sec-${name}`);
+  if (target) {
+    target.classList.add('active');
+  }
+  if (btn) {
+    btn.classList.add('active');
+  }
+}
 function sendAnonymousSuggestion() {
   const categoryEl = document.getElementById("suggestionCategory");
   const textEl = document.getElementById("suggestionText");
